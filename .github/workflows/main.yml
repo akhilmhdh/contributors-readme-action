@@ -1,0 +1,12 @@
+on: [push]
+
+jobs:
+  contrib-auto-job:
+    runs-on: ubuntu-latest
+    name: A job to automate contrib in readme
+    steps:
+    - name: Contrib Automateaction step
+      id: hello
+      uses: akhilmhdh/contribution-automation-action@master
+      with:
+        myToken: ${{ secrets.GITHUB_TOKEN }}
