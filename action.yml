@@ -1,0 +1,9 @@
+name: "Contribute List"
+description: "Automation of contributors list in README.md"
+inputs:
+  myToken: # id of input
+    description: "github token"
+    required: true
+runs:
+  using: "node12"
+  main: "index.js"

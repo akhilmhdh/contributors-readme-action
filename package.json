@@ -1,0 +1,23 @@
+{
+  "name": "contribution-automation-action",
+  "version": "1.0.0",
+  "description": "A github action to automate contributors section of a readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akhilmhdh/contribution-automation-action.git"
+  },
+  "author": "akhi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akhilmhdh/contribution-automation-action/issues"
+  },
+  "homepage": "https://github.com/akhilmhdh/contribution-automation-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "@actions/github": "^2.1.1"
+  }
+}
