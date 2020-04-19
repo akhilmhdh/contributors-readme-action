@@ -15,7 +15,7 @@ async function run(){
         const readme= await octokit.request(`GET /repos/${owner}/${repo}/readme`,{
             headers: {
                 authorization: `token ${myToken}`,
-                Accept: "application/vnd.github.VERSION.raw"
+                Accept: "application/vnd.github.VERSION.raw+json"
               },
         })
         console.log(`readme: ${readme}`);
