@@ -15,18 +15,15 @@ async function run(){
         const readme= await octokit.request(`GET /repos/${owner}/${repo}/readme`,{
             headers: {
                 authorization: `token ${myToken}`,
-                Accept: "application/vnd.github.VERSION.raw+json"
-              },
-        })
-        const readme_details= await octokit.request(`GET /repos/${owner}/${repo}/readme`,{
-            headers: {
-                authorization: `token ${myToken}`,
               },
         })
         //readme.data has the readme value
 
-        console.log("readme: ",readme.data)
-        console.log("readme details: ",JSON.stringify(readme_details))
+        const buff = new Buffer(readme.data.content,'base64')
+        const content = buff.toString('utf-8')
+        
+        console.log("readme: ",content)
+        console.log("readme details: ",readme.data.sha)
         
     }
     catch(error){
