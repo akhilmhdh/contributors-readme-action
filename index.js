@@ -18,7 +18,7 @@ async function run(){
                 Accept: "application/vnd.github.VERSION.raw+json"
               },
         })
-        console.log(`readme: ${readme}`);
+        console.log(`readme: ${JSON.stringify((readme))}`);
     }
     catch(error){
         core.setFailed(error.message)
