@@ -8,7 +8,7 @@ async function run(){
         if (!myToken){
             throw "Token not found"
         }
-        const octokit = new github.GitHub('GITHUB_TOKEN');
+        const octokit = new github.GitHub(myToken);
         const nwo = process.env['GITHUB_REPOSITORY'] || '/'
         const [owner, repo] = nwo.split('/')
         
