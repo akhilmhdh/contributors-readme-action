@@ -18,7 +18,16 @@ async function run(){
                 Accept: "application/vnd.github.VERSION.raw+json"
               },
         })
-        console.log(`readme: ${JSON.stringify((readme))}`);
+        const readme_details= await octokit.request(`GET /repos/${owner}/${repo}/readme`,{
+            headers: {
+                authorization: `token ${myToken}`,
+              },
+        })
+        //readme.data has the readme value
+
+        console.log("readme: ",readme.data)
+        console.log("readme details: ",JSON.stringify(readme_details))
+        
     }
     catch(error){
         core.setFailed(error.message)
