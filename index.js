@@ -30,8 +30,8 @@ async function run(){
         
         let  preprocess_content= content.split("# ")
         preprocess_content = preprocess_content.filter(function(el){return el.includes("Contributors List")})
-        const contributors_list = preprocess_content[0].split("\n")[1]
-        console.log("readme: ",content)
+        const contributors_content = preprocess_content[0].split("\n")[1]
+        console.log("readme: ",contributors_content)
         console.log("contributors api: ",contributors_list)
         // console.log("readme details: ",readme.data.sha)
     }
