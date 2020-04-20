@@ -25,8 +25,7 @@ async function run(){
         })
         //readme.data has the readme value
 
-        const buff64 = Buffer.from(readme.data.content,'base64')
-        const content = buff64.toString('utf-8')
+        const content = Buffer.from(readme.data.content,'base64').toString('ascii')
         
         let  preprocess_content= content.split("# ")
         let pos;
@@ -49,8 +48,7 @@ async function run(){
 
         const postprocess_content= preprocess_content.join("# ")
 
-        const buffString =Buffer.from(postprocess_content,'utf-8')
-        const base64String = Buffer.toString('base64')
+        const base64String = Buffer.from(postprocess_content).toString('base64')
 
         const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
             headers: {
