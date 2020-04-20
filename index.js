@@ -39,11 +39,11 @@ async function run(){
         let contributors_content=""
 
         contributors_list.data.forEach(function(el){
-            const image=`[${el.login}](${el.avatar_url}&s=100)`
+            const image=`[![${el.login}](${el.avatar_url}&s=100)](https://github.com/${el.login})`
              contributors_content+=image
         })
-        
-        const github_action="[github-actions[bot]](https://avatars2.githubusercontent.com/in/15368?v=4&s=100)"
+   
+        const github_action="[![github-actions[bot]](https://avatars2.githubusercontent.com/in/15368?v=4&s=100)](https://github.com/github-actions[bot])"
 
         contributors_content=contributors_content.replace(github_action,"")
 
