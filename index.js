@@ -28,12 +28,12 @@ async function run(){
         const buff = Buffer.from(readme.data.content,'base64')
         const content = buff.toString('utf-8')
         
-        const  preprocess_content= content.split("#")
-        const contributors_template = preprocess_content.filter(function (el){el.includes("# Contributors List")})
+        const  preprocess_content= content.split("# ")
+        const preprocess_content = preprocess_content.filter(function(el){return el.includes("Contributors List")})
+        const contributors_list = preprocess_content[0].split("\n")[1]
         console.log("readme: ",content)
         console.log("contributors api: ",contributors_list)
         // console.log("readme details: ",readme.data.sha)
-        
     }
     catch(error){
         core.setFailed(error.message)
