@@ -1,9 +1,14 @@
 name: "Contribute List"
 description: "Automation of contributors list in README.md"
 inputs:
-  myToken: # id of input
-    description: "github token"
-    required: true
+  listType: # id of input
+    description: "To output contributors in list type of usernames"
+    required: false
+    default: "false"
+  imageSize: # id of input
+    description: "Size of square images in the stack"
+    required: false
+    default: "50"
 runs:
   using: "node12"
   main: "index.js"

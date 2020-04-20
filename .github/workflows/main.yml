@@ -1,12 +1,12 @@
-on: [push]
+on: [push, issues]
 
 jobs:
   contrib-auto-job:
     runs-on: ubuntu-latest
     name: A job to automate contrib in readme
     steps:
-    - name: Contrib Automateaction step
-      id: hello
-      uses: akhilmhdh/contribution-automation-action@master
-      with:
-        myToken: ${{ secrets.GITHUB_TOKEN }}
+      - name: Contrib Automateaction step
+        id: hello
+        uses: akhilmhdh/contribution-automation-action@master\
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
