@@ -17,13 +17,22 @@ async function run(){
                 authorization: `token ${myToken}`,
               },
         })
+
+        const contributors_list = await octokit.request(`GET /repos/${owner}/${repo}/contributors`,{
+            headers: {
+                authorization: `token ${myToken}`,
+              },
+        })
         //readme.data has the readme value
 
-        const buff = new Buffer(readme.data.content,'base64')
+        const buff = Buffer.from(readme.data.content,'base64')
         const content = buff.toString('utf-8')
         
-        console.log("readme: ",content)
-        console.log("readme details: ",readme.data.sha)
+        const  preprocess_content= content.split("#")
+        const contributors_template = preprocess_content.filter(function (el){el.includes("# Contributors List")})
+        console.log("readme: ",contributors_template)
+        console.log("contributors api: ",contributors_list)
+        // console.log("readme details: ",readme.data.sha)
         
     }
     catch(error){
