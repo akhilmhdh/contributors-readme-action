@@ -25,8 +25,8 @@ async function run(){
         })
         //readme.data has the readme value
 
-        const buff = Buffer.from(readme.data.content,'base64')
-        const content = buff.toString('utf-8')
+        const buff64 = Buffer.from(readme.data.content,'base64')
+        const content = buff64.toString('utf-8')
         
         let  preprocess_content= content.split("# ")
         let pos;
@@ -43,14 +43,24 @@ async function run(){
             return acc+image
         })
 
-        const template =`Contributors List\n ${contributors_content}`
+        const template =`Contributors List\n${contributors_content}`
 
         preprocess_content[pos]=template
 
         const postprocess_content= preprocess_content.join("# ")
 
-        console.log("readme: ",postprocess_content)
-        // console.log("readme details: ",readme.data.sha)
+        const buffString =Buffer.from(postprocess_content,'utf-8')
+        const base64String = Buffer.toString('base64')
+
+        const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
+            headers: {
+                authorization: `token ${myToken}`,
+              },
+              "message": "contrib-auto-update",
+            "content": base64String,
+            "sha": readme.data.sha
+        })
+         console.log("updated readme")
     }
     catch(error){
         core.setFailed(error.message)
