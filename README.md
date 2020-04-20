@@ -1,8 +1,3 @@
-# Testing
-
-# Alpha Dog
-
-hello
-# Contributors ✨
+Contributors ✨
 <table>
 </table>
