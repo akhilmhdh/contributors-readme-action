@@ -36,10 +36,11 @@ async function run(){
                 break;
             }
         }
+        let contributors_content=""
 
-        const contributors_content = contributors_list.data.reduce(function(acc,el){
+        contributors_list.data.foreach(function(el){
             const image=`[${el.login}](${el.avatar_url}&s=100)`
-            return acc+image
+             contributors_content+=image
         })
 
         const template =`Contributors List\n${contributors_content}`
