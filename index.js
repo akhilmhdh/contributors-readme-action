@@ -38,7 +38,7 @@ async function run(){
         }
         let contributors_content=""
 
-        contributors_list.data.foreach(function(el){
+        contributors_list.data.forEach(function(el){
             const image=`[${el.login}](${el.avatar_url}&s=100)`
              contributors_content+=image
         })
