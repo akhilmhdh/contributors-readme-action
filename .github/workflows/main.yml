@@ -7,6 +7,6 @@ jobs:
     steps:
       - name: Contrib Automateaction step
         id: hello
-        uses: akhilmhdh/contribution-automation-action@master\
+        uses: akhilmhdh/contribution-automation-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
