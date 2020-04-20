@@ -8,7 +8,11 @@ inputs:
   imageSize: # id of input
     description: "Size of square images in the stack"
     required: false
-    default: "50"
+    default: "100"
+  columnsPerRow: # id of input
+    description: "Number of columns in a row"
+    required: false
+    default: "6"
 runs:
   using: "node12"
   main: "index.js"

@@ -8,6 +8,7 @@ async function run(){
         }
 
         const imageSize= core.getInput('imageSize');
+        const columns = Number(core.getInput('columnsPerRow'))
     
         const token = process.env['GITHUB_TOKEN']
 
@@ -34,25 +35,45 @@ async function run(){
 
         const content = Buffer.from(readme.data.content,'base64').toString('ascii')
         
-        let  preprocess_content= content.split("# ")
+        let  preprocess_content= content.split("## ")
         let pos=null;
 
         for(let i=0;i<preprocess_content.length;i++){
-            if (preprocess_content[i].includes("Contributors List")){
+            if (preprocess_content[i].includes("Contributors")){
                 pos=i;
                 break;
             }
         }
-        let contributors_content=""
-
-        contributors_list.data.forEach(function(el){
-            if(!el.login.includes("bot")){
-                const image=`[![${el.login}](${el.avatar_url}&s=${imageSize})](https://github.com/${el.login})`
-                contributors_content+=image
-            }
-        })
+        let contributors_content="<table>\n"
+        const contributors = contributors_list.data.length;
         
-        const template =`Contributors List\n${contributors_content}`
+        const rows =Math.ceil( contributors.length / columns)
+
+        for(let row=1;row<=rows;row++){
+            contributors_content+="<tr>"
+            for(let column=1;column<=columns,row+column<=contributors.length;column++){
+                contributors+=`
+                <td align="center">
+                    <a href="https://github.com/${el.login}">
+                        <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
+                        <br />
+                        <sub><b>${el.login}</b></sub>
+                        </a</td>`
+            }
+            contributors_content+="</tr>"
+        }
+
+        contributors_content+="</table>"
+
+        // contributors_list.data.forEach(function(el){
+        //     if(!el.login.includes("bot")){
+        //         const image=`[![${el.login}](${el.avatar_url}&s=${imageSize})](https://github.com/${el.login})`
+        //         contributors_content+=image
+        //     }
+
+        // })
+        
+        const template =`Contributors ✨\n${contributors_content}`
 
         if(pos!==null){
             preprocess_content[pos]=template
