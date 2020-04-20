@@ -52,7 +52,7 @@ async function run(){
         for(let row=1;row<=rows;row++){
             contributors_content+="<tr>"
             for(let column=1;column<=columns,row+column<=contributors.length;column++){
-                contributors+=`
+                contributors_content+=`
                 <td align="center">
                     <a href="https://github.com/${el.login}">
                         <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
