@@ -42,6 +42,10 @@ async function run(){
             const image=`[${el.login}](${el.avatar_url}&s=100)`
              contributors_content+=image
         })
+        
+        const github_action="[github-actions[bot]](https://avatars2.githubusercontent.com/in/15368?v=4&s=100)"
+
+        contributors_content=contributors_content.replace(github_action,"")
 
         const template =`Contributors List\n${contributors_content}`
 
@@ -59,7 +63,7 @@ async function run(){
         //     "content": base64String,
         //     "sha": readme.data.sha
         // })
-         console.log("updated readme",JSON.stringify(contributors_content))
+         console.log("updated readme",postprocess_content)
     }
     catch(error){
         core.setFailed(error.message)
