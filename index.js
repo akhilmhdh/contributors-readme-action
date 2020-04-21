@@ -78,30 +78,30 @@ async function run(){
         
         const template =`Contributors ✨\n${contributors_content}\n`
 
-        if(pos!==null){
-            preprocess_content[pos]=preprocess_content[pos].split("#")
-            preprocess_content[pos][0]=template
-            preprocess_content[pos]=preprocess_content[pos].join("#")
-        }
-        else{
-            preprocess_content.push(template)
-        }
+        // if(pos!==null){
+        //     preprocess_content[pos]=preprocess_content[pos].split("#")
+        //     preprocess_content[pos][0]=template
+        //     preprocess_content[pos]=preprocess_content[pos].join("#")
+        // }
+        // else{
+        //     preprocess_content.push(template)
+        // }
 
-        const postprocess_content= preprocess_content.join("## ")
+        // const postprocess_content= preprocess_content.join("## ")
 
-        const base64String = Buffer.from(postprocess_content).toString('base64')
+        // const base64String = Buffer.from(postprocess_content).toString('base64')
 
-        const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
-            headers: {
-                authorization: `token ${token}`,
-              },
-              "message": "contrib-auto-update",
-            "content": base64String,
-            "sha": readme.data.sha
-        })
-         console.log("updated readme")
+        // const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
+        //     headers: {
+        //         authorization: `token ${token}`,
+        //       },
+        //       "message": "contrib-auto-update",
+        //     "content": base64String,
+        //     "sha": readme.data.sha
+        // })
          console.log("template",contributors_content)
-         console.log(contributors_list)
+         console.log(template)
+         console.log(contributors)
     }
     catch(error){
         core.setFailed(error.message)
