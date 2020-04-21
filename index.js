@@ -58,7 +58,8 @@ async function run(){
                         <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
                         <br />
                         <sub><b>${el.login}</b></sub>
-                        </a</td>`
+                    </a>
+                </td>`
             }
             contributors_content+="</tr>"
         }
