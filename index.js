@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const CamelCaseString = require('./camelcase')
+const camelize = require('./camelcase')
 
 async function run(){
     try{
@@ -62,7 +62,7 @@ async function run(){
                     <a href="https://github.com/${el.login}">
                         <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
                         <br />
-                        <sub><b>${CamelCaseString(user_details.data.name)}</b></sub>
+                        <sub><b>${camelize.toCamelCase(user_details.data.name)}</b></sub>
                     </a>
                 </td>\n`
             }
