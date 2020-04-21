@@ -42,11 +42,11 @@ async function run(){
 
         const content = Buffer.from(readme.data.content,'base64').toString('ascii')
 
-        console.log(content)
         
-        // let  preprocess_content= content.split("## ")
-        // let pos=null;
-
+        let  preprocess_content= content.split("## ")
+        let pos=null;
+        
+        console.log(preprocess_content)
         // for(let i=0;i<preprocess_content.length;i++){
         //     if (preprocess_content[i].includes("Contributors")){
         //         pos=i;
