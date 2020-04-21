@@ -77,7 +77,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
                     <a href="https://github.com/akhilmhdh">
                         <img src="https://avatars1.githubusercontent.com/u/31166322?v=4" width="100;" alt="akhilmhdh"/>
                         <br />
-                        <sub><b>AKHIL MOHAN</b></sub>
+                        <sub><b>akhilMohan</b></sub>
                     </a>
                 </td>
 </tr>
