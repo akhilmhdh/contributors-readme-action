@@ -1,7 +1,6 @@
 # Testing
 
 ## Contributors ✨
-
 <table>
 <tr>
                 <td align="center">
@@ -10,7 +9,8 @@
                         <br />
                         <sub><b>akhilmhdh</b></sub>
                     </a>
-                </td></tr>
+                </td>
+</tr>
 </table>
 
 # Alpha Dog
