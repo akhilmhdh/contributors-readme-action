@@ -1,6 +1,8 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+const {CamelCaseString} = require('./camelcase')
+
 async function run(){
     try{
         if(github.context.payload.action){
@@ -60,7 +62,7 @@ async function run(){
                     <a href="https://github.com/${el.login}">
                         <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
                         <br />
-                        <sub><b>${user_details.data.name.toUpperCase()}</b></sub>
+                        <sub><b>${CamelCaseString(user_details.data.name)}</b></sub>
                     </a>
                 </td>\n`
             }
