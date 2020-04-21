@@ -6,7 +6,7 @@ As it uses github action its secure and very easy to integrate into your project
 
 ### First Step
 
-If your new to action add these to your .github/workflows/<any-name>.yml
+If your new to action add these to your .github/workflows/main.yml
   
 ```
 on: [push, issues]
