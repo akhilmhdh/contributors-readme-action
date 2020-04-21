@@ -45,7 +45,7 @@ async function run(){
             }
         }
         let contributors_content="<table>\n"
-        const contributors = contributors_list.data.length;
+        const contributors = contributors_list.data;
         
         const rows =Math.ceil( contributors.length / columns)
 
