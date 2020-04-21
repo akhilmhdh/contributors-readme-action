@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const {CamelCaseString} = require('./camelcase')
+const CamelCaseString = require('./camelcase')
 
 async function run(){
     try{
