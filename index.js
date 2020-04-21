@@ -35,7 +35,7 @@ async function run(){
 
         const content = Buffer.from(readme.data.content,'base64').toString('ascii')
         
-        let  preprocess_content= content.split("## ")
+        let  preprocess_content= content.split("# ")
         let pos=null;
 
         for(let i=0;i<preprocess_content.length;i++){
@@ -73,28 +73,28 @@ async function run(){
 
         // })
         
-        const template =`Contributors ✨\n${contributors_content}`
+        // const template =`Contributors ✨\n${contributors_content}`
 
-        if(pos!==null){
-            preprocess_content[pos]=template
-        }
-        else{
-            preprocess_content.push(template)
-        }
+        // if(pos!==null){
+        //     preprocess_content[pos]=template
+        // }
+        // else{
+        //     preprocess_content.push(template)
+        // }
 
-        const postprocess_content= preprocess_content.join("# ")
+        // const postprocess_content= preprocess_content.join("# ")
 
-        const base64String = Buffer.from(postprocess_content).toString('base64')
+        // const base64String = Buffer.from(postprocess_content).toString('base64')
 
-        const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
-            headers: {
-                authorization: `token ${token}`,
-              },
-              "message": "contrib-auto-update",
-            "content": base64String,
-            "sha": readme.data.sha
-        })
-         console.log("updated readme")
+        // const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
+        //     headers: {
+        //         authorization: `token ${token}`,
+        //       },
+        //       "message": "contrib-auto-update",
+        //     "content": base64String,
+        //     "sha": readme.data.sha
+        // })
+         console.log("updated readme:",contributors_content)
     }
     catch(error){
         core.setFailed(error.message)
