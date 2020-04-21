@@ -31,11 +31,10 @@ async function run(){
                 authorization: `token ${token}`,
               },
         })
-        //readme.data has the readme value
 
         const content = Buffer.from(readme.data.content,'base64').toString('ascii')
         
-        let  preprocess_content= content.split("# ")
+        let  preprocess_content= content.split("## ")
         let pos=null;
 
         for(let i=0;i<preprocess_content.length;i++){
@@ -53,7 +52,6 @@ async function run(){
             contributors_content+="<tr>"
             for(let column=1;column<=columns,row+column<=contributors.length;column++){
                 const el = contributors[row+column-2]
-
                 contributors_content+=`
                 <td align="center">
                     <a href="https://github.com/${el.login}">
@@ -61,23 +59,25 @@ async function run(){
                         <br />
                         <sub><b>${el.login}</b></sub>
                     </a>
-                </td>`
+                </td>\n`
             }
             contributors_content+="</tr>\n"
         }
 
         contributors_content+="</table>\n"
         
-        const template =`Contributors ✨\n${contributors_content}`
+        const template =`Contributors ✨\n${contributors_content}\n`
 
         if(pos!==null){
-            preprocess_content[pos]=template
+            preprocess_content[pos]=preprocess_content[pos].split("#")
+            preprocess_content[pos][0]=template
+            preprocess_content[pos]=preprocess_content[pos].join("#")
         }
         else{
             preprocess_content.push(template)
         }
 
-        const postprocess_content= preprocess_content.join("# ")
+        const postprocess_content= preprocess_content.join("## ")
 
         const base64String = Buffer.from(postprocess_content).toString('base64')
 

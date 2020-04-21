@@ -1,6 +1,7 @@
 # Testing
 
-# Contributors ✨
+## Contributors ✨
+
 <table>
 <tr>
                 <td align="center">
@@ -11,6 +12,7 @@
                     </a>
                 </td></tr>
 </table>
+
 # Alpha Dog
 
 hello
