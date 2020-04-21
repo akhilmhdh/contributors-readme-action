@@ -46,38 +46,38 @@ async function run(){
         let  preprocess_content= content.split("## ")
         let pos=null;
         
-        console.log(preprocess_content)
-        // for(let i=0;i<preprocess_content.length;i++){
-        //     if (preprocess_content[i].includes("Contributors")){
-        //         pos=i;
-        //         break;
-        //     }
-        // }
-        // const contributors = contributors_list.data;
-        
-        // const rows =Math.ceil( contributors.length / columns)
-        
-        // let contributors_content="<table>\n"
+        for(let i=0;i<preprocess_content.length;i++){
+            if (preprocess_content[i].includes("Contributors")){
+                pos=i;
+                break;
+            }
+        }
 
-        // for(let row=1;row<=rows;row++){
-        //     contributors_content+="<tr>"
-        //     for(let column=1;column<=columns,row+column-1<=contributors.length;column++){
-        //         const el = contributors[row+column-2]
+        const contributors = contributors_list.data;
+        
+        const rows =Math.ceil( contributors.length / columns)
+        
+        let contributors_content="<table>\n"
+
+        for(let row=1;row<=rows;row++){
+            contributors_content+="<tr>"
+            for(let column=1;column<=columns,row+column-1<=contributors.length;column++){
+                const el = contributors[row+column-2]
                 
-        //         const user_details = await octokit.request(`GET /users/${el.login}`)
-        //         contributors_content+=`
-        //         <td align="center">
-        //             <a href="https://github.com/${el.login}">
-        //                 <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
-        //                 <br />
-        //                 <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
-        //             </a>
-        //         </td>\n`
-        //     }
-        //     contributors_content+="</tr>\n"
-        // }
+                const user_details = await octokit.request(`GET /users/${el.login}`)
+                contributors_content+=`
+                <td align="center">
+                    <a href="https://github.com/${el.login}">
+                        <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
+                        <br />
+                        <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
+                    </a>
+                </td>\n`
+            }
+            contributors_content+="</tr>\n"
+        }
 
-        // contributors_content+="</table>\n"
+        contributors_content+="</table>\n"
         
         // const template =`Contributors ✨\n${contributors_content}\n`
 
