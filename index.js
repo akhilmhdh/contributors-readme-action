@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
-const capitalize = require('./capitalize')
+const capitalize = require("./capitalize");
 
 async function run(){
     try{
@@ -28,6 +28,11 @@ async function run(){
               },
         })
 
+        if(readme.headers.status==="404"){
+            console.log("readme not added");
+            return;
+        }
+
         const contributors_list = await octokit.request(`GET /repos/${owner}/${repo}/contributors`,{
             headers: {
                 authorization: `token ${token}`,
@@ -45,10 +50,11 @@ async function run(){
                 break;
             }
         }
-        let contributors_content="<table>\n"
         const contributors = contributors_list.data;
         
         const rows =Math.ceil( contributors.length / columns)
+        
+        let contributors_content="<table>\n"
 
         for(let row=1;row<=rows;row++){
             contributors_content+="<tr>"
