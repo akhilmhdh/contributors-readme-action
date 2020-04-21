@@ -81,7 +81,7 @@ async function run(){
         
         const template =`Contributors ✨\n${contributors_content}\n`
 
-        if(pos!==null){
+        if(pos){
             preprocess_content[pos]=preprocess_content[pos].split("#")
             preprocess_content[pos][0]=template
             preprocess_content[pos]=preprocess_content[pos].join("#")
