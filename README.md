@@ -1,74 +1,46 @@
-# Project Title
-
-One Paragraph of project description goes here
+# Contributors-Readme-Action
+Contributors-Readme-Action is a simple github action to automate contributors list in README file.<br>
+As it uses github action its secure and very easy to integrate into your projects. Once added it will automatically add all the contributors into your readme in a nice style. Also the future ones :smile:. Now why would you need a contributors list. Come one man, show some love to the ones who contribute to your project.:wink: 
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+### First Step
 
-### Prerequisites
-
-What things you need to install the software and how to install them
-
+If your new to action add these to your .github/workflows/<any-name>.yml
+  
 ```
-Give examples
+on: [push, issues]
+
+jobs:
+  contrib-readme-job:
+    runs-on: ubuntu-latest
+    name: A job to automate contrib in readme
+    steps:
+      - name: Contrib Automateaction step
+        id: Contributor
+        uses: akhilmhdh/contributors-readme-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+Thats it.<br>
+To add it to your to your existing workflow
 ```
-Give the example
+  - uses: mikeal/publish-to-github-action@master
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-And repeat
-
+### Second Step
+1. Add a readme.md file
+2. If you want the contributors list to appear in a particular position add like this
 ```
-until finished
+.
+.
+## Contributors
+`
+`
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-- [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-- [Maven](https://maven.apache.org/) - Dependency Management
-- [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags).
+Sidenote: "## Contributors is the keyword dont change it"
+3. If not given it will be added automatically as your last section in readme.
 
 ## Contributors ✨
 <table>
@@ -82,13 +54,10 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
                 </td>
 </tr>
 </table>
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- [all-contributors-bot](https://github.com/all-contributors/all-contributors):Insipration of this project
