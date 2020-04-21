@@ -53,7 +53,7 @@ async function run(){
             contributors_content+="<tr>"
             for(let column=1;column<=columns,row+column<=contributors.length;column++){
                 const el = contributors[row+column-2]
-                
+
                 contributors_content+=`
                 <td align="center">
                     <a href="https://github.com/${el.login}">
@@ -67,36 +67,28 @@ async function run(){
         }
 
         contributors_content+="</table>"
-
-        // contributors_list.data.forEach(function(el){
-        //     if(!el.login.includes("bot")){
-        //         const image=`[![${el.login}](${el.avatar_url}&s=${imageSize})](https://github.com/${el.login})`
-        //         contributors_content+=image
-        //     }
-
-        // })
         
-        // const template =`Contributors ✨\n${contributors_content}`
+        const template =`Contributors ✨\n${contributors_content}`
 
-        // if(pos!==null){
-        //     preprocess_content[pos]=template
-        // }
-        // else{
-        //     preprocess_content.push(template)
-        // }
+        if(pos!==null){
+            preprocess_content[pos]=template
+        }
+        else{
+            preprocess_content.push(template)
+        }
 
-        // const postprocess_content= preprocess_content.join("# ")
+        const postprocess_content= preprocess_content.join("# ")
 
-        // const base64String = Buffer.from(postprocess_content).toString('base64')
+        const base64String = Buffer.from(postprocess_content).toString('base64')
 
-        // const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
-        //     headers: {
-        //         authorization: `token ${token}`,
-        //       },
-        //       "message": "contrib-auto-update",
-        //     "content": base64String,
-        //     "sha": readme.data.sha
-        // })
+        const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
+            headers: {
+                authorization: `token ${token}`,
+              },
+              "message": "contrib-auto-update",
+            "content": base64String,
+            "sha": readme.data.sha
+        })
          console.log("updated readme:",contributors_content)
     }
     catch(error){

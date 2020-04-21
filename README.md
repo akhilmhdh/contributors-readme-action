@@ -3,5 +3,3 @@
 # Alpha Dog
 
 hello
-
-# Contributors ✨
