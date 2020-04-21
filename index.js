@@ -62,7 +62,7 @@ async function run(){
                 const el = contributors[row+column-2]
                 
                 const user_details = await octokit.request(`GET /users/${el.login}`)
-
+                console.log("testing...")
                 contributors_content+=`
                 <td align="center">
                     <a href="https://github.com/${el.login}">
