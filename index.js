@@ -101,6 +101,8 @@ async function run(){
             "sha": readme.data.sha
         })
          console.log("updated readme")
+         console.log("template",contributors_content)
+         console.log(contributors_list)
     }
     catch(error){
         core.setFailed(error.message)
