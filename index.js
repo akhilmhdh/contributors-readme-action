@@ -63,10 +63,10 @@ async function run(){
                     </a>
                 </td>`
             }
-            contributors_content+="</tr>"
+            contributors_content+="</tr>\n"
         }
 
-        contributors_content+="</table>"
+        contributors_content+="</table>\n"
         
         const template =`Contributors ✨\n${contributors_content}`
 
@@ -89,7 +89,7 @@ async function run(){
             "content": base64String,
             "sha": readme.data.sha
         })
-         console.log("updated readme:",contributors_content)
+         console.log("updated readme")
     }
     catch(error){
         core.setFailed(error.message)
