@@ -40,7 +40,7 @@ To add it to your to your existing workflow
 ```
 .
 .
-<any-prefered-header-style eg:#,##,###>Contributors   
+<any-prefered-header-style eg:#,##,###> Contributors   
 .
 .
 ```
