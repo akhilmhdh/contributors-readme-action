@@ -47,7 +47,7 @@ async function run(){
         let pos=null;
 
         for(let i=0;i<preprocess_content.length;i++){
-            if (preprocess_content[i].match(/Contributors["\n"]/)){
+            if (preprocess_content[i].match(/(Contributors["\n"]|Contributors ✨)/)){
                 pos=i;
                 break;
             }
