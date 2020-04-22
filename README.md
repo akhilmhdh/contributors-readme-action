@@ -73,7 +73,6 @@ columnsPerRow:7
 Default value is 7
 
 ## Contributors :sparkles:
-
 <table>
 <tr>
                 <td align="center">
@@ -84,6 +83,7 @@ Default value is 7
                     </a>
                 </td></tr>
 </table>
+
 
 ## License
 
