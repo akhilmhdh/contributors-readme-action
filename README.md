@@ -33,6 +33,7 @@ To add it to your to your existing workflow
 ```
 
 ### Contributors b(
+
 <table>
 <tr>
                 <td align="center">
@@ -44,7 +45,6 @@ To add it to your to your existing workflow
                 </td>
 </tr>
 </table>
-
 
 ### Optional paramaters
 
@@ -65,6 +65,7 @@ columnsPerRow:7
 Default value is 7
 
 ## Contributors b(
+
 <table>
 <tr>
                 <td align="center">
@@ -76,7 +77,6 @@ Default value is 7
                 </td>
 </tr>
 </table>
-
 
 ## License
 
@@ -85,7 +85,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 - [all-contributors-bot](https://github.com/all-contributors/all-contributors):Insipration of this project)
+
 ## Contributors ✨
+
 <table>
 <tr>
                 <td align="center">
@@ -97,4 +99,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
                 </td>
 </tr>
 </table>
-
