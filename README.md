@@ -68,7 +68,7 @@ columnsPerRow:7
 
 Default value is 7
 
-## Contributors ✨
+## Contributors b(
 
 <table>
 <tr>
@@ -90,3 +90,16 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 - [all-contributors-bot](https://github.com/all-contributors/all-contributors):Insipration of this project)
 ```
+## Contributors ✨
+<table>
+<tr>
+                <td align="center">
+                    <a href="https://github.com/akhilmhdh">
+                        <img src="https://avatars1.githubusercontent.com/u/31166322?v=4" width="100;" alt="akhilmhdh"/>
+                        <br />
+                        <sub><b>Akhil Mohan</b></sub>
+                    </a>
+                </td>
+</tr>
+</table>
+
