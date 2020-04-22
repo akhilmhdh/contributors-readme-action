@@ -66,11 +66,11 @@ Default value is 100x100px
 
 ```
 
-columnsPerRow:7
+columnsPerRow:6
 
 ```
 
-Default value is 7
+Default value is 6
 
 ## Contributors :sparkles:
 <table>
