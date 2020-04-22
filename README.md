@@ -40,12 +40,12 @@ To add it to your to your existing workflow
 ```
 .
 .
-<any-prefered-header-style eg:#,##,###> Contributors   
+<any-prefered-header-style eg:#,##,###> Contributors
 .
 .
 ```
 
-Sidenote: "Contributors is the keyword in header"
+Sidenote: "Contributors is the keyword in header and also add enter(\n) at last"
 
 3. If not given it will be added automatically as your last section in readme.
 
@@ -72,6 +72,7 @@ columnsPerRow:7
 Default value is 7
 
 ## Contributors :sparkles:
+
 <table>
 <tr>
                 <td align="center">
@@ -83,7 +84,6 @@ Default value is 7
                 </td>
 </tr>
 </table>
-
 
 ## License
 
