@@ -32,22 +32,18 @@ To add it to your to your existing workflow
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Second Step
+### Contributors :sparkles:
+<table>
+<tr>
+                <td align="center">
+                    <a href="https://github.com/akhilmhdh">
+                        <img src="https://avatars1.githubusercontent.com/u/31166322?v=4" width="100;" alt="akhilmhdh"/>
+                        <br />
+                        <sub><b>Akhil Mohan</b></sub>
+                    </a>
+                </td></tr>
+</table>
 
-1. Add a readme.md file
-2. If you want the contributors list to appear in a particular position add like this
-
-```
-.
-.
-<any-prefered-header-style eg:#,##,###> Contributors
-.
-.
-```
-
-Sidenote: "Contributors is the keyword in header and also add enter(\n) at last"
-
-3. If not given it will be added automatically as your last section in readme.
 
 ### Optional paramaters
 
