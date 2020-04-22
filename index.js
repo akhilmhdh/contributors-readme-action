@@ -83,13 +83,13 @@ async function run(){
 
         contributors_content+="</table>\n"
         
-        const template =`Contributors ✨\n${contributors_content}\n`
+        const template =` Contributors ✨\n${contributors_content}\n`
 
         if(pos){
             preprocess_content[pos]=template
         }
         else{
-            preprocess_content.push(template)
+            preprocess_content.push(`##${template}`)
         }
 
         const postprocess_content= preprocess_content.join("")
