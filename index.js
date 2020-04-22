@@ -104,6 +104,8 @@ async function run(){
             "content": base64String,
             "sha": readme.data.sha
         })
+    
+        console.log("Updated contribution section of readme")
     }
     catch(error){
         core.setFailed(error.message)
