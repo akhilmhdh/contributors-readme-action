@@ -96,15 +96,14 @@ async function run(){
 
         const base64String = Buffer.from(postprocess_content).toString('base64')
 
-        console.log(postprocess_content)
-        // const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
-        //     headers: {
-        //         authorization: `token ${token}`,
-        //       },
-        //       "message": "contrib-auto-update",
-        //     "content": base64String,
-        //     "sha": readme.data.sha
-        // })
+        const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
+            headers: {
+                authorization: `token ${token}`,
+              },
+              "message": "contrib-auto-update",
+            "content": base64String,
+            "sha": readme.data.sha
+        })
     }
     catch(error){
         core.setFailed(error.message)
