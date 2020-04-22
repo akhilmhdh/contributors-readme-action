@@ -65,15 +65,17 @@ async function run(){
                 const el = contributors[row+column-2]
                 
                 const user_details = await octokit.request(`GET /users/${el.login}`)
-                console.log(user_details)
-                // contributors_content+=`
-                // <td align="center">
-                //     <a href="https://github.com/${el.login}">
-                //         <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
-                //         <br />
-                //         <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
-                //     </a>
-                // </td>\n`
+
+                if(user_details.data.name){
+                    contributors_content+=`
+                <td align="center">
+                    <a href="https://github.com/${el.login}">
+                        <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
+                        <br />
+                        <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
+                    </a>
+                </td>\n`
+                }
             }
             contributors_content+="</tr>\n"
         }
@@ -82,30 +84,27 @@ async function run(){
         
         const template =`Contributors ✨\n${contributors_content}\n`
 
-        // if(pos){
-        //     preprocess_content[pos]=preprocess_content[pos].split("#")
-        //     preprocess_content[pos][0]=template
-        //     preprocess_content[pos]=preprocess_content[pos].join("#")
-        // }
-        // else{
-        //     preprocess_content.push(template)
-        // }
+        if(pos){
+            preprocess_content[pos]=preprocess_content[pos].split("#")
+            preprocess_content[pos][0]=template
+            preprocess_content[pos]=preprocess_content[pos].join("#")
+        }
+        else{
+            preprocess_content.push(template)
+        }
 
-        // const postprocess_content= preprocess_content.join("## ")
+        const postprocess_content= preprocess_content.join("## ")
 
-        // const base64String = Buffer.from(postprocess_content).toString('base64')
+        const base64String = Buffer.from(postprocess_content).toString('base64')
 
-        // const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
-        //     headers: {
-        //         authorization: `token ${token}`,
-        //       },
-        //       "message": "contrib-auto-update",
-        //     "content": base64String,
-        //     "sha": readme.data.sha
-        // })
-         console.log("contributors_content",contributors_content)
-         console.log("template",template)
-         console.log(pos)
+        const updateReadme = await octokit.request(`PUT /repos/${owner}/${repo}/contents/README.md`,{
+            headers: {
+                authorization: `token ${token}`,
+              },
+              "message": "contrib-auto-update",
+            "content": base64String,
+            "sha": readme.data.sha
+        })
     }
     catch(error){
         core.setFailed(error.message)
