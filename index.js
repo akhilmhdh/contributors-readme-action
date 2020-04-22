@@ -43,11 +43,11 @@ async function run(){
         const content = Buffer.from(readme.data.content,'base64').toString('ascii')
 
         
-        let  preprocess_content= content.split("## ")
+        let  preprocess_content= content.split(/(["\n"]#+)/)
         let pos=null;
         
         for(let i=0;i<preprocess_content.length;i++){
-            console.log(`${i}`,preprocess_content[i].split("\n"))
+            console.log(`${i}`,preprocess_content[i])
         }
 
         // for(let i=0;i<preprocess_content.length;i++){
