@@ -47,7 +47,7 @@ async function run(){
         let pos=null;
         
         for(let i=0;i<preprocess_content.length;i++){
-            if (preprocess_content[i].includes("Contributors")){
+            if (preprocess_content[i].split("\n")[0].includes("Contributors")){
                 pos=i;
                 break;
             }
