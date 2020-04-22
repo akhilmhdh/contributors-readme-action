@@ -48,12 +48,12 @@ async function run(){
 
         for(let i=0;i<preprocess_content.length;i++){
             console.log(preprocess_content[i])
-            console.log(`${i}`,preprocess_content[i].match(/(Contributors["\n"]|Contributors ✨)/))
+            console.log(`${i}`,preprocess_content[i].match(/(Contributors["\n"]|Contributors :sparkles:)/))
         
         }
 
         // for(let i=0;i<preprocess_content.length;i++){
-        //     if (preprocess_content[i].match(/(Contributors["\n"]|Contributors ✨)/)){
+        //     if (preprocess_content[i].match(/(Contributors["\n"]|Contributors :sparkles:)/)){
         //         pos=i;
         //         break;
         //     }
@@ -89,7 +89,7 @@ async function run(){
 
         // contributors_content+="</table>\n"
         
-        // const template =` Contributors ✨\n${contributors_content}\n`
+        // const template =` Contributors :sparkles:\n${contributors_content}\n`
 
         // if(pos){
         //     preprocess_content[pos]=template

@@ -71,7 +71,7 @@ columnsPerRow:7
 
 Default value is 7
 
-## Contributors ✨
+## Contributors :sparkles:
 
 <table>
 <tr>
