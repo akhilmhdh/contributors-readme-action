@@ -37,13 +37,10 @@ To add it to your to your existing workflow
 1. Add a readme.md file
 2. If you want the contributors list to appear in a particular position add like this
 
-```
+````
 .
 .
-<any-prefered-header-style eg:#,##,###>Contributors
-.
-.
-```
+<any-prefered-header-style eg:#,##,###>Contributors```
 
 Sidenote: "Contributors is the keyword in header"
 
@@ -53,8 +50,10 @@ Sidenote: "Contributors is the keyword in header"
 
 1. To change the image size inside the box
 
-```
- imageSize:100
+````
+
+imageSize:100
+
 ```
 
 Default value is 100x100px
@@ -62,7 +61,9 @@ Default value is 100x100px
 2. To change the number of columns in a row
 
 ```
+
 columnsPerRow:7
+
 ```
 
 Default value is 7
@@ -88,3 +89,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 - [all-contributors-bot](https://github.com/all-contributors/all-contributors):Insipration of this project)
+```
