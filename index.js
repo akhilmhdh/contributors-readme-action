@@ -76,7 +76,7 @@ async function run(){
                         <br />
                         <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
                     </a>
-                </td>\n`
+                </td>`
                 }
             }
             contributors_content+="</tr>\n"
