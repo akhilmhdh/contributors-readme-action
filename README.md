@@ -32,7 +32,7 @@ To add it to your to your existing workflow
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Contributors ✨
+### Contributors b(
 <table>
 <tr>
                 <td align="center">
@@ -64,7 +64,19 @@ columnsPerRow:7
 
 Default value is 7
 
-## Contributors
+## Contributors ✨
+<table>
+<tr>
+                <td align="center">
+                    <a href="https://github.com/akhilmhdh">
+                        <img src="https://avatars1.githubusercontent.com/u/31166322?v=4" width="100;" alt="akhilmhdh"/>
+                        <br />
+                        <sub><b>Akhil Mohan</b></sub>
+                    </a>
+                </td>
+</tr>
+</table>
+
 
 ## License
 
