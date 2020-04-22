@@ -47,7 +47,8 @@ async function run(){
         let pos=null;
         
         for(let i=0;i<preprocess_content.length;i++){
-            console.log(`${i}`,preprocess_content[i])
+            if(preprocess_content[i].match(/Contributors["\n"]/))
+                console.log(`${i}`,preprocess_content[i]);
         }
 
         // for(let i=0;i<preprocess_content.length;i++){
