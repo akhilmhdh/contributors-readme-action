@@ -6,7 +6,7 @@ const capitalize = require("./capitalize");
 async function run(){
     try{
         if(github.context.payload.action){
-            if(github.content.payload.action !=="closed") return
+            if(github.context.payload.action !=="closed") return
         }
 
         const imageSize= core.getInput('imageSize');
