@@ -39,14 +39,6 @@ To add it to your to your existing workflow
 1. Add a readme.md file
 2. If you want the contributors list to appear in a particular position add like this
 
-```
-.
-.
-## Contributors
-`
-`
-```
-
 Sidenote: "## Contributors is the keyword dont change it"<br>
 
 3. If not given it will be added automatically as your last section in readme.
