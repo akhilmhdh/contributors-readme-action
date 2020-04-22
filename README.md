@@ -81,8 +81,7 @@ Default value is 7
                         <br />
                         <sub><b>Akhil Mohan</b></sub>
                     </a>
-                </td>
-</tr>
+                </td></tr>
 </table>
 
 ## License
