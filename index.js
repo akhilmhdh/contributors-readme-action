@@ -65,14 +65,15 @@ async function run(){
                 const el = contributors[row+column-2]
                 
                 const user_details = await octokit.request(`GET /users/${el.login}`)
-                contributors_content+=`
-                <td align="center">
-                    <a href="https://github.com/${el.login}">
-                        <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
-                        <br />
-                        <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
-                    </a>
-                </td>\n`
+                console.log(user_details)
+                // contributors_content+=`
+                // <td align="center">
+                //     <a href="https://github.com/${el.login}">
+                //         <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
+                //         <br />
+                //         <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
+                //     </a>
+                // </td>\n`
             }
             contributors_content+="</tr>\n"
         }
