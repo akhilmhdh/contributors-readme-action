@@ -47,6 +47,7 @@ async function run(){
         let pos=null;
 
         for(let i=0;i<preprocess_content.length;i++){
+            console.log(preprocess_content[i])
             console.log(`${i}`,preprocess_content[i].match(/(Contributors["\n"]|Contributors ✨)/))
         
         }
