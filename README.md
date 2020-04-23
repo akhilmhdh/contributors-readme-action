@@ -81,6 +81,13 @@ Default value is 6
                         <br />
                         <sub><b>Akhil Mohan</b></sub>
                     </a>
+                </td>
+                <td align="center">
+                    <a href="https://github.com/athul">
+                        <img src="https://avatars2.githubusercontent.com/u/40897573?v=4" width="100;" alt="athul"/>
+                        <br />
+                        <sub><b>Athul Cyriac Ajay</b></sub>
+                    </a>
                 </td></tr>
 </table>
 
