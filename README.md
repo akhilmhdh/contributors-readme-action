@@ -1,7 +1,7 @@
 # Contributors-Readme-Action
 
 Contributors-Readme-Action is a simple github action to automate contributors list in README file.<br>
-As it uses github action its secure and very easy to integrate into your projects. Once added it will automatically add all the contributors into your readme in a nice style. Also the future ones :smile:. Now why would you need a contributors list. Come on man, show some love to the ones who contribute to your project.:wink:
+As it uses github action its secure and very easy to integrate into your projects. Once added it will automatically add all the contributors into your readme as well formated. Also the future ones :smile:. Now why would you need a contributors list. Come on man, show some love to the ones who contribute to your project.:wink:
 
 ## Getting Started
 
