@@ -9,7 +9,7 @@ As it uses github action its secure and very easy to integrate into your project
 
 If your new to action add these to your .github/workflows/main.yml
 
-```
+```yml
 on: [push, issues]
 
 jobs:
@@ -26,7 +26,7 @@ jobs:
 Thats it.<br>
 To add it to your to your existing workflow
 
-```
+```yml
   - uses: akhilmhdh/contributors-readme-action@v1
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -37,7 +37,7 @@ To add it to your to your existing workflow
 1. Add a readme.md file
 2. If you want the contributors list to appear in a particular position add like this
 
-```
+```md
 .
 .
 <any-prefered-header-style eg:#,##,###> Contributors  
@@ -54,7 +54,7 @@ Sidenote: "Contributors is the keyword in header and also add enter(\n) at last"
 
 1. To change the image size inside the box
 
-```
+```yml
 
 imageSize:100
 
@@ -64,7 +64,7 @@ Default value is 100x100px
 
 2. To change the number of columns in a row
 
-```
+```yml
 
 columnsPerRow:6
 
