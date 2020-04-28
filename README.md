@@ -10,7 +10,7 @@ As it uses github action its secure and very easy to integrate into your project
 If your new to action add these to your .github/workflows/main.yml
 
 ```yml
-on: [push, issues]
+on: [push, pull_request]
 
 jobs:
   contrib-readme-job:
