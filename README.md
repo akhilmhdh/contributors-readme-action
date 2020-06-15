@@ -3,6 +3,8 @@
 Contributors-Readme-Action is a simple github action to automate contributors list in README file.<br>
 As it uses github action its secure and very easy to integrate into your projects. Once added it will automatically add all the contributors into your readme as well formated. Also the future ones :smile:. Now why would you need a contributors list. Come on man, show some love to the ones who contribute to your project.:wink:
 
+The contributors list is fetched from [GitHub API](https://developer.github.com/v3/repos/statistics/).
+
 ## Getting Started
 
 ### First Step
@@ -50,7 +52,7 @@ Sidenote: "Contributors is the keyword in header and also add enter(\n) at last"
 3. If not given it will be added automatically as your last section in readme.
 
 
-### Optional paramaters
+### Optional parameters
 
 1. To change the image size inside the box
 
@@ -94,8 +96,8 @@ Default value is 6
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
-- [all-contributors-bot](https://github.com/all-contributors/all-contributors):Insipration of this project)
+- [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration of this project
