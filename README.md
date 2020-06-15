@@ -96,8 +96,8 @@ Default value is 6
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
 
 ## Acknowledgments
 
-- [all-contributors-bot](https://github.com/all-contributors/all-contributors):Inspiration of this project
+- [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration of this project
