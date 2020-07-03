@@ -47,7 +47,7 @@ To add it to your to your existing workflow
 .
 ```
 
-Sidenote: "Contributors is the keyword in header and also add enter(\n) at last. Also contributors keyword can be changed. Kindly go through the next section to know more about customization"
+> **Contributors** is the keyword in header and also add enter(\n) at last. Also **Contributors** keyword can be changed. Kindly go through the next section to know more about customization"
 
 3. If not given it will be added automatically as your last section in readme.
 
