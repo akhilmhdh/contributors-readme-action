@@ -13,6 +13,10 @@ inputs:
     description: "Number of columns in a row"
     required: false
     default: "6"
+  header: # id of input
+    description: "Header of the section"
+    required: false
+    default: "Contributors"
 runs:
   using: "node12"
   main: "index.js"
