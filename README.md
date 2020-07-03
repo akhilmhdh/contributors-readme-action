@@ -52,47 +52,32 @@ Sidenote: "Contributors is the keyword in header and also add enter(\n) at last.
 3. If not given it will be added automatically as your last section in readme.
 
 
-### Optional parameters
+### Contributors :sparkles:
+<table>
+<tr>
+                <td align="center">
+                    <a href="https://github.com/akhilmhdh">
+                        <img src="https://avatars1.githubusercontent.com/u/31166322?v=4" width="100;" alt="akhilmhdh"/>
+                        <br />
+                        <sub><b>Akhil Mohan</b></sub>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="https://github.com/matks">
+                        <img src="https://avatars0.githubusercontent.com/u/3830050?v=4" width="100;" alt="matks"/>
+                        <br />
+                        <sub><b>Mathieu Ferment</b></sub>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="https://github.com/athul">
+                        <img src="https://avatars2.githubusercontent.com/u/40897573?v=4" width="100;" alt="athul"/>
+                        <br />
+                        <sub><b>Athul Cyriac Ajay</b></sub>
+                    </a>
+                </td></tr>
+</table>
 
-You can add these optional parameters to modify the appearence of the list in your action script.
-
-```yml
-
-- name: Contribute List
-  with:
-    header: Developers
-    columnsPerRow: 6  
-```
-
-1. To change the header of the section
-
-```yml
-
-header:Contributors
-
-```
-Default value is Contributors. 
-Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow) 
-
-2. To change the image size inside the box
-
-```yml
-
-imageSize:100
-
-```
-
-Default value is 100x100px
-
-3. To change the number of columns in a row
-
-```yml
-
-columnsPerRow:6
-
-```
-
-Default value is 6
 
 ## Contributors :sparkles:
 <table>
