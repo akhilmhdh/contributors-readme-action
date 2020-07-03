@@ -51,6 +51,49 @@ To add it to your to your existing workflow
 
 3. If not given it will be added automatically as your last section in readme.
 
+### Optional parameters
+
+You can add these optional parameters to modify the appearence of the list in your action script.
+
+```yml
+
+- name: Contribute List
+  with:
+    header: Developers
+    columnsPerRow: 6  
+```
+
+1. To change the header of the section
+
+```yml
+
+header:Contributors   
+
+```
+Default value is Contributors. 
+Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow) 
+
+2. To change the image size inside the box
+
+```yml
+
+imageSize:100
+
+```
+
+Default value is 100x100px
+
+3. To change the number of columns in a row
+
+```yml
+
+columnsPerRow:6
+
+```
+
+Default value is 6
+
+
 ## Contributors :sparkles:
 <table>
 <tr>
