@@ -67,7 +67,7 @@ You can add these optional parameters to modify the appearence of the list in yo
 
 ```yml
 
-header:Contributors   
+header: Contributors   
 
 ```
 Default value is Contributors. 
@@ -77,7 +77,7 @@ Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow)
 
 ```yml
 
-imageSize:100
+imageSize: 100
 
 ```
 
@@ -87,7 +87,7 @@ Default value is 100x100px
 
 ```yml
 
-columnsPerRow:6
+columnsPerRow: 6
 
 ```
 
