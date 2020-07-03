@@ -64,8 +64,7 @@ async function run(){
         }
 
         // contributors template build
-        const contributors = contributors_list.data;
-        console.log(contributors_list.data)
+        const contributors = contributors_list.data.filter(el => el.type !== "Bot");
         
         const rows =Math.ceil( contributors.length / columns);
         
