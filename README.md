@@ -33,6 +33,7 @@ To add it to your to your existing workflow
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
+> Currently GITHUB_TOKEN doesn't have permission to directly commit on a protected branch. To solve this you may need to replace the github action token with an admin acc token as mentioned in this post by ![phips28](https://github.community/t/how-to-push-to-protected-branches-in-a-github-action/16101/10). Hope in future github can give exception to actions in workflow.
 
 ### Second Step
 
