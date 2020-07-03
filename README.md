@@ -47,14 +47,34 @@ To add it to your to your existing workflow
 .
 ```
 
-Sidenote: "Contributors is the keyword in header and also add enter(\n) at last"
+Sidenote: "Contributors is the keyword in header and also add enter(\n) at last. Also contributors keyword can be changed. Kindly go through the next section to know more about customization"
 
 3. If not given it will be added automatically as your last section in readme.
 
 
 ### Optional parameters
 
-1. To change the image size inside the box
+You can add these optional parameters to modify the appearence of the list in your action script.
+
+```yml
+
+- name: Contribute List
+  with:
+    header: Developers
+    columnsPerRow: 6  
+```
+
+1. To change the header of the section
+
+```yml
+
+header:Contributors
+
+```
+Default value is Contributors. 
+Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow) 
+
+2. To change the image size inside the box
 
 ```yml
 
@@ -64,7 +84,7 @@ imageSize:100
 
 Default value is 100x100px
 
-2. To change the number of columns in a row
+3. To change the number of columns in a row
 
 ```yml
 
