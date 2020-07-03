@@ -72,8 +72,8 @@ async function run(){
 
         for(let row=1;row<=rows;row++){
             contributors_content+="<tr>"
-            for(let column=1;column<=columns,row+column-1<=contributors.length;column++){
-                const el = contributors[row+column-2]
+            for(let column=1; column<=columns && (row-1)*columns+column-1 < contributors.length; column++){
+                const el = contributors[(row-1)*columns+column-1]
                 
                 const user_details = await octokit.request(`GET /users/${el.login}`)
 
