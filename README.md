@@ -29,7 +29,7 @@ Thats it.<br>
 To add it to your to your existing workflow
 
 ```yml
-  - uses: akhilmhdh/contributors-readme-action@v1
+  - uses: akhilmhdh/contributors-readme-action@v1.1
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
