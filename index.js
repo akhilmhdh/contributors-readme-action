@@ -65,6 +65,7 @@ async function run(){
 
         // contributors template build
         const contributors = contributors_list.data;
+        console.log(contributors_list.data)
         
         const rows =Math.ceil( contributors.length / columns);
         
