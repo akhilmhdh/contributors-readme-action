@@ -1,7 +1,8 @@
 # Contributors-Readme-Action
 
-Contributors-Readme-Action is a simple github action to automate contributors list in README file.<br>
-As it uses github action its secure and very easy to integrate into your projects. Once added it will automatically add all the contributors into your readme as well formated. Also the future ones :smile:. Now why would you need a contributors list. Come on man, show some love to the ones who contribute to your project.:wink:
+Contributors-Readme-Action is a simple GitHub action to automate contributors list in README file.
+
+As it uses a GitHub action it's secure and very easy to integrate into your projects. Once added it will automatically add all the repository contributors to your readme in a well-formatted table, including future contributors :smile:. Now why would you need a contributors list? Come on man, show some love to the ones who contribute to your project.:wink:
 
 The contributors list is fetched from [GitHub API](https://developer.github.com/v3/repos/statistics/).
 
@@ -9,7 +10,7 @@ The contributors list is fetched from [GitHub API](https://developer.github.com/
 
 ### First Step
 
-If your new to action add these to your .github/workflows/main.yml
+If you're new to actions, add these to your `.github/workflows/main.yml` file. If this file does not exist, create one.
 
 ```yml
 on: [push, pull_request]
@@ -25,20 +26,22 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-Thats it.<br>
-To add it to your to your existing workflow
+That's it!
+
+To add it to your to your existing workflow, append this to your current `.yml` workflow script.
 
 ```yml
-  - uses: akhilmhdh/contributors-readme-action@v1.1
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+- uses: akhilmhdh/contributors-readme-action@v1.1
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
-> Currently GITHUB_TOKEN doesn't have permission to directly commit on a protected branch. To solve this you may need to replace the github action token with an admin acc token as mentioned in this post by [phips28](https://github.community/t/how-to-push-to-protected-branches-in-a-github-action/16101/10). Hope in future github can give exception to actions in workflow.
+
+> Currently GITHUB_TOKEN doesn't have permission to directly commit on a protected branch. To solve this you may need to replace the github action token with an admin acc token as mentioned in this post by [phips28](https://github.community/t/how-to-push-to-protected-branches-in-a-github-action/16101/10). Hopefully in the future GitHub can give an exception to actions in workflow.
 
 ### Second Step
 
-1. Add a readme.md file
-2. If you want the contributors list to appear in a particular position add like this
+1. Add a `README.md` file
+2. If you want the contributors list to appear in a particular section of your readme, add the section name like this:
 
 ```md
 .
@@ -48,54 +51,48 @@ To add it to your to your existing workflow
 .
 ```
 
-> **Contributors** is the keyword in header and also add enter(\n) at last. Also **Contributors** keyword can be changed. Kindly go through the next section to know more about customization"
+> **Contributors** is the keyword in the header. Add a line-break (\n or enter) after the header. Also, the **Contributors** keyword can be changed. Kindly go through the next section to learn more about customization"
 
-3. If not given it will be added automatically as your last section in readme.
+3. If you choose not to add the header it will be added automatically as your last section in readme.
 
 ### Optional parameters
 
-You can add these optional parameters to modify the appearence of the list in your action script.
+You can add these optional parameters in your action script to modify the appearance of the resulting list.
 
 ```yml
-
 - name: Contribute List
   with:
     header: Developers
-    columnsPerRow: 6  
+    columnsPerRow: 6
 ```
 
-1. To change the header of the section
+1. To change the header of the section:
 
 ```yml
-
-header: Contributors   
-
+header: Contributors
 ```
-Default value is Contributors. 
-Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow) 
 
-2. To change the image size inside the box
+The default value is `Contributors`.
+Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow)
+
+2. To change the image size inside the box:
 
 ```yml
-
 imageSize: 100
-
 ```
 
-Default value is 100x100px
+The default value is `100px x 100px`.
 
-3. To change the number of columns in a row
+3. To change the number of columns in a row:
 
 ```yml
-
 columnsPerRow: 6
-
 ```
 
-Default value is 6
-
+The default value is `6`.
 
 ## Contributors :sparkles:
+
 <table>
 <tr>
                 <td align="center">
@@ -121,11 +118,10 @@ Default value is 6
                 </td></tr>
 </table>
 
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration of this project
+- [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project
