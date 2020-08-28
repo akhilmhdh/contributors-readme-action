@@ -55,41 +55,39 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 
 3. If you choose not to add the header it will be added automatically as your last section in readme.
 
-### Optional parameters
+### Contributors :sparkles:
+<table>
+<tr>
+                <td align="center">
+                    <a href="https://github.com/akhilmhdh">
+                        <img src="https://avatars1.githubusercontent.com/u/31166322?v=4" width="100;" alt="akhilmhdh"/>
+                        <br />
+                        <sub><b>Akhil Mohan</b></sub>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="https://github.com/matks">
+                        <img src="https://avatars0.githubusercontent.com/u/3830050?v=4" width="100;" alt="matks"/>
+                        <br />
+                        <sub><b>Mathieu Ferment</b></sub>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="https://github.com/athul">
+                        <img src="https://avatars2.githubusercontent.com/u/40897573?v=4" width="100;" alt="athul"/>
+                        <br />
+                        <sub><b>Athul Cyriac Ajay</b></sub>
+                    </a>
+                </td>
+                <td align="center">
+                    <a href="https://github.com/nhcarrigan">
+                        <img src="https://avatars1.githubusercontent.com/u/63889819?v=4" width="100;" alt="nhcarrigan"/>
+                        <br />
+                        <sub><b>Nicholas Carrigan</b></sub>
+                    </a>
+                </td></tr>
+</table>
 
-You can add these optional parameters in your action script to modify the appearance of the resulting list.
-
-```yml
-- name: Contribute List
-  with:
-    header: Developers
-    columnsPerRow: 6
-```
-
-1. To change the header of the section:
-
-```yml
-header: Contributors
-```
-
-The default value is `Contributors`.
-Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow)
-
-2. To change the image size inside the box:
-
-```yml
-imageSize: 100
-```
-
-The default value is `100px x 100px`.
-
-3. To change the number of columns in a row:
-
-```yml
-columnsPerRow: 6
-```
-
-The default value is `6`.
 
 ## Contributors :sparkles:
 
