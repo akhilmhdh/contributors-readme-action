@@ -56,7 +56,6 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 3. If you choose not to add the header it will be added automatically as your last section in readme.
 
 ## Contributors :sparkles:
-
 <table>
 <tr>
                 <td align="center">
@@ -79,8 +78,16 @@ To add it to your to your existing workflow, append this to your current `.yml` 
                         <br />
                         <sub><b>Athul Cyriac Ajay</b></sub>
                     </a>
+                </td>
+                <td align="center">
+                    <a href="https://github.com/nhcarrigan">
+                        <img src="https://avatars1.githubusercontent.com/u/63889819?v=4" width="100;" alt="nhcarrigan"/>
+                        <br />
+                        <sub><b>Nicholas Carrigan</b></sub>
+                    </a>
                 </td></tr>
 </table>
+
 
 ## License
 
