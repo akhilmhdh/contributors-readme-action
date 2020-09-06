@@ -51,7 +51,7 @@ async function run() {
         // contributors template build
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
 
-        let contributors_content = templateBuilder.parser(
+        let contributors_content = await templateBuilder.parser(
             contributors,
             prevContributors,
             columns,
