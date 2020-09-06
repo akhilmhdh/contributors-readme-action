@@ -46,7 +46,9 @@ async function run() {
         var prevReadmeContributorsTemplate = content.match(
             /<!--\s*readme:contributors-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:contributors-end\s*-->/
         );
-        const prevContributors = templateParser.parser(prevReadmeContributorsTemplate);
+        const prevContributors = templateParser.parser(
+            prevReadmeContributorsTemplate.groups.content
+        );
 
         // contributors template build
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
