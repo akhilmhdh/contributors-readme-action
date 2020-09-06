@@ -2,6 +2,8 @@ const core = require("@actions/core");
 const github = require("@actions/github");
 
 const capitalize = require("./utils/capitalize");
+const templateParser = require("./utils/templateParser");
+const templateBuilder = require("./utils/templateBuilder");
 
 async function run() {
     try {
@@ -40,39 +42,22 @@ async function run() {
         // parse the base6 readme
         const content = Buffer.from(readme.data.content, "base64").toString("ascii");
 
+        // get prev contributors in the readme
+        var prevReadmeContributorsTemplate = content.match(
+            /<!--\s*readme:contributors-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:contributors-end\s*-->/
+        );
+        const prevContributors = templateParser.parser(prevReadmeContributorsTemplate);
+
         // contributors template build
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
 
-        const rows = Math.ceil(contributors.length / columns);
-
-        let contributors_content = "<!-- readme:contributors-start --> \n<table>\n";
-
-        for (let row = 1; row <= rows; row++) {
-            contributors_content += "<tr>";
-            for (
-                let column = 1;
-                column <= columns && (row - 1) * columns + column - 1 < contributors.length;
-                column++
-            ) {
-                const el = contributors[(row - 1) * columns + column - 1];
-
-                const user_details = await octokit.request(`GET /users/${el.login}`);
-
-                if (user_details.data.name) {
-                    contributors_content += `
-                <td align="center">
-                    <a href="https://github.com/${el.login}">
-                        <img src="${el.avatar_url}" width="${imageSize};" alt="${el.login}"/>
-                        <br />
-                        <sub><b>${capitalize.toCapitalCase(user_details.data.name)}</b></sub>
-                    </a>
-                </td>`;
-                }
-            }
-            contributors_content += "</tr>\n";
-        }
-
-        contributors_content += "</table>\n<!-- readme:contributors-end -->\n";
+        let contributors_content = templateBuilder.parser(
+            contributors,
+            prevContributors,
+            columns,
+            imageSize,
+            octokit
+        );
 
         const postprocess_content = content.replace(
             /<!--\s*readme:contributors-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:contributors-end\s*-->/,
