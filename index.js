@@ -67,6 +67,7 @@ async function run() {
         );
 
         const base64String = Buffer.from(postprocess_content).toString("base64");
+        console.log(postprocess_content, content);
 
         if (postprocess_content != content) {
             await octokit.repos.createOrUpdateFileContents({
