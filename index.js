@@ -13,6 +13,7 @@ async function run() {
 
         // get various inputs applied in action.yml
         const imageSize = core.getInput("imageSize").trim();
+        const path = core.getInput("readme_path").trim();
         const columns = Number(core.getInput("columnsPerRow").trim());
         // const header = core.getInput('header').trim();
 
@@ -29,7 +30,7 @@ async function run() {
         const [owner, repo] = nwo.split("/");
 
         // get the readme of the repo
-        const readme = await octokit.repos.getReadme({ owner, repo });
+        const readme = await octokit.repos.getContent({ owner, repo, path });
 
         if (readme.headers.status === "404") {
             console.log("readme not added");
@@ -75,7 +76,7 @@ async function run() {
                 repo,
                 message: "contrib-auto-update",
                 content: base64String,
-                path: "README.md",
+                path,
                 sha: readme.data.sha,
             });
             console.log("Updated contribution section of readme");
