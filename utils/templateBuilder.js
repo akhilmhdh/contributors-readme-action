@@ -46,7 +46,7 @@ exports.parser = async function (contributors, prevContributors, columns, imageS
         contributors_content += "</tr>\n";
     }
 
-    contributors_content += "</table>\n<!-- readme:contributors-end -->\n";
+    contributors_content += "</table>\n<!-- readme:contributors-end -->";
 
     return contributors_content;
 };
