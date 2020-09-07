@@ -62,7 +62,7 @@ exports.buildContent = async function (
     );
 
     const re = new RegExp(
-        `<!--\\s*readme:${prevReadmeContributorsTemplate.groups.type}-start\\s-->([\\s\\S]*?)<!--\\s*readme:${prevReadmeContributorsTemplate.groups.type}-end\\s*-->`
+        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
     );
 
     const postprocess_content = content.replace(re, contributors_content);

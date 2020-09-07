@@ -47,7 +47,7 @@ async function run() {
         let content = Buffer.from(readme.data.content, "base64").toString("ascii");
         const prevContent = content;
         const getAllReadmeComments = content.match(
-            /<!--\s*readme:[a-zA-Z,-]*-start\s*-->[\s\S]*?<!--\s*readme:[a-zA-Z,-]*-end\s*-->/gm
+            /<!--\s*readme:\s*[a-zA-Z0-9,-]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-]*\s*-end\s*-->/gm
         );
 
         if (!getAllReadmeComments) {
