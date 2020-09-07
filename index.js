@@ -34,14 +34,14 @@ async function run() {
 
         // get all contributors of the repo max:500
         const contributors_list = await octokit.repos.listContributors({ owner, repo });
-        const collabrators_list = await octokit.repos.listCollaborators({
+        const collaborators_list = await octokit.repos.listCollaborators({
             owner,
             repo,
             affiliation: "direct",
         });
         // contributors template build
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
-        const collabrators = collabrators_list.data;
+        const collaborators = collaborators_list.data;
 
         // parse the base6 readme
         let content = Buffer.from(readme.data.content, "base64").toString("ascii");
@@ -59,13 +59,21 @@ async function run() {
             content = await readMeCore.buildContent(
                 getAllReadmeComments[match],
                 contributors,
-                collabrators,
+                collaborators,
                 content,
                 octokit
             );
         }
 
         const base64String = Buffer.from(content).toString("base64");
+
+        const protection = await octokit.repos.getBranchProtection({
+            owner,
+            repo,
+            branch: "master",
+        });
+
+        console.log(protection);
 
         if (prevContent !== content) {
             await octokit.repos.createOrUpdateFileContents({
