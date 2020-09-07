@@ -67,14 +67,6 @@ async function run() {
 
         const base64String = Buffer.from(content).toString("base64");
 
-        const protection = await octokit.repos.getBranchProtection({
-            owner,
-            repo,
-            branch: "master",
-        });
-
-        console.log(protection);
-
         if (prevContent !== content) {
             await octokit.repos.createOrUpdateFileContents({
                 owner,
