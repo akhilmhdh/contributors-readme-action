@@ -51,7 +51,13 @@ async function run() {
         );
 
         for (let match = 0; match < getAllReadmeComments.length; match++) {
-            content = await readMeCore.buildContent(octokit, contributors, collabrators, content);
+            content = await readMeCore.buildContent(
+                getAllReadmeComments[match],
+                contributors,
+                collabrators,
+                content,
+                octokit
+            );
         }
 
         const base64String = Buffer.from(content).toString("base64");

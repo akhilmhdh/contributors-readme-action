@@ -31,7 +31,13 @@ function joinArray(values, prevContributors, contributors, collabrators) {
     return joinedArray;
 }
 
-exports.buildContent = async function (templateContent, contributors, collabrators, octokit) {
+exports.buildContent = async function (
+    templateContent,
+    contributors,
+    collabrators,
+    content,
+    octokit
+) {
     // get various inputs applied in action.yml
     const imageSize = core.getInput("imageSize").trim();
     const columns = Number(core.getInput("columnsPerRow").trim());
