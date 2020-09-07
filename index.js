@@ -88,10 +88,6 @@ async function run() {
                 content: base64String,
                 path,
                 sha: readme.data.sha,
-                committer: {
-                    name,
-                    email,
-                },
             });
             console.log("Updated contribution section of readme");
         }
