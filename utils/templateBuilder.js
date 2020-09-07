@@ -12,21 +12,29 @@ function getTemplate(userID, imageSize, name, avatar_url) {
 }
 
 // to get the full name of a user
-async function getName(login, prevContributors, octokit) {
-    if (prevContributors.login) {
-        return prevContributors.login.name;
+async function getData(login, avatar_url, prevContributors, octokit) {
+    if (prevContributors[login] && prevContributors[login].url) {
+        return { name: prevContributors.login.name, url: prevContributors.login.url };
     } else {
         const user_details = await octokit.users.getByUsername({ username: login });
-        return user_details.data.name;
+        return { name: user_details.data.name, url: user_details.data.avatar_url };
     }
 }
 
 // to build the table layout
 // takes prev data to avoid unneccessary call
-exports.parser = async function (contributors, prevContributors, columns, imageSize, octokit) {
-    let contributors_content = "<!-- readme:contributors-start --> \n<table>\n";
+exports.parser = async function (
+    contributors,
+    prevContributors,
+    type,
+    columns,
+    imageSize,
+    octokit
+) {
+    let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
 
     const rows = Math.ceil(contributors.length / columns);
+    let unqiue = {};
 
     for (let row = 1; row <= rows; row++) {
         contributors_content += "<tr>";
@@ -36,17 +44,18 @@ exports.parser = async function (contributors, prevContributors, columns, imageS
             column++
         ) {
             const { login, avatar_url } = contributors[(row - 1) * columns + column - 1];
+            if (!unqiue[login]) {
+                unqiue[login] = true;
 
-            const name = await getName(login, prevContributors, octokit);
+                const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
 
-            if (name) {
-                contributors_content += getTemplate(login, imageSize, name, avatar_url);
+                contributors_content += getTemplate(login, imageSize, name, url);
             }
         }
         contributors_content += "</tr>\n";
     }
 
-    contributors_content += "</table>\n<!-- readme:contributors-end -->";
+    contributors_content += `</table>\n<!-- readme:${type}-end -->`;
 
     return contributors_content;
 };
