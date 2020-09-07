@@ -1,5 +1,8 @@
 const capitalize = require("./capitalize");
 const stripDuplicates = require("./stripDuplicates");
+
+const core = require("@actions/core");
+
 function getTemplate(userID, imageSize, name, avatar_url) {
     return `
     <td align="center">

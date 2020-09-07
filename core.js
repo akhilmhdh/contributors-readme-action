@@ -1,5 +1,3 @@
-const core = require("@actions/core");
-
 const templateParser = require("./utils/templateParser");
 const templateBuilder = require("./utils/templateBuilder");
 
