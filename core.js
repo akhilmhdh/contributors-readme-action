@@ -43,8 +43,8 @@ exports.buildContent = async function (
     octokit
 ) {
     // get various inputs applied in action.yml
-    const imageSize = core.getInput("imageSize").trim();
-    const columns = Number(core.getInput("columnsPerRow").trim());
+    const imageSize = core.getInput("image_size").trim();
+    const columns = Number(core.getInput("columns_per_row").trim());
 
     // get prev contributors in the readme
     let prevReadmeContributorsTemplate = templateContent.match(

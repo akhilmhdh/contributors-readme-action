@@ -11,7 +11,7 @@ async function run() {
 
         // get various inputs applied in action.yml
         const path = core.getInput("readme_path").trim();
-        const affiliation = core.getInput("collaborators ").trim();
+        const affiliation = core.getInput("collaborators").trim();
         const message = core.getInput("commit_message ").trim();
         const name = core.getInput("committer_username ").trim();
         const email = core.getInput("committer_email ").trim();
