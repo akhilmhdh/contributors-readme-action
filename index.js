@@ -12,6 +12,9 @@ async function run() {
         // get various inputs applied in action.yml
         const path = core.getInput("readme_path").trim();
         const affiliation = core.getInput("collaborators ").trim();
+        const message = core.getInput("commit_message ").trim();
+        const name = core.getInput("committer_username ").trim();
+        const email = core.getInput("committer_email ").trim();
 
         // get repo token
         const token = process.env["GITHUB_TOKEN"];
@@ -81,7 +84,7 @@ async function run() {
             await octokit.repos.createOrUpdateFileContents({
                 owner,
                 repo,
-                message: "contrib-auto-update",
+                message,
                 content: base64String,
                 path,
                 sha: readme.data.sha,
@@ -89,7 +92,6 @@ async function run() {
             console.log("Updated contribution section of readme");
         }
     } catch (error) {
-        console.log(error);
         core.setFailed(error.message);
     }
 }
