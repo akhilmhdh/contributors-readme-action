@@ -16,8 +16,13 @@ async function getData(login, avatar_url, prevContributors, octokit) {
     if (prevContributors[login] && prevContributors[login].url) {
         return { name: prevContributors[login].name, url: prevContributors[login].url };
     } else {
-        const user_details = await octokit.users.getByUsername({ username: login });
-        return { name: user_details.data.name, url: user_details.data.avatar_url };
+        try {
+            const user_details = await octokit.users.getByUsername({ username: login });
+            return { name: user_details.data.name, url: user_details.data.avatar_url };
+        } catch (error) {
+            console.log("Oops...given github id is invalid :(");
+            return { name: login, url: "" };
+        }
     }
 }
 
