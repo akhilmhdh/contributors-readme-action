@@ -20,7 +20,7 @@ async function getData(login, avatar_url, prevContributors, octokit) {
             const user_details = await octokit.users.getByUsername({ username: login });
             return { name: user_details.data.name, url: user_details.data.avatar_url };
         } catch (error) {
-            console.log("Oops...given github id is invalid :(");
+            console.log(`Oops...given github id ${login} is invalid :(`);
             return { name: login, url: "" };
         }
     }
@@ -28,14 +28,11 @@ async function getData(login, avatar_url, prevContributors, octokit) {
 
 // to build the table layout
 // takes prev data to avoid unneccessary call
-exports.parser = async function (
-    contributors,
-    prevContributors,
-    type,
-    columns,
-    imageSize,
-    octokit
-) {
+exports.parser = async function (contributors, prevContributors, type, octokit) {
+    // get various inputs applied in action.yml
+    const imageSize = core.getInput("image_size").trim();
+    const columns = Number(core.getInput("columns_per_row").trim());
+
     let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
 
     contributors = stripDuplicates.clean(contributors, "login");

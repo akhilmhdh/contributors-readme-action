@@ -3,6 +3,8 @@ const core = require("@actions/core");
 const templateParser = require("./utils/templateParser");
 const templateBuilder = require("./utils/templateBuilder");
 
+// joinArray - join various arrays
+// array will be joined based on priority
 function joinArray(values, prevContributors, contributors, collaborators, bots) {
     let joinedArray = [];
 
@@ -42,10 +44,6 @@ exports.buildContent = async function (
     content,
     octokit
 ) {
-    // get various inputs applied in action.yml
-    const imageSize = core.getInput("image_size").trim();
-    const columns = Number(core.getInput("columns_per_row").trim());
-
     // get prev contributors in the readme
     let prevReadmeContributorsTemplate = templateContent.match(
         /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
@@ -58,8 +56,6 @@ exports.buildContent = async function (
         contributorsPool,
         prevContributors,
         prevReadmeContributorsTemplate.groups.type,
-        columns,
-        imageSize,
         octokit
     );
 

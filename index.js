@@ -55,18 +55,22 @@ async function run() {
             }));
         const collaborators = collaborators_list.data;
 
-        // parse the base6 readme
+        // parse the base64 readme
         let content = Buffer.from(readme.data.content, "base64").toString("ascii");
         const prevContent = content;
+
+        // get all tag comments with the given format
         const getAllReadmeComments = content.match(
             /<!--\s*readme:\s*[a-zA-Z0-9,-]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-]*\s*-end\s*-->/gm
         );
 
+        // return action if no tags were found
         if (!getAllReadmeComments) {
             console.log("No contrib comments were attached");
             return;
         }
 
+        // based on tags update the content
         for (let match = 0; match < getAllReadmeComments.length; match++) {
             content = await readMeCore.buildContent(
                 getAllReadmeComments[match],
