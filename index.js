@@ -47,7 +47,8 @@ async function run() {
             .map(({ login, avatar_url }) => ({
                 login: login,
                 avatar_url,
-                name: login.includes("[bot]") ? login.slice(0, -5) : login,
+                name: login,
+                type: "bot",
             }));
         const collaborators = collaborators_list.data;
 

@@ -44,11 +44,14 @@ exports.parser = async function (
             column <= columns && (row - 1) * columns + column - 1 < contributors.length;
             column++
         ) {
-            const { login, avatar_url } = contributors[(row - 1) * columns + column - 1];
+            const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
 
-            const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
-
-            contributors_content += getTemplate(login, imageSize, name, url);
+            if (type !== "bot") {
+                const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
+                contributors_content += getTemplate(login, imageSize, name, url);
+            } else {
+                contributors_content += getTemplate(login, imageSize, login, avatar_url);
+            }
         }
         contributors_content += "</tr>\n";
     }
