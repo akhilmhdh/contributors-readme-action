@@ -3,11 +3,11 @@ const core = require("@actions/core");
 const templateParser = require("./utils/templateParser");
 const templateBuilder = require("./utils/templateBuilder");
 
-function joinArray(values, prevContributors, contributors, collaborators) {
+function joinArray(values, prevContributors, contributors, collaborators, bots) {
     let joinedArray = [];
 
     values.forEach((category) => {
-        category = category.trim();
+        category = category.trim().toLowerCase();
 
         switch (category) {
             case "contributors":
@@ -15,6 +15,9 @@ function joinArray(values, prevContributors, contributors, collaborators) {
                 break;
             case "collaborators":
                 joinedArray = joinedArray.concat(collaborators);
+                break;
+            case "bots":
+                joinedArray = joinedArray.concat(bots);
                 break;
             default:
                 prevContributors[category]
@@ -35,6 +38,7 @@ exports.buildContent = async function (
     templateContent,
     contributors,
     collaborators,
+    bots,
     content,
     octokit
 ) {
@@ -48,7 +52,7 @@ exports.buildContent = async function (
     );
     const prevContributors = templateParser.parser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(",");
-    const contributorsPool = joinArray(types, prevContributors, contributors, collaborators);
+    const contributorsPool = joinArray(types, prevContributors, contributors, collaborators, bots);
 
     let contributors_content = await templateBuilder.parser(
         contributorsPool,

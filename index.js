@@ -40,9 +40,15 @@ async function run() {
             repo,
             affiliation,
         });
-        // contributors template build
-        console.log(contributors_list);
+
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
+        const bots = contributors_list.data
+            .filter((el) => el.type === "Bot")
+            .map(({ login, avatar_url }) => ({
+                login: login,
+                avatar_url,
+                name: login.includes("[bot]") ? login.slice(0, -5) : login,
+            }));
         const collaborators = collaborators_list.data;
 
         // parse the base6 readme
@@ -62,6 +68,7 @@ async function run() {
                 getAllReadmeComments[match],
                 contributors,
                 collaborators,
+                bots,
                 content,
                 octokit
             );
