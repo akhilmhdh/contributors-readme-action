@@ -45,7 +45,7 @@ async function run() {
 
         // parse the base6 readme
         let content = Buffer.from(readme.data.content, "base64").toString("ascii");
-
+        const prevContent = content;
         const getAllReadmeComments = content.match(
             /<!--\s*readme:[a-zA-Z]*-start\s*-->[\s\S]*?<!--\s*readme:[a-zA-Z]*-end\s*-->/gm
         );
@@ -62,7 +62,7 @@ async function run() {
 
         const base64String = Buffer.from(content).toString("base64");
 
-        if (postprocess_content != content) {
+        if (prevContent != content) {
             await octokit.repos.createOrUpdateFileContents({
                 owner,
                 repo,
