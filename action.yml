@@ -1,10 +1,6 @@
 name: "Contribute List"
 description: "Automation of contributors list in README.md"
 inputs:
-    listType: # id of input
-        description: "To output contributors in list type of usernames"
-        required: false
-        default: "false"
     imageSize: # id of input
         description: "Size of square images in the stack"
         required: false
@@ -17,10 +13,10 @@ inputs:
         description: "Number of columns in a row"
         required: false
         default: "6"
-    header: # id of input
-        description: "Header of the section"
+    collaborators: # id of input
+        description: "Type of collaborators options: all/direct/outside"
         required: false
-        default: "Contributors"
+        default: "direct"
 runs:
     using: "node12"
     main: "index.js"

@@ -11,6 +11,7 @@ async function run() {
 
         // get various inputs applied in action.yml
         const path = core.getInput("readme_path").trim();
+        const affiliation = core.getInput("collaborators ").trim();
 
         // get repo token
         const token = process.env["GITHUB_TOKEN"];
@@ -37,9 +38,10 @@ async function run() {
         const collaborators_list = await octokit.repos.listCollaborators({
             owner,
             repo,
-            affiliation: "direct",
+            affiliation,
         });
         // contributors template build
+        console.log(contributors_list);
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
         const collaborators = collaborators_list.data;
 
