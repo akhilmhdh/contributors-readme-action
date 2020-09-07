@@ -1,5 +1,5 @@
 const capitalize = require("./capitalize");
-
+const stripDuplicates = require("./stripDuplicates");
 function getTemplate(userID, imageSize, name, avatar_url) {
     return `
     <td align="center">
@@ -33,8 +33,9 @@ exports.parser = async function (
 ) {
     let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
 
+    contributors = stripDuplicates.clean(contributors, "login");
+
     const rows = Math.ceil(contributors.length / columns);
-    let unqiue = {};
 
     for (let row = 1; row <= rows; row++) {
         contributors_content += "<tr>";
@@ -44,13 +45,8 @@ exports.parser = async function (
             column++
         ) {
             const { login, avatar_url } = contributors[(row - 1) * columns + column - 1];
-            if (!unqiue[login]) {
-                unqiue[login] = true;
-
-                const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
-
-                contributors_content += getTemplate(login, imageSize, name, url);
-            }
+            const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
+            contributors_content += getTemplate(login, imageSize, name, url);
         }
         contributors_content += "</tr>\n";
     }

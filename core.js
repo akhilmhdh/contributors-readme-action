@@ -11,10 +11,10 @@ function joinArray(values, prevContributors, contributors, collabrators) {
 
         switch (category) {
             case "contributors":
-                joinedArray.concat(contributors);
+                joinedArray = joinedArray.concat(contributors);
                 break;
             case "collabrators":
-                joinedArray.concat(collabrators);
+                joinedArray = joinedArray.concat(collabrators);
                 break;
             default:
                 prevContributors[category]
@@ -60,7 +60,7 @@ exports.buildContent = async function (
     );
 
     const re = new RegExp(
-        `<!--\s*readme:${prevReadmeContributorsTemplate.groups.type}-start\s-->([\s\S]*?)<!--\s*readme:${prevReadmeContributorsTemplate.groups.type}-end\s*-->`
+        `<!--\\s*readme:${prevReadmeContributorsTemplate.groups.type}-start\\s-->([\\s\\S]*?)<!--\\s*readme:${prevReadmeContributorsTemplate.groups.type}-end\\s*-->`
     );
 
     const postprocess_content = content.replace(re, contributors_content);

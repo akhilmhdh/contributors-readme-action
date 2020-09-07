@@ -50,6 +50,11 @@ async function run() {
             /<!--\s*readme:[a-zA-Z]*-start\s*-->[\s\S]*?<!--\s*readme:[a-zA-Z]*-end\s*-->/gm
         );
 
+        if (!getAllReadmeComments) {
+            console.log("No contrib comments were attached");
+            return;
+        }
+
         for (let match = 0; match < getAllReadmeComments.length; match++) {
             content = await readMeCore.buildContent(
                 getAllReadmeComments[match],
@@ -62,7 +67,7 @@ async function run() {
 
         const base64String = Buffer.from(content).toString("base64");
 
-        if (prevContent != content) {
+        if (prevContent !== content) {
             await octokit.repos.createOrUpdateFileContents({
                 owner,
                 repo,
