@@ -31,6 +31,7 @@ exports.parser = async function (
     imageSize,
     octokit
 ) {
+    console.log("hit parser");
     let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
 
     contributors = stripDuplicates.clean(contributors, "login");
@@ -45,7 +46,9 @@ exports.parser = async function (
             column++
         ) {
             const { login, avatar_url } = contributors[(row - 1) * columns + column - 1];
+            console.log(login, avatar_url);
             const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
+            console.log(login, avatar_url);
             contributors_content += getTemplate(login, imageSize, name, url);
         }
         contributors_content += "</tr>\n";

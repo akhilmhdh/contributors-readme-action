@@ -47,7 +47,9 @@ exports.buildContent = async function (
         /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
     );
     const prevContributors = templateParser.parser(prevReadmeContributorsTemplate.groups.content);
+    console.log(prevContributors);
     const types = prevReadmeContributorsTemplate.groups.type.split(",");
+    console.log(types);
     const contributorsPool = joinArray(types, prevContributors, contributors, collabrators);
 
     let contributors_content = await templateBuilder.parser(
