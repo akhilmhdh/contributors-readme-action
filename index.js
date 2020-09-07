@@ -37,6 +37,7 @@ async function run() {
         const collabrator = await octokit.repos.listCollaborators({
             owner,
             repo,
+            affiliation: "direct",
         });
         // contributors template build
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
@@ -46,7 +47,7 @@ async function run() {
         const postprocess_content = await readMeCore.buildContent(octokit, contributors, content);
 
         const base64String = Buffer.from(postprocess_content).toString("base64");
-        console.log(collabrator);
+        console.log(collabrator.data);
 
         if (postprocess_content != content) {
             await octokit.repos.createOrUpdateFileContents({
