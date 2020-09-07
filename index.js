@@ -1,9 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 
-const capitalize = require("./utils/capitalize");
-const templateParser = require("./utils/templateParser");
-const templateBuilder = require("./utils/templateBuilder");
+const readMeCore = require("./core");
 
 async function run() {
     try {
@@ -12,10 +10,7 @@ async function run() {
         }
 
         // get various inputs applied in action.yml
-        const imageSize = core.getInput("imageSize").trim();
         const path = core.getInput("readme_path").trim();
-        const columns = Number(core.getInput("columnsPerRow").trim());
-        // const header = core.getInput('header').trim();
 
         // get repo token
         const token = process.env["GITHUB_TOKEN"];
@@ -39,36 +34,19 @@ async function run() {
 
         // get all contributors of the repo max:500
         const contributors_list = await octokit.repos.listContributors({ owner, repo });
-
+        const collabrator = await octokit.repos.listCollaborators({
+            owner,
+            repo,
+        });
+        // contributors template build
+        const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
         // parse the base6 readme
         const content = Buffer.from(readme.data.content, "base64").toString("ascii");
 
-        // get prev contributors in the readme
-        var prevReadmeContributorsTemplate = content.match(
-            /<!--\s*readme:contributors-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:contributors-end\s*-->/
-        );
-        const prevContributors = templateParser.parser(
-            prevReadmeContributorsTemplate.groups.content
-        );
-
-        // contributors template build
-        const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
-
-        let contributors_content = await templateBuilder.parser(
-            contributors,
-            prevContributors,
-            columns,
-            imageSize,
-            octokit
-        );
-
-        const postprocess_content = content.replace(
-            /<!--\s*readme:contributors-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:contributors-end\s*-->/,
-            contributors_content
-        );
+        const postprocess_content = await readMeCore.buildContent(octokit, contributors, content);
 
         const base64String = Buffer.from(postprocess_content).toString("base64");
-        console.log(postprocess_content, content);
+        console.log(collabrator);
 
         if (postprocess_content != content) {
             await octokit.repos.createOrUpdateFileContents({
