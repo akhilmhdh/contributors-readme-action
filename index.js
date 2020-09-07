@@ -79,7 +79,8 @@ async function run() {
             console.log("Updated contribution section of readme");
         }
     } catch (error) {
-        core.setFailed(error);
+        console.log(error);
+        core.setFailed(error.message);
     }
 }
 
