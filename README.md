@@ -1,6 +1,6 @@
 # Contributors-Readme-Action
 
-Contributors-Readme-Action is a simple GitHub action to automate contributors list in README file.
+Contributors-Readme-Action is a simple GitHub action to automate contributors list in README file. Not only contributors, collborators, bots or any user.
 
 As it uses a GitHub action it's secure and very easy to integrate into your projects. Once added it will automatically add all the repository contributors to your readme in a well-formatted table, including future contributors :smile:. Now why would you need a contributors list? Come on man, show some love to the ones who contribute to your project.:wink:
 
@@ -21,7 +21,7 @@ jobs:
     name: A job to automate contrib in readme
     steps:
       - name: Contribute List
-        uses: akhilmhdh/contributors-readme-action@v1.1
+        uses: akhilmhdh/contributors-readme-action@v2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -41,19 +41,42 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 ### Second Step
 
 1. Add a `README.md` file
-2. If you want the contributors list to appear in a particular section of your readme, add the section name like this:
-
+2. Add the below comment inside your `README.md` where you want it to appear.
 ```md
-.
-.
-<any-prefered-header-style eg:#,##,###> Contributors  
-.
-.
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
+```
+3. Save it and tadaa :smile:
+
+### But wait!!!
+
+* What if you wanted to add direct collaborators of a project, no worries 
+```md
+## Collaborators
+<!-- readme: collaborators -start -->
+<!-- readme: collaborators -end -->
+
+## Contributors
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 ```
 
-> **Contributors** is the keyword in the header. Add a line-break (\n or enter) after the header. Also, the **Contributors** keyword can be changed. Kindly go through the next section to learn more about customization"
+* Now you decided that you want to join this into one list, no issue
+```md
+## Contributors
+<!-- readme: collaborators,contributors -start -->
+<!-- readme: collaborators,contributors -end -->
+```
 
-3. If you choose not to add the header it will be added automatically as your last section in readme.
+* Then you decided to add some github users who are important figure in this project
+```md
+## Contributors
+<!-- readme: <username1>,collaborators,<username2>,contributors -start -->
+<!-- readme: <username1>,collaborators,<username3>,contributors -end -->
+```
+> The order of the list will be given priority. So username1 will appear first collaborators then username2 likewise.(No brackets for usernames) 
+> The subject inside start and end must be same. 
+> Currently supported key commands are *collaborators*, *contributors*, *bots*
 
 ### Optional parameters
 
@@ -61,69 +84,20 @@ You can add these optional parameters in your action script to modify the appear
 
 ```yml
 - name: Contribute List
+  uses: akhilmhdh/contributors-readme-action@v2.0
   with:
-    header: Developers
-    columnsPerRow: 6
+    image_size: 100
 ```
 
-1. To change the header of the section:
-
-```yml
-header: Contributors   
-```
-
-The default value is `Contributors`.
-Feature Credit: [Hyeonseok Samuel Seo](https://github.com/samslow)
-
-2. To change the image size inside the box:
-
-```yml
-imageSize: 100
-```
-
-The default value is `100px x 100px`.
-
-3. To change the number of columns in a row:
-
-```yml
-columnsPerRow: 6
-```
-
-The default value is `6`.
-
-## Contributors :sparkles:
-<table>
-<tr>
-                <td align="center">
-                    <a href="https://github.com/akhilmhdh">
-                        <img src="https://avatars1.githubusercontent.com/u/31166322?v=4" width="100;" alt="akhilmhdh"/>
-                        <br />
-                        <sub><b>Akhil Mohan</b></sub>
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="https://github.com/matks">
-                        <img src="https://avatars0.githubusercontent.com/u/3830050?v=4" width="100;" alt="matks"/>
-                        <br />
-                        <sub><b>Mathieu Ferment</b></sub>
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="https://github.com/athul">
-                        <img src="https://avatars2.githubusercontent.com/u/40897573?v=4" width="100;" alt="athul"/>
-                        <br />
-                        <sub><b>Athul Cyriac Ajay</b></sub>
-                    </a>
-                </td>
-                <td align="center">
-                    <a href="https://github.com/nhcarrigan">
-                        <img src="https://avatars1.githubusercontent.com/u/63889819?v=4" width="100;" alt="nhcarrigan"/>
-                        <br />
-                        <sub><b>Nicholas Carrigan</b></sub>
-                    </a>
-                </td></tr>
-</table>
-
+| Option             | Default Value                            | Description                                       | Required |
+|--------------------|------------------------------------------|---------------------------------------------------|----------|
+| image_size         | 100(px)                                  | Size of square images in the stack                | false    |
+| readme_path        | README.md                                | Path of the readme file you want to update        | false    |
+| columns_per_row    | 6                                        | Number of columns in a row                        | false    |
+| collaborators      | direct                                   | Type of collaborators options: all/direct/outside | false    |
+| commit_message     | contrib-readme-action has updated readme | Commit message of the github action               | false    |
+| committer_username | contrib-readme-bot                       | Username on commit                                | false    |
+| committer_email    | email id of committer                    | contrib-readme-action@noreply.com                 | false    |
 
 ## License
 
