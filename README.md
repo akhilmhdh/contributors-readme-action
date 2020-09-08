@@ -16,14 +16,14 @@ If you're new to actions, add these to your `.github/workflows/main.yml` file. I
 on: [push, pull_request]
 
 jobs:
-  contrib-readme-job:
-    runs-on: ubuntu-latest
-    name: A job to automate contrib in readme
-    steps:
-      - name: Contribute List
-        uses: akhilmhdh/contributors-readme-action@v2.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    contrib-readme-job:
+        runs-on: ubuntu-latest
+        name: A job to automate contrib in readme
+        steps:
+            - name: Contribute List
+              uses: akhilmhdh/contributors-readme-action@v2.0
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 That's it!
@@ -33,7 +33,7 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 ```yml
 - uses: akhilmhdh/contributors-readme-action@v1.1
   env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 > Currently GITHUB_TOKEN doesn't have permission to directly commit on a protected branch. To solve this you may need to replace the github action token with an admin acc token as mentioned in this post by [phips28](https://github.community/t/how-to-push-to-protected-branches-in-a-github-action/16101/10). Hopefully in the future GitHub can give an exception to actions in workflow.
@@ -42,43 +42,55 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 
 1. Add a `README.md` file
 2. Add the below comment inside your `README.md` where you want it to appear.
+
 ```md
 <!-- readme: contributors -start -->
 <!-- readme: contributors -end -->
 ```
+
 3. Save it, wait for the action to complete and tadaa :smile:
 
 ### But wait!!!
 
-* What if you wanted to add direct collaborators of a project, no worries 
+-   What if you wanted to add direct collaborators of a project, no worries
+
 ```md
 ## Collaborators
+
 <!-- readme: collaborators -start -->
 <!-- readme: collaborators -end -->
 
 ## Contributors
+
 <!-- readme: contributors -start -->
 <!-- readme: contributors -end -->
 ```
 
-* Now you decided that you want to join this into one list, no issue
+-   Now you decided that you want to join this into one list, no issue
+
 ```md
 ## Contributors
+
 <!-- readme: collaborators,contributors -start -->
 <!-- readme: collaborators,contributors -end -->
 ```
 
-* Then you decided to add some github users who are important figure in this project
+-   Then you decided to add some github users who are important figure in this project
+
 ```md
 ## Contributors
+
 <!-- readme: <username1>,collaborators,<username2>,contributors -start -->
 <!-- readme: <username1>,collaborators,<username3>,contributors -end -->
 ```
-> The order of the list will be given priority. So username1 will appear first collaborators then username2 likewise.(No brackets for usernames) 
 
-> The subject inside start and end must be same. 
+> The order of the list will be given priority. So username1 will appear first collaborators then username2 likewise.(No brackets for usernames)
 
-> Currently supported key commands are *collaborators*, *contributors*, *bots*
+> The subject inside start and end must be same.
+
+> Currently supported key commands are _collaborators_, _contributors_, _bots_
+
+-   [An example of this action can be found here](./contributors.md)
 
 ### Optional parameters
 
@@ -88,11 +100,11 @@ You can add these optional parameters in your action script to modify the appear
 - name: Contribute List
   uses: akhilmhdh/contributors-readme-action@v2.0
   with:
-    image_size: 100
+      image_size: 100
 ```
 
 | Option             | Default Value                            | Description                                       | Required |
-|--------------------|------------------------------------------|---------------------------------------------------|----------|
+| ------------------ | ---------------------------------------- | ------------------------------------------------- | -------- |
 | image_size         | 100(px)                                  | Size of square images in the stack                | false    |
 | readme_path        | README.md                                | Path of the readme file you want to update        | false    |
 | columns_per_row    | 6                                        | Number of columns in a row                        | false    |
@@ -107,4 +119,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
-- [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project
+-   [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project

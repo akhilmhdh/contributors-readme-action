@@ -4,8 +4,8 @@ This is an example of contributors-readme-action as it can't be utilized in mast
 
 ## Contributors
 
-<!-- readme: contributors,samslow,alandefreitas,atharwa-24 -start -->
-<!-- readme: contributors,samslow,alandefreitas,atharwa-24 -end -->
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
 
 ## Feature ThankAway
 
