@@ -17,7 +17,7 @@ function getTemplate(userID, imageSize, name, avatar_url) {
 // to get the full name of a user
 async function getData(login, avatar_url, prevContributors, octokit) {
     if (prevContributors[login] && prevContributors[login].url) {
-        return { name: prevContributors[login].name, url: prevContributors[login].url };
+        return { name: prevContributors[login].name, url: avatar_url };
     } else {
         try {
             const user_details = await octokit.users.getByUsername({ username: login });
