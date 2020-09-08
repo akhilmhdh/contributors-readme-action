@@ -46,7 +46,7 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 <!-- readme: contributors -start -->
 <!-- readme: contributors -end -->
 ```
-3. Save it and tadaa :smile:
+3. Save it, wait for the action to complete and tadaa :smile:
 
 ### But wait!!!
 
