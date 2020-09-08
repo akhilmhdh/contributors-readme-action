@@ -75,7 +75,9 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 <!-- readme: <username1>,collaborators,<username3>,contributors -end -->
 ```
 > The order of the list will be given priority. So username1 will appear first collaborators then username2 likewise.(No brackets for usernames) 
+
 > The subject inside start and end must be same. 
+
 > Currently supported key commands are *collaborators*, *contributors*, *bots*
 
 ### Optional parameters
