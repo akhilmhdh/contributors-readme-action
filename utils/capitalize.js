@@ -1,8 +1,7 @@
-function capitalCaseUtil(str){
-    return(str.charAt(0).toUpperCase()+str.substring(1))
+function capitalCaseUtil(str) {
+    return str.charAt(0).toUpperCase() + str.substring(1);
 }
 
 exports.toCapitalCase = function (str) {
-    return (str.split(" ").map(capitalCaseUtil).join(" "))
-  }
-
+    return str ? str.split(" ").map(capitalCaseUtil).join(" ") : "";
+};
