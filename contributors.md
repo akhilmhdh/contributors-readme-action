@@ -38,7 +38,7 @@ This is an example of contributors-readme-action as it can't be utilized in mast
 </table>
 <!-- readme: contributors -end -->
 
-## Feature ThankAway
+## Feature Thank Away
 
 <!-- readme: samslow,alandefreitas,atharwa-24 -start --> 
 <table>
