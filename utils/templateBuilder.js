@@ -9,7 +9,7 @@ function getTemplate(userID, imageSize, name, avatar_url) {
         <a href="https://github.com/${userID}">
             <img src="${avatar_url}" width="${imageSize};" alt="${userID}"/>
             <br />
-            <sub><b>${capitalize.toCapitalCase(name)}</b></sub>
+            <sub><b>${name ? capitalize.toCapitalCase(name) : userID}</b></sub>
         </a>
     </td>`;
 }
