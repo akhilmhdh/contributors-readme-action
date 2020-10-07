@@ -44,8 +44,11 @@ async function run() {
             affiliation,
         });
 
+        // get data of contributors
+        // collaborators
+        // bots
         const contributors = contributors_list.data.filter((el) => el.type !== "Bot");
-        const bots = contributors_list.data
+        const contributorsBots = contributors_list.data
             .filter((el) => el.type === "Bot")
             .map(({ login, avatar_url }) => ({
                 login: login,
@@ -53,12 +56,25 @@ async function run() {
                 name: login,
                 type: "bot",
             }));
-        const collaborators = collaborators_list.data;
-
+        const collaborators = collaborators_list.data.filter((el) => el.type !== "Bot");
+        const collaboratorsBots = contributors_list.data
+            .filter((el) => el.type === "Bot")
+            .map(({ login, avatar_url }) => ({
+                login: login,
+                avatar_url,
+                name: login,
+                type: "bot",
+            }));
+        const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, "base64").toString("ascii");
         const prevContent = content;
 
+        /**
+         * regex expresstion to get all the special readme tags
+         * eg: <!-- readme:contributors -start --!> anything inside this<!-- readme:contributors -end --!>
+         * gets these matched and the content inside of these tags to an array
+         */
         // get all tag comments with the given format
         const getAllReadmeComments = content.match(
             /<!--\s*readme:\s*[a-zA-Z0-9,-]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-]*\s*-end\s*-->/gm

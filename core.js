@@ -1,8 +1,15 @@
 const templateParser = require("./utils/templateParser");
 const templateBuilder = require("./utils/templateBuilder");
 
-// joinArray - join various arrays
-// array will be joined based on priority
+/**
+ * build a new array by joining given arrays
+ * based on values priorities as of index
+ * @param {Array} values
+ * @param {Array} prevContributors
+ * @param {Array} contributors
+ * @param {Array} collaborators
+ * @param {Array} bots
+ */
 function joinArray(values, prevContributors, contributors, collaborators, bots) {
     let joinedArray = [];
 
@@ -42,6 +49,15 @@ exports.buildContent = async function (
     content,
     octokit
 ) {
+    /**
+     * regex expression to parse the options passed inside the readme tags
+     * eg: <!-- readme:contributors,bots -start --!> anything inside this<!-- readme:contributors,bots -end --!>
+     * using the regex we get two groups return as
+     *  type: contributors,bots
+     *      use: to get the options passed
+     *  content: anything that was inside the tag
+     *      use: to reuse the html created inside the tah
+     */
     // get prev contributors in the readme
     let prevReadmeContributorsTemplate = templateContent.match(
         /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
@@ -57,6 +73,10 @@ exports.buildContent = async function (
         octokit
     );
 
+    /**
+     * Build back the new template
+     * replace it with the old one
+     */
     const re = new RegExp(
         `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
     );
