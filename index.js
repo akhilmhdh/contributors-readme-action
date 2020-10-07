@@ -85,7 +85,7 @@ async function run() {
             console.log("No contrib comments were attached");
             return;
         }
-        console.log(contributors_list, bots, collaboratorsBots, contributorsBots);
+
         // based on tags update the content
         for (let match = 0; match < getAllReadmeComments.length; match++) {
             content = await readMeCore.buildContent(
