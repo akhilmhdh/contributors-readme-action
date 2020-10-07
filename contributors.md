@@ -70,21 +70,4 @@ This is an example of contributors-readme-action as it can't be utilized in mast
 ## Bots
 
 <!-- readme: bots -start --> 
-<table>
-<tr>
-    <td align="center">
-        <a href="https://github.com/github-actions[bot]">
-            <img src="https://avatars2.githubusercontent.com/in/15368?v=4" width="100;" alt="github-actions[bot]"/>
-            <br />
-            <sub><b>Github-actions[bot]</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/dependabot[bot]">
-            <img src="https://avatars0.githubusercontent.com/in/29110?v=4" width="100;" alt="dependabot[bot]"/>
-            <br />
-            <sub><b>Dependabot[bot]</b></sub>
-        </a>
-    </td></tr>
-</table>
 <!-- readme: bots -end -->
