@@ -3,12 +3,12 @@ const templateBuilder = require("./utils/templateBuilder");
 
 /**
  * build a new array by joining given arrays
- * based on values priorities as of index
- * @param {Array} values
- * @param {Array} prevContributors
- * @param {Array} contributors
- * @param {Array} collaborators
- * @param {Array} bots
+ * @param {Array} values - priority based order
+ * @param {Array} prevContributors - contributors list of previous readme
+ * @param {Array} contributors - current contributors
+ * @param {Array} collaborators - current colloborators
+ * @param {Array} bots - current bots
+ * @returns {Array} prdered list
  */
 function joinArray(values, prevContributors, contributors, collaborators, bots) {
     let joinedArray = [];
