@@ -1,23 +1,31 @@
 {
-  "name": "contribution-automation-action",
-  "version": "1.0.0",
-  "description": "A github action to automate contributors section of a readme",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/akhilmhdh/contribution-automation-action.git"
-  },
-  "author": "akhi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/akhilmhdh/contribution-automation-action/issues"
-  },
-  "homepage": "https://github.com/akhilmhdh/contribution-automation-action#readme",
-  "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0"
-  }
+    "name": "contribution-automation-action",
+    "version": "1.0.0",
+    "description": "A github action to automate contributors section of a readme",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint .",
+        "format": "prettier --write **/*.js",
+        "format-check": "prettier --check **/*.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/akhilmhdh/contribution-automation-action.git"
+    },
+    "author": "akhi",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/akhilmhdh/contribution-automation-action/issues"
+    },
+    "homepage": "https://github.com/akhilmhdh/contribution-automation-action#readme",
+    "dependencies": {
+        "@actions/core": "^1.2.6",
+        "@actions/github": "^4.0.0"
+    },
+    "devDependencies": {
+        "@vercel/ncc": "^0.25.1",
+        "eslint": "^7.14.0",
+        "mocha": "^8.2.1",
+        "prettier": "^2.2.0"
+    }
 }

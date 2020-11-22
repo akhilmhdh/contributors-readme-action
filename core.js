@@ -1,5 +1,5 @@
-const templateParser = require("./utils/templateParser");
-const templateBuilder = require("./utils/templateBuilder");
+const templateParser = require('./utils/templateParser');
+const templateBuilder = require('./utils/templateBuilder');
 
 /**
  * build a new array by joining given arrays
@@ -13,17 +13,17 @@ const templateBuilder = require("./utils/templateBuilder");
 function joinArray(values, prevContributors, contributors, collaborators, bots) {
     let joinedArray = [];
 
-    values.forEach((category) => {
+    values.forEach(category => {
         category = category.trim().toLowerCase();
 
         switch (category) {
-            case "contributors":
+            case 'contributors':
                 joinedArray = joinedArray.concat(contributors);
                 break;
-            case "collaborators":
+            case 'collaborators':
                 joinedArray = joinedArray.concat(collaborators);
                 break;
-            case "bots":
+            case 'bots':
                 joinedArray = joinedArray.concat(bots);
                 break;
             default:
@@ -31,7 +31,7 @@ function joinArray(values, prevContributors, contributors, collaborators, bots) 
                     ? joinedArray.push({
                           login: category,
                           avatar_url: prevContributors[category].url,
-                          name: prevContributors[category].name,
+                          name: prevContributors[category].name
                       })
                     : joinedArray.push({ login: category });
                 break;
@@ -63,7 +63,7 @@ exports.buildContent = async function (
         /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
     );
     const prevContributors = templateParser.parser(prevReadmeContributorsTemplate.groups.content);
-    const types = prevReadmeContributorsTemplate.groups.type.split(",");
+    const types = prevReadmeContributorsTemplate.groups.type.split(',');
     const contributorsPool = joinArray(types, prevContributors, contributors, collaborators, bots);
 
     let contributors_content = await templateBuilder.parser(

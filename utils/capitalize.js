@@ -3,5 +3,5 @@ function capitalCaseUtil(str) {
 }
 
 exports.toCapitalCase = function (str) {
-    return str ? str.split(" ").map(capitalCaseUtil).join(" ") : "";
+    return str ? str.split(' ').map(capitalCaseUtil).join(' ') : '';
 };

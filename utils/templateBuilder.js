@@ -1,7 +1,7 @@
-const capitalize = require("./capitalize");
-const stripDuplicates = require("./stripDuplicates");
+const capitalize = require('./capitalize');
+const stripDuplicates = require('./stripDuplicates');
 
-const core = require("@actions/core");
+const core = require('@actions/core');
 
 function getTemplate(userID, imageSize, name, avatar_url) {
     return `
@@ -24,7 +24,7 @@ async function getData(login, avatar_url, prevContributors, octokit) {
             return { name: user_details.data.name, url: user_details.data.avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
-            return { name: login, url: "" };
+            return { name: login, url: '' };
         }
     }
 }
@@ -33,17 +33,17 @@ async function getData(login, avatar_url, prevContributors, octokit) {
 // takes prev data to avoid unneccessary call
 exports.parser = async function (contributors, prevContributors, type, octokit) {
     // get various inputs applied in action.yml
-    const imageSize = core.getInput("image_size").trim();
-    const columns = Number(core.getInput("columns_per_row").trim());
+    const imageSize = core.getInput('image_size').trim();
+    const columns = Number(core.getInput('columns_per_row').trim());
 
     let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
 
-    contributors = stripDuplicates.clean(contributors, "login");
+    contributors = stripDuplicates.clean(contributors, 'login');
 
     const rows = Math.ceil(contributors.length / columns);
 
     for (let row = 1; row <= rows; row++) {
-        contributors_content += "<tr>";
+        contributors_content += '<tr>';
         for (
             let column = 1;
             column <= columns && (row - 1) * columns + column - 1 < contributors.length;
@@ -51,14 +51,14 @@ exports.parser = async function (contributors, prevContributors, type, octokit) 
         ) {
             const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
 
-            if (type !== "bot") {
+            if (type !== 'bot') {
                 const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
                 contributors_content += getTemplate(login, imageSize, name, url);
             } else {
                 contributors_content += getTemplate(login, imageSize, login, avatar_url);
             }
         }
-        contributors_content += "</tr>\n";
+        contributors_content += '</tr>\n';
     }
 
     contributors_content += `</table>\n<!-- readme:${type}-end -->`;
