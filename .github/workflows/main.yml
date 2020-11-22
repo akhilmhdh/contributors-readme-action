@@ -1,4 +1,10 @@
-on: [push, issues]
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
 
 jobs:
     contrib-readme-job:
