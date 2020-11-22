@@ -1,21 +1,27 @@
-const capitalize = require('./capitalize');
-const stripDuplicates = require('./stripDuplicates');
+import capitalize from './capitalize';
+import stripDuplicates from './stripDuplicates';
 
-const core = require('@actions/core');
+import * as core from '@actions/core';
 
-function getTemplate(userID, imageSize, name, avatar_url) {
+const getTemplate = (userID, imageSize, name, avatar_url) => {
     return `
     <td align="center">
         <a href="https://github.com/${userID}">
             <img src="${avatar_url}" width="${imageSize};" alt="${userID}"/>
             <br />
-            <sub><b>${name ? capitalize.toCapitalCase(name) : userID}</b></sub>
+            <sub><b>${name ? capitalize(name) : userID}</b></sub>
         </a>
     </td>`;
-}
+};
 
-// to get the full name of a user
-async function getData(login, avatar_url, prevContributors, octokit) {
+/**
+ * function to generate userinfo either from prev readme data or using fetch
+ * @param {string} login : login id of github
+ * @param {string} avatar_url : url of the github user
+ * @param {object} prevContributors : prev contributors list to fetch it like a cache instead of calling
+ * @param {object} octokit : octokit client
+ */
+const getUserInfo = async (login, avatar_url, prevContributors, octokit) => {
     if (prevContributors[login] && prevContributors[login].url) {
         return { name: prevContributors[login].name, url: avatar_url };
     } else {
@@ -27,11 +33,16 @@ async function getData(login, avatar_url, prevContributors, octokit) {
             return { name: login, url: '' };
         }
     }
-}
+};
 
-// to build the table layout
-// takes prev data to avoid unneccessary call
-exports.parser = async function (contributors, prevContributors, type, octokit) {
+/**
+ * core function to generate readme template
+ * @param {object} contributors - contributors object
+ * @param {object} prevContributors - previous contributors list stored in readme
+ * @param {string} type - type like bot, contributors, collab
+ * @param {object} octokit - github octokit client
+ */
+const parser = async (contributors, prevContributors, type, octokit) => {
     // get various inputs applied in action.yml
     const imageSize = core.getInput('image_size').trim();
     const columns = Number(core.getInput('columns_per_row').trim());
@@ -52,7 +63,12 @@ exports.parser = async function (contributors, prevContributors, type, octokit) 
             const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
 
             if (type !== 'bot') {
-                const { name, url } = await getData(login, avatar_url, prevContributors, octokit);
+                const { name, url } = await getUserInfo(
+                    login,
+                    avatar_url,
+                    prevContributors,
+                    octokit
+                );
                 contributors_content += getTemplate(login, imageSize, name, url);
             } else {
                 contributors_content += getTemplate(login, imageSize, login, avatar_url);
@@ -65,3 +81,5 @@ exports.parser = async function (contributors, prevContributors, type, octokit) 
 
     return contributors_content;
 };
+
+export default parser;

@@ -1,10 +1,14 @@
-// to convert given html template to an object
-// to reuse the old data for efficiency
-
-exports.parser = function (str) {
+/**
+ * given an input string it will search for all the img tags inside contributors list. readme
+ * used for using past data for more speed
+ * parse these \<img src=github_url alt=github_user_name>github_full_name\</img>
+ * into  array of object of three keys each
+ * @param {string} inputTemplate : multiline string
+ */
+const templateParser = inputTemplate => {
     // regex to parse into an array of three each with url userid and name
     // ntg to match will result in null
-    let parsedKeys = str.match(/src="([\s\S]*?)"|alt="([\s\S]*?)"|<b>([\s\S]*?)<\/b>/gm);
+    let parsedKeys = inputTemplate.match(/src="([\s\S]*?)"|alt="([\s\S]*?)"|<b>([\s\S]*?)<\/b>/gm);
     if (!parsedKeys) return {};
 
     let data = {};
@@ -18,3 +22,5 @@ exports.parser = function (str) {
 
     return data;
 };
+
+export default templateParser;

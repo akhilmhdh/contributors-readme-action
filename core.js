@@ -1,5 +1,5 @@
-const templateParser = require('./utils/templateParser');
-const templateBuilder = require('./utils/templateBuilder');
+import templateParser from './utils/templateParser';
+import templateBuilder from './utils/templateBuilder';
 
 /**
  * build a new array by joining given arrays
@@ -10,7 +10,7 @@ const templateBuilder = require('./utils/templateBuilder');
  * @param {Array} bots - current bots
  * @returns {Array} prdered list
  */
-function joinArray(values, prevContributors, contributors, collaborators, bots) {
+const joinArray = (values, prevContributors, contributors, collaborators, bots) => {
     let joinedArray = [];
 
     values.forEach(category => {
@@ -39,16 +39,16 @@ function joinArray(values, prevContributors, contributors, collaborators, bots) 
     });
 
     return joinedArray;
-}
+};
 
-exports.buildContent = async function (
+const buildContent = async (
     templateContent,
     contributors,
     collaborators,
     bots,
     content,
     octokit
-) {
+) => {
     /**
      * regex expression to parse the options passed inside the readme tags
      * eg: <!-- readme:contributors,bots -start --!> anything inside this<!-- readme:contributors,bots -end --!>
@@ -62,11 +62,11 @@ exports.buildContent = async function (
     let prevReadmeContributorsTemplate = templateContent.match(
         /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
     );
-    const prevContributors = templateParser.parser(prevReadmeContributorsTemplate.groups.content);
+    const prevContributors = templateParser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
     const contributorsPool = joinArray(types, prevContributors, contributors, collaborators, bots);
 
-    let contributors_content = await templateBuilder.parser(
+    let contributors_content = await templateBuilder(
         contributorsPool,
         prevContributors,
         prevReadmeContributorsTemplate.groups.type,
@@ -84,3 +84,5 @@ exports.buildContent = async function (
     const postprocess_content = content.replace(re, contributors_content);
     return postprocess_content;
 };
+
+export default buildContent;

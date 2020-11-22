@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
 
-const readMeCore = require('./core');
+import buildContributorsList from './core';
 
 async function run() {
     try {
@@ -88,7 +88,7 @@ async function run() {
 
         // based on tags update the content
         for (let match = 0; match < getAllReadmeComments.length; match++) {
-            content = await readMeCore.buildContent(
+            content = await buildContributorsList(
                 getAllReadmeComments[match],
                 contributors,
                 collaborators,
