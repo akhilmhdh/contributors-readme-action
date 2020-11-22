@@ -121,7 +121,7 @@ const parser = async (contributors, prevContributors, type, octokit) => {
 
     let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
 
-    contributors = stripDuplicates.clean(contributors, 'login');
+    contributors = stripDuplicates(contributors, 'login');
 
     const rows = Math.ceil(contributors.length / columns);
 
