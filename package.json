@@ -6,7 +6,8 @@
     "scripts": {
         "lint": "eslint .",
         "format": "prettier --write **/*.js",
-        "format-check": "prettier --check **/*.js"
+        "format-check": "prettier --check **/*.js",
+        "build": "ncc build index.js -o dist --source-map --license licenses.txt"
     },
     "repository": {
         "type": "git",

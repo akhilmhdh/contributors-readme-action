@@ -1,37 +1,37 @@
-name: "Contribute List"
-description: "Automation of contributors list in README.md"
+name: 'Contribute List'
+description: 'Automation of contributors list in README.md'
 inputs:
     image_size: # id of input
-        description: "Size of square images in the stack"
+        description: 'Size of square images in the stack'
         required: false
-        default: "100"
+        default: '100'
     readme_path:
-        description: "Path of the readme file you want to update"
-        default: "README.md"
+        description: 'Path of the readme file you want to update'
+        default: 'README.md'
         required: false
     columns_per_row: # id of input
-        description: "Number of columns in a row"
+        description: 'Number of columns in a row'
         required: false
-        default: "6"
+        default: '6'
     collaborators: # id of input
-        description: "Type of collaborators options: all/direct/outside"
+        description: 'Type of collaborators options: all/direct/outside'
         required: false
-        default: "direct"
+        default: 'direct'
     commit_message:
-        description: "Commit message of the github action"
-        default: "contrib-readme-action has updated readme"
+        description: 'Commit message of the github action'
+        default: 'contrib-readme-action has updated readme'
         required: false
     committer_username:
-        description: "Username on commit"
-        default: "contrib-readme-bot"
+        description: 'Username on commit'
+        default: 'contrib-readme-bot'
         required: false
     committer_email:
-        description: "email id of committer"
-        default: "contrib-readme-action@noreply.com"
+        description: 'email id of committer'
+        default: 'contrib-readme-action@noreply.com'
         required: false
 runs:
-    using: "node12"
-    main: "index.js"
+    using: 'node12'
+    main: 'dist/index.js'
 branding:
-    icon: "archive"
-    color: "black"
+    icon: 'archive'
+    color: 'black'
