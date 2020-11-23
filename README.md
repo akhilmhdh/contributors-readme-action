@@ -129,7 +129,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments
 
--   [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project
+- [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project
+- [image-shield](https://shields.io/): For the cool badges
 
 [contributors-shield]: https://img.shields.io/github/contributors/akhilmhdh/contributors-readme-action.svg?style=for-the-badge
 [contributors-url]: https://github.com/akhilmhdh/contributors-readme-action/graphs/contributors
