@@ -1,4 +1,14 @@
-# Contributors-Readme-Action
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+
+<br />
+
+<p align="center">
+    <h2 align="center">Contributors-Readme-Action</h3>
+</p>
 
 Contributors-Readme-Action is a simple GitHub action to automate contributors list in README file. Not only contributors, collborators, bots or any user.
 
@@ -120,3 +130,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 -   [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project
+
+[contributors-shield]: https://img.shields.io/github/contributors/akhilmhdh/contributors-readme-action.svg?style=for-the-badge
+[contributors-url]: https://github.com/akhilmhdh/contributors-readme-action/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/akhilmhdh/contributors-readme-action.svg?style=for-the-badge
+[forks-url]: https://github.com/akhilmhdh/contributors-readme-action/network/members
+[stars-shield]: https://img.shields.io/github/stars/akhilmhdh/contributors-readme-action?style=for-the-badge
+[stars-url]: https://github.com/akhilmhdh/contributors-readme-action/stargazers
+[issues-shield]: https://img.shields.io/github/issues/akhilmhdh/contributors-readme-action.svg?style=for-the-badge
+[issues-url]: https://github.com/akhilmhdh/contributors-readme-action/issues
+[license-shield]: https://img.shields.io/github/license/akhilmhdh/contributors-readme-action.svg?style=for-the-badge
+[license-url]: https://github.com/akhilmhdh/contributors-readme-action/blob/master/LICENSE.txt
+
