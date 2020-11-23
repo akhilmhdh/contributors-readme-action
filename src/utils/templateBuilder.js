@@ -3,7 +3,7 @@ import stripDuplicates from './stripDuplicates';
 
 import * as core from '@actions/core';
 
-const getTemplate = (userID, imageSize, name, avatar_url) => {
+export const getTemplate = (userID, imageSize, name, avatar_url) => {
     return `
     <td align="center">
         <a href="https://github.com/${userID}">
@@ -21,7 +21,7 @@ const getTemplate = (userID, imageSize, name, avatar_url) => {
  * @param {object} prevContributors : prev contributors list to fetch it like a cache instead of calling
  * @param {object} octokit : octokit client
  */
-const getUserInfo = async (login, avatar_url, prevContributors, octokit) => {
+export const getUserInfo = async (login, avatar_url, prevContributors, octokit) => {
     if (prevContributors[login] && prevContributors[login].url) {
         return { name: prevContributors[login].name, url: avatar_url };
     } else {

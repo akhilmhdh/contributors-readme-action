@@ -8,6 +8,7 @@
         "format": "prettier --write **/*.js",
         "format-check": "prettier --check **/*.js",
         "test": "jest --verbose",
+        "test:watch": "jest --verbose --watch",
         "build": "ncc build src/index.js -o dist --source-map --license licenses.txt"
     },
     "repository": {
