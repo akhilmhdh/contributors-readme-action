@@ -5849,6 +5849,7 @@ const capitalCaseUtil = str => {
 
 
 
+
 const getTemplate = (userID, imageSize, name, avatar_url) => {
     return `
     <td align="center">
@@ -5867,12 +5868,12 @@ const getTemplate = (userID, imageSize, name, avatar_url) => {
  * @param {object} prevContributors : prev contributors list to fetch it like a cache instead of calling
  * @param {object} octokit : octokit client
  */
-const getUserInfo = async (login, avatar_url, prevContributors, octokit) => {
+const getUserInfo = async (login, avatar_url, prevContributors) => {
     if (prevContributors[login] && prevContributors[login].url) {
         return { name: prevContributors[login].name, url: avatar_url };
     } else {
         try {
-            const user_details = await octokit.users.getByUsername({ username: login });
+            const user_details = await src_octokit.users.getByUsername({ username: login });
             return { name: user_details.data.name, url: user_details.data.avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
@@ -5888,7 +5889,7 @@ const getUserInfo = async (login, avatar_url, prevContributors, octokit) => {
  * @param {string} type - type like bot, contributors, collab
  * @param {object} octokit - github octokit client
  */
-const parser = async (contributors, prevContributors, type, octokit) => {
+const templateBuilder = async (contributors, prevContributors, type) => {
     // get various inputs applied in action.yml
     const imageSize = core.getInput('image_size').trim();
     const columns = Number(core.getInput('columns_per_row').trim());
@@ -5909,12 +5910,7 @@ const parser = async (contributors, prevContributors, type, octokit) => {
             const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
 
             if (type !== 'bot') {
-                const { name, url } = await getUserInfo(
-                    login,
-                    avatar_url,
-                    prevContributors,
-                    octokit
-                );
+                const { name, url } = await getUserInfo(login, avatar_url, prevContributors);
                 contributors_content += getTemplate(login, imageSize, name, url);
             } else {
                 contributors_content += getTemplate(login, imageSize, login, avatar_url);
@@ -5928,10 +5924,9 @@ const parser = async (contributors, prevContributors, type, octokit) => {
     return contributors_content;
 };
 
-/* harmony default export */ const templateBuilder = (parser);
+/* harmony default export */ const utils_templateBuilder = (templateBuilder);
 
 // CONCATENATED MODULE: ./src/core.js
-
 
 
 /**
@@ -5974,14 +5969,7 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots) 
     return joinedArray;
 };
 
-const buildContent = async (
-    templateContent,
-    contributors,
-    collaborators,
-    bots,
-    content,
-    octokit
-) => {
+const buildContent = async (templateContent, contributors, collaborators, bots, content) => {
     /**
      * regex expression to parse the options passed inside the readme tags
      * eg: <!-- readme:contributors,bots -start --!> anything inside this<!-- readme:contributors,bots -end --!>
@@ -5999,11 +5987,10 @@ const buildContent = async (
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
     const contributorsPool = joinArray(types, prevContributors, contributors, collaborators, bots);
 
-    let contributors_content = await templateBuilder(
+    let contributors_content = await utils_templateBuilder(
         contributorsPool,
         prevContributors,
-        prevReadmeContributorsTemplate.groups.type,
-        octokit
+        prevReadmeContributorsTemplate.groups.type
     );
 
     /**
@@ -6115,8 +6102,7 @@ async function run() {
                 contributors,
                 collaborators,
                 bots,
-                content,
-                src_octokit
+                content
             );
         }
 

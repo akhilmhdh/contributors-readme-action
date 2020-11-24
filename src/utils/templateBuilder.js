@@ -1,5 +1,6 @@
 import capitalize from './capitalize';
 import stripDuplicates from './stripDuplicates';
+import octokit from '../octokit';
 
 import * as core from '@actions/core';
 
@@ -21,7 +22,7 @@ export const getTemplate = (userID, imageSize, name, avatar_url) => {
  * @param {object} prevContributors : prev contributors list to fetch it like a cache instead of calling
  * @param {object} octokit : octokit client
  */
-export const getUserInfo = async (login, avatar_url, prevContributors, octokit) => {
+export const getUserInfo = async (login, avatar_url, prevContributors) => {
     if (prevContributors[login] && prevContributors[login].url) {
         return { name: prevContributors[login].name, url: avatar_url };
     } else {
@@ -42,7 +43,7 @@ export const getUserInfo = async (login, avatar_url, prevContributors, octokit) 
  * @param {string} type - type like bot, contributors, collab
  * @param {object} octokit - github octokit client
  */
-const parser = async (contributors, prevContributors, type, octokit) => {
+const templateBuilder = async (contributors, prevContributors, type) => {
     // get various inputs applied in action.yml
     const imageSize = core.getInput('image_size').trim();
     const columns = Number(core.getInput('columns_per_row').trim());
@@ -63,12 +64,7 @@ const parser = async (contributors, prevContributors, type, octokit) => {
             const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
 
             if (type !== 'bot') {
-                const { name, url } = await getUserInfo(
-                    login,
-                    avatar_url,
-                    prevContributors,
-                    octokit
-                );
+                const { name, url } = await getUserInfo(login, avatar_url, prevContributors);
                 contributors_content += getTemplate(login, imageSize, name, url);
             } else {
                 contributors_content += getTemplate(login, imageSize, login, avatar_url);
@@ -82,4 +78,4 @@ const parser = async (contributors, prevContributors, type, octokit) => {
     return contributors_content;
 };
 
-export default parser;
+export default templateBuilder;

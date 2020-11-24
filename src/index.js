@@ -92,8 +92,7 @@ async function run() {
                 contributors,
                 collaborators,
                 bots,
-                content,
-                octokit
+                content
             );
         }
 

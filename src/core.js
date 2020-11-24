@@ -1,6 +1,5 @@
 import templateParser from './utils/templateParser';
 import templateBuilder from './utils/templateBuilder';
-
 /**
  * build a new array by joining given arrays
  * @param {Array} values - priority based order
@@ -41,14 +40,7 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots) 
     return joinedArray;
 };
 
-const buildContent = async (
-    templateContent,
-    contributors,
-    collaborators,
-    bots,
-    content,
-    octokit
-) => {
+const buildContent = async (templateContent, contributors, collaborators, bots, content) => {
     /**
      * regex expression to parse the options passed inside the readme tags
      * eg: <!-- readme:contributors,bots -start --!> anything inside this<!-- readme:contributors,bots -end --!>
@@ -69,8 +61,7 @@ const buildContent = async (
     let contributors_content = await templateBuilder(
         contributorsPool,
         prevContributors,
-        prevReadmeContributorsTemplate.groups.type,
-        octokit
+        prevReadmeContributorsTemplate.groups.type
     );
 
     /**
