@@ -1,5 +1,6 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
+import octokit from './octokit';
 
 import buildContributorsList from './core';
 
@@ -23,8 +24,6 @@ async function run() {
             throw new Error('Token not found');
         }
 
-        // octakit library to access various functions
-        const octokit = github.getOctokit(token);
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
 

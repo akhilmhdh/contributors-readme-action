@@ -5754,7 +5754,7 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 444:
+/***/ 260:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5765,13 +5765,33 @@ __webpack_require__.r(__webpack_exports__);
 var core = __webpack_require__(186);
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
 var github = __webpack_require__(438);
+// CONCATENATED MODULE: ./src/octokit.js
+/**
+ * Shard octokit client
+ */
+
+
+// get repo token
+const token = process.env['GITHUB_TOKEN'];
+
+const octokit = github.getOctokit(token);
+
+/* harmony default export */ const src_octokit = (octokit);
+
 // CONCATENATED MODULE: ./src/utils/templateParser.js
+/**
+ * @typedef {Object} parsedData
+ * @property {string} url - avatar url
+ * @property {string} name - full name of the github user profile, can be null
+ */
+
 /**
  * given an input string it will search for all the img tags inside contributors list. readme
  * used for using past data for more speed
  * parse these \<img src=github_url alt=github_user_name>github_full_name\</img>
  * into  array of object of three keys each
  * @param {string} inputTemplate : multiline string
+ * @returns {{username:parsedData}[]}
  */
 const templateParser = inputTemplate => {
     // regex to parse into an array of three each with url userid and name
@@ -5804,11 +5824,13 @@ const capitalCaseUtil = str => {
 
 // CONCATENATED MODULE: ./src/utils/stripDuplicates.js
 /**
- * function to clean an array of objects duplicates
+ * function to clean an array of objects with duplicates
  * @param {Array} - arr - array of objects
  * @param {string} - key - key to compare
  */
-/* harmony default export */ const stripDuplicates = ((arr, key) => {
+/* harmony default export */ const stripDuplicates = ((arr = [], key) => {
+    // if either array or key is null
+    if (!arr || !key) return [];
     const unqiue = {};
     const uniqueArray = [];
     for (let index = 0; index < arr.length; index++) {
@@ -6004,6 +6026,7 @@ const buildContent = async (
 
 
 
+
 async function run() {
     try {
         if (github.context.payload.action) {
@@ -6024,13 +6047,11 @@ async function run() {
             throw new Error('Token not found');
         }
 
-        // octakit library to access various functions
-        const octokit = github.getOctokit(token);
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
 
         // get the readme of the repo
-        const readme = await octokit.repos.getContent({ owner, repo, path });
+        const readme = await src_octokit.repos.getContent({ owner, repo, path });
 
         if (readme.headers.status === '404') {
             console.log('readme not added');
@@ -6038,8 +6059,8 @@ async function run() {
         }
 
         // get all contributors of the repo max:500
-        const contributors_list = await octokit.repos.listContributors({ owner, repo });
-        const collaborators_list = await octokit.repos.listCollaborators({
+        const contributors_list = await src_octokit.repos.listContributors({ owner, repo });
+        const collaborators_list = await src_octokit.repos.listCollaborators({
             owner,
             repo,
             affiliation
@@ -6095,14 +6116,14 @@ async function run() {
                 collaborators,
                 bots,
                 content,
-                octokit
+                src_octokit
             );
         }
 
         const base64String = Buffer.from(content).toString('base64');
 
         if (prevContent !== content) {
-            await octokit.repos.createOrUpdateFileContents({
+            await src_octokit.repos.createOrUpdateFileContents({
                 owner,
                 repo,
                 message,
@@ -6287,7 +6308,7 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(444);
+/******/ 	return __webpack_require__(260);
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
