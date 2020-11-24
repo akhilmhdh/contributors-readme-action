@@ -123,6 +123,11 @@ You can add these optional parameters in your action script to modify the appear
 | committer_username | contrib-readme-bot                       | Username on commit                                | false    |
 | committer_email    | email id of committer                    | contrib-readme-action@noreply.com                 | false    |
 
+## TO-Do
+
+-   [ ] graphql migration
+-   [ ] sponser command support
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

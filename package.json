@@ -1,23 +1,36 @@
 {
-  "name": "contribution-automation-action",
-  "version": "1.0.0",
-  "description": "A github action to automate contributors section of a readme",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/akhilmhdh/contribution-automation-action.git"
-  },
-  "author": "akhi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/akhilmhdh/contribution-automation-action/issues"
-  },
-  "homepage": "https://github.com/akhilmhdh/contribution-automation-action#readme",
-  "dependencies": {
-    "@actions/core": "^1.2.6",
-    "@actions/github": "^4.0.0"
-  }
+    "name": "contribution-automation-action",
+    "version": "1.0.0",
+    "description": "A github action to automate contributors section of a readme",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint .",
+        "format": "prettier --write **/*.js",
+        "format-check": "prettier --check **/*.js",
+        "test": "jest --verbose",
+        "test:watch": "jest --verbose --watch",
+        "build": "ncc build src/index.js -o dist --source-map --license licenses.txt"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/akhilmhdh/contribution-automation-action.git"
+    },
+    "author": "akhi",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/akhilmhdh/contribution-automation-action/issues"
+    },
+    "homepage": "https://github.com/akhilmhdh/contribution-automation-action#readme",
+    "dependencies": {
+        "@actions/core": "^1.2.6",
+        "@actions/github": "^4.0.0"
+    },
+    "devDependencies": {
+        "@babel/preset-env": "^7.12.7",
+        "@vercel/ncc": "^0.25.1",
+        "babel-jest": "^26.6.3",
+        "eslint": "^7.14.0",
+        "jest": "^26.6.3",
+        "prettier": "^2.2.0"
+    }
 }
