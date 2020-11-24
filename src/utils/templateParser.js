@@ -1,9 +1,16 @@
 /**
+ * @typedef {Object} parsedData
+ * @property {string} url - avatar url
+ * @property {string} name - full name of the github user profile, can be null
+ */
+
+/**
  * given an input string it will search for all the img tags inside contributors list. readme
  * used for using past data for more speed
  * parse these \<img src=github_url alt=github_user_name>github_full_name\</img>
  * into  array of object of three keys each
  * @param {string} inputTemplate : multiline string
+ * @returns {{username:parsedData}[]}
  */
 const templateParser = inputTemplate => {
     // regex to parse into an array of three each with url userid and name
