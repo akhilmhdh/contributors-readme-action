@@ -3,6 +3,7 @@ import * as github from '@actions/github';
 import octokit from './octokit';
 
 import buildContributorsList from './core';
+import getSponserListQuery from './query/getSponsersList.gql';
 
 async function run() {
     try {
@@ -36,18 +37,19 @@ async function run() {
         }
 
         // get all contributors of the repo max:500
-        const contributors_list = await octokit.repos.listContributors({ owner, repo });
-        const collaborators_list = await octokit.repos.listCollaborators({
+        const contributorsList = await octokit.repos.listContributors({ owner, repo });
+        const collaboratorsList = await octokit.repos.listCollaborators({
             owner,
             repo,
             affiliation
         });
+        const sponsersList = await octokit.graphql(getSponserListQuery, { owner });
 
         // get data of contributors
         // collaborators
         // bots
-        const contributors = contributors_list.data.filter(el => el.type !== 'Bot');
-        const contributorsBots = contributors_list.data
+        const contributors = contributorsList.data.filter(el => el.type !== 'Bot');
+        const contributorsBots = contributorsList.data
             .filter(el => el.type === 'Bot')
             .map(({ login, avatar_url }) => ({
                 login: login,
@@ -55,8 +57,8 @@ async function run() {
                 name: login,
                 type: 'bot'
             }));
-        const collaborators = collaborators_list.data.filter(el => el.type !== 'Bot');
-        const collaboratorsBots = contributors_list.data
+        const collaborators = collaboratorsList.data.filter(el => el.type !== 'Bot');
+        const collaboratorsBots = contributorsList.data
             .filter(el => el.type === 'Bot')
             .map(({ login, avatar_url }) => ({
                 login: login,
@@ -64,6 +66,13 @@ async function run() {
                 name: login,
                 type: 'bot'
             }));
+        const sponsers = sponsersList.user.sponsorshipsAsMaintainer.nodes.map(
+            ({ sponsorEntity: { name, login, avatarUrl } }) => ({
+                name,
+                login,
+                avatar_url: avatarUrl
+            })
+        );
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
