@@ -43,7 +43,7 @@ async function run() {
             repo,
             affiliation
         });
-        const sponsersList = await octokit.graphql(getSponserListQuery);
+        const sponsersList = await octokit.graphql(getSponserListQuery, { owner });
 
         // get data of contributors
         // collaborators
