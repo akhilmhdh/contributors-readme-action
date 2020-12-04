@@ -6009,7 +6009,7 @@ const buildContent = async (templateContent, contributors, collaborators, bots, 
 
 // CONCATENATED MODULE: ./src/query/getSponsersList.gql
 /* harmony default export */ const getSponsersList = (`
-query($owner: String!) {
+query() {
     user(login: "freakboy3742") {
         name
         sponsorshipsAsMaintainer(first: 100) {
@@ -6073,7 +6073,7 @@ async function run() {
             repo,
             affiliation
         });
-        const sponsersList = await src_octokit.graphql(getSponsersList, { owner });
+        const sponsersList = await src_octokit.graphql(getSponsersList);
 
         // get data of contributors
         // collaborators

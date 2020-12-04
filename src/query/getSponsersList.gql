@@ -1,5 +1,5 @@
 export default `
-query($owner: String!) {
+query {
     user(login: "freakboy3742") {
         name
         sponsorshipsAsMaintainer(first: 100) {
