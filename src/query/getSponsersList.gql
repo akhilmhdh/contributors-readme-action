@@ -1,6 +1,6 @@
 export default `
 query($owner: String!) {
-    user(login: $owner) {
+    user(login: "freakboy3742") {
         name
         sponsorshipsAsMaintainer(first: 100) {
             nodes {

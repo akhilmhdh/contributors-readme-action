@@ -29,7 +29,7 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots) 
                 prevContributors[category]
                     ? joinedArray.push({
                           login: category,
-                          avatar_url: prevContributors[category].url,
+                          avatarUrl: prevContributors[category].url,
                           name: prevContributors[category].name
                       })
                     : joinedArray.push({ login: category });

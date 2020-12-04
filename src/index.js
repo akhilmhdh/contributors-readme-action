@@ -53,7 +53,7 @@ async function run() {
             .filter(el => el.type === 'Bot')
             .map(({ login, avatar_url }) => ({
                 login: login,
-                avatar_url,
+                avatarUrl: avatar_url,
                 name: login,
                 type: 'bot'
             }));
@@ -62,7 +62,7 @@ async function run() {
             .filter(el => el.type === 'Bot')
             .map(({ login, avatar_url }) => ({
                 login: login,
-                avatar_url,
+                avatarUrl: avatar_url,
                 name: login,
                 type: 'bot'
             }));
@@ -70,9 +70,10 @@ async function run() {
             ({ sponsorEntity: { name, login, avatarUrl } }) => ({
                 name,
                 login,
-                avatar_url: avatarUrl
+                avatarUrl
             })
         );
+        console.log(sponsers);
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
