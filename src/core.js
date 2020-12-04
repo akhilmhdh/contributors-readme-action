@@ -7,9 +7,10 @@ import templateBuilder from './utils/templateBuilder';
  * @param {Array} contributors - current contributors
  * @param {Array} collaborators - current colloborators
  * @param {Array} bots - current bots
+ * @param {Array} sponsors - current sponsors
  * @returns {Array} prdered list
  */
-const joinArray = (values, prevContributors, contributors, collaborators, bots) => {
+const joinArray = (values, prevContributors, contributors, collaborators, bots, sponsors) => {
     let joinedArray = [];
 
     values.forEach(category => {
@@ -24,6 +25,9 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots) 
                 break;
             case 'bots':
                 joinedArray = joinedArray.concat(bots);
+                break;
+            case 'sponsors':
+                joinedArray = joinedArray.concat(sponsors);
                 break;
             default:
                 prevContributors[category]
@@ -40,12 +44,19 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots) 
     return joinedArray;
 };
 
-const buildContent = async (templateContent, contributors, collaborators, bots, content) => {
+const buildContent = async (
+    templateContent,
+    contributors,
+    collaborators,
+    bots,
+    sponsors,
+    content
+) => {
     /**
      * regex expression to parse the options passed inside the readme tags
      * eg: <!-- readme:contributors,bots -start --!> anything inside this<!-- readme:contributors,bots -end --!>
      * using the regex we get two groups return as
-     *  type: contributors,bots
+     *  type: contributors,bots, collobortors, sponsors
      *      use: to get the options passed
      *  content: anything that was inside the tag
      *      use: to reuse the html created inside the tah
@@ -56,7 +67,14 @@ const buildContent = async (templateContent, contributors, collaborators, bots, 
     );
     const prevContributors = templateParser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
-    const contributorsPool = joinArray(types, prevContributors, contributors, collaborators, bots);
+    const contributorsPool = joinArray(
+        types,
+        prevContributors,
+        contributors,
+        collaborators,
+        bots,
+        sponsors
+    );
 
     let contributors_content = await templateBuilder(
         contributorsPool,

@@ -3,7 +3,7 @@ import { context } from '@actions/github';
 import octokit from './octokit';
 
 import buildContributorsList from './core';
-import getSponserListQuery from './query/getSponsersList.gql';
+import getSponserListQuery from './query/getSponsorsList.gql';
 
 async function run() {
     try {
@@ -73,7 +73,6 @@ async function run() {
                 avatarUrl
             })
         );
-        console.log(sponsers);
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
@@ -102,6 +101,7 @@ async function run() {
                 contributors,
                 collaborators,
                 bots,
+                sponsers,
                 content
             );
         }

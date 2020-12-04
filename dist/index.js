@@ -5754,7 +5754,7 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 564:
+/***/ 821:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -5936,9 +5936,10 @@ const templateBuilder = async (contributors, prevContributors, type) => {
  * @param {Array} contributors - current contributors
  * @param {Array} collaborators - current colloborators
  * @param {Array} bots - current bots
+ * @param {Array} sponsors - current sponsors
  * @returns {Array} prdered list
  */
-const joinArray = (values, prevContributors, contributors, collaborators, bots) => {
+const joinArray = (values, prevContributors, contributors, collaborators, bots, sponsors) => {
     let joinedArray = [];
 
     values.forEach(category => {
@@ -5953,6 +5954,9 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots) 
                 break;
             case 'bots':
                 joinedArray = joinedArray.concat(bots);
+                break;
+            case 'sponsors':
+                joinedArray = joinedArray.concat(sponsors);
                 break;
             default:
                 prevContributors[category]
@@ -5969,12 +5973,19 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots) 
     return joinedArray;
 };
 
-const buildContent = async (templateContent, contributors, collaborators, bots, content) => {
+const buildContent = async (
+    templateContent,
+    contributors,
+    collaborators,
+    bots,
+    sponsors,
+    content
+) => {
     /**
      * regex expression to parse the options passed inside the readme tags
      * eg: <!-- readme:contributors,bots -start --!> anything inside this<!-- readme:contributors,bots -end --!>
      * using the regex we get two groups return as
-     *  type: contributors,bots
+     *  type: contributors,bots, collobortors, sponsors
      *      use: to get the options passed
      *  content: anything that was inside the tag
      *      use: to reuse the html created inside the tah
@@ -5985,7 +5996,14 @@ const buildContent = async (templateContent, contributors, collaborators, bots, 
     );
     const prevContributors = utils_templateParser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
-    const contributorsPool = joinArray(types, prevContributors, contributors, collaborators, bots);
+    const contributorsPool = joinArray(
+        types,
+        prevContributors,
+        contributors,
+        collaborators,
+        bots,
+        sponsors
+    );
 
     let contributors_content = await utils_templateBuilder(
         contributorsPool,
@@ -6007,8 +6025,8 @@ const buildContent = async (templateContent, contributors, collaborators, bots, 
 
 /* harmony default export */ const src_core = (buildContent);
 
-// CONCATENATED MODULE: ./src/query/getSponsersList.gql
-/* harmony default export */ const getSponsersList = (`
+// CONCATENATED MODULE: ./src/query/getSponsorsList.gql
+/* harmony default export */ const getSponsorsList = (`
 query {
     user(login: "freakboy3742") {
         name
@@ -6073,7 +6091,7 @@ async function run() {
             repo,
             affiliation
         });
-        const sponsersList = await src_octokit.graphql(getSponsersList);
+        const sponsersList = await src_octokit.graphql(getSponsorsList);
 
         // get data of contributors
         // collaborators
@@ -6103,7 +6121,6 @@ async function run() {
                 avatarUrl
             })
         );
-        console.log(sponsers);
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
@@ -6132,6 +6149,7 @@ async function run() {
                 contributors,
                 collaborators,
                 bots,
+                sponsers,
                 content
             );
         }
@@ -6324,7 +6342,7 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(564);
+/******/ 	return __webpack_require__(821);
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
