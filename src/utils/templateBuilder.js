@@ -4,11 +4,11 @@ import octokit from '../octokit';
 
 import * as core from '@actions/core';
 
-export const getTemplate = (userID, imageSize, name, avatar_url) => {
+export const getTemplate = (userID, imageSize, name, avatarUrl) => {
     return `
     <td align="center">
         <a href="https://github.com/${userID}">
-            <img src="${avatar_url}" width="${imageSize};" alt="${userID}"/>
+            <img src="${avatarUrl}" width="${imageSize};" alt="${userID}"/>
             <br />
             <sub><b>${name ? capitalize(name) : userID}</b></sub>
         </a>
@@ -18,13 +18,13 @@ export const getTemplate = (userID, imageSize, name, avatar_url) => {
 /**
  * function to generate userinfo either from prev readme data or using fetch
  * @param {string} login : login id of github
- * @param {string} avatar_url : url of the github user
+ * @param {string} avatarUrl : url of the github user
  * @param {object} prevContributors : prev contributors list to fetch it like a cache instead of calling
  * @param {object} octokit : octokit client
  */
-export const getUserInfo = async (login, avatar_url, prevContributors) => {
+export const getUserInfo = async (login, avatarUrl, prevContributors) => {
     if (prevContributors[login] && prevContributors[login].url) {
-        return { name: prevContributors[login].name, url: avatar_url };
+        return { name: prevContributors[login].name, url: avatarUrl };
     } else {
         try {
             const user_details = await octokit.users.getByUsername({ username: login });
@@ -61,13 +61,13 @@ const templateBuilder = async (contributors, prevContributors, type) => {
             column <= columns && (row - 1) * columns + column - 1 < contributors.length;
             column++
         ) {
-            const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
+            const { login, avatarUrl, type } = contributors[(row - 1) * columns + column - 1];
 
             if (type !== 'bot') {
-                const { name, url } = await getUserInfo(login, avatar_url, prevContributors);
+                const { name, url } = await getUserInfo(login, avatarUrl, prevContributors);
                 contributors_content += getTemplate(login, imageSize, name, url);
             } else {
-                contributors_content += getTemplate(login, imageSize, login, avatar_url);
+                contributors_content += getTemplate(login, imageSize, login, avatarUrl);
             }
         }
         contributors_content += '</tr>\n';
