@@ -6009,7 +6009,7 @@ const buildContent = async (templateContent, contributors, collaborators, bots, 
 
 // CONCATENATED MODULE: ./src/query/getSponsersList.gql
 /* harmony default export */ const getSponsersList = (`
-query() {
+query {
     user(login: "freakboy3742") {
         name
         sponsorshipsAsMaintainer(first: 100) {
