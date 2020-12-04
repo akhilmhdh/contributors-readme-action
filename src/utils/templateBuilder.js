@@ -2,7 +2,7 @@ import capitalize from './capitalize';
 import stripDuplicates from './stripDuplicates';
 import octokit from '../octokit';
 
-import * as core from '@actions/core';
+import { getInput } from '@actions/core';
 
 export const getTemplate = (userID, imageSize, name, avatarUrl) => {
     return `
@@ -45,8 +45,8 @@ export const getUserInfo = async (login, avatarUrl, prevContributors) => {
  */
 const templateBuilder = async (contributors, prevContributors, type) => {
     // get various inputs applied in action.yml
-    const imageSize = core.getInput('image_size').trim();
-    const columns = Number(core.getInput('columns_per_row').trim());
+    const imageSize = getInput('image_size').trim();
+    const columns = Number(getInput('columns_per_row').trim());
 
     let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
 
