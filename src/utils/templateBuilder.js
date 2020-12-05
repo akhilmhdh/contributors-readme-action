@@ -61,15 +61,15 @@ const templateBuilder = async (contributors, prevContributors, type) => {
             column <= columns && (row - 1) * columns + column - 1 < contributors.length;
             column++
         ) {
-            const { login, avatarUrl, type } = contributors[(row - 1) * columns + column - 1];
-            console.log({ login, avatarUrl, type });
+            const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
+            console.log({ login, avatar_url, type });
             console.log(JSON.stringify(prevContributors, null, 4));
 
             if (type !== 'bot') {
-                const { name, url } = await getUserInfo(login, avatarUrl, prevContributors);
+                const { name, url } = await getUserInfo(login, avatar_url, prevContributors);
                 contributors_content += getTemplate(login, imageSize, name, url);
             } else {
-                contributors_content += getTemplate(login, imageSize, login, avatarUrl);
+                contributors_content += getTemplate(login, imageSize, login, avatar_url);
             }
         }
         contributors_content += '</tr>\n';

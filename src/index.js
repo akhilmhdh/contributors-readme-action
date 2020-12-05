@@ -55,7 +55,7 @@ async function run() {
             .filter(el => el.type === 'Bot')
             .map(({ login, avatar_url }) => ({
                 login: login,
-                avatarUrl: avatar_url,
+                avatar_url,
                 name: login,
                 type: 'bot'
             }));
@@ -64,7 +64,7 @@ async function run() {
             .filter(el => el.type === 'Bot')
             .map(({ login, avatar_url }) => ({
                 login: login,
-                avatarUrl: avatar_url,
+                avatar_url,
                 name: login,
                 type: 'bot'
             }));
@@ -72,7 +72,7 @@ async function run() {
             ({ sponsorEntity: { name, login, avatarUrl } }) => ({
                 name,
                 login,
-                avatarUrl
+                avatar_url: avatarUrl
             })
         );
         const bots = [...contributorsBots, ...collaboratorsBots];
