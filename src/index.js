@@ -43,25 +43,29 @@ async function run() {
             repo,
             affiliation
         });
-        console.log(console.log(JSON.stringify(contributorsList.data, null, 4)));
-        console.log(console.log(JSON.stringify(collaboratorsList.data, null, 4)));
+        console.log(JSON.stringify(contributorsList.data, null, 4));
+        console.log(JSON.stringify(collaboratorsList.data, null, 4));
         const sponsersList = await octokit.graphql(getSponserListQuery, { owner });
 
         // get data of contributors
         // collaborators
         // bots
-        const contributors = contributorsList.data.filter(el => el.type !== 'Bot');
+        const contributors = contributorsList.data.filter(
+            el => el.type !== 'Bot' || !el.login.includes('actions-user')
+        );
         const contributorsBots = contributorsList.data
-            .filter(el => el.type === 'Bot')
+            .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
             .map(({ login, avatar_url }) => ({
                 login: login,
                 avatar_url,
                 name: login,
                 type: 'bot'
             }));
-        const collaborators = collaboratorsList.data.filter(el => el.type !== 'Bot');
+        const collaborators = collaboratorsList.data.filter(
+            el => el.type !== 'Bot' || !el.login.includes('actions-user')
+        );
         const collaboratorsBots = contributorsList.data
-            .filter(el => el.type === 'Bot')
+            .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
             .map(({ login, avatar_url }) => ({
                 login: login,
                 avatar_url,
