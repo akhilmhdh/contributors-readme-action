@@ -31,7 +31,7 @@ jobs:
         name: A job to automate contrib in readme
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@v2.0.2
+              uses: akhilmhdh/contributors-readme-action@v2.1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -41,7 +41,7 @@ That's it!
 To add it to your to your existing workflow, append this to your current `.yml` workflow script.
 
 ```yml
-- uses: akhilmhdh/contributors-readme-action@v2.0.2
+- uses: akhilmhdh/contributors-readme-action@v2.1
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -98,7 +98,15 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 
 > The subject inside start and end must be same.
 
-> Currently supported key commands are _collaborators_, _contributors_, _bots_
+### Keywords
+
+| keywords      | Definition                                       |
+| ------------- | ------------------------------------------------ |
+| contributors  | contributors of the repo                         |
+| collaborators | contributors of the repo                         |
+| sponsors      | sponsors of the repo's user/organization         |
+| bots          | bots of the repo                                 |
+| username      | any username that you want to add on to the list |
 
 -   [An example of this action can be found here](./contributors.md)
 
@@ -108,7 +116,7 @@ You can add these optional parameters in your action script to modify the appear
 
 ```yml
 - name: Contribute List
-  uses: akhilmhdh/contributors-readme-action@v2.0
+  uses: akhilmhdh/contributors-readme-action@v2.1
   with:
       image_size: 100
 ```
@@ -123,19 +131,14 @@ You can add these optional parameters in your action script to modify the appear
 | committer_username | contrib-readme-bot                       | Username on commit                                | false    |
 | committer_email    | email id of committer                    | contrib-readme-action@noreply.com                 | false    |
 
-## To-Do
-
--   [ ] graphql migration
--   [ ] sponser command support
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project
-- [image-shield](https://shields.io/): For the cool badges
+-   [all-contributors-bot](https://github.com/all-contributors/all-contributors): Inspiration for this project
+-   [image-shield](https://shields.io/): For the cool badges
 
 [contributors-shield]: https://img.shields.io/github/contributors/akhilmhdh/contributors-readme-action.svg?style=for-the-badge
 [contributors-url]: https://github.com/akhilmhdh/contributors-readme-action/graphs/contributors
@@ -147,4 +150,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [issues-url]: https://github.com/akhilmhdh/contributors-readme-action/issues
 [license-shield]: https://img.shields.io/github/license/akhilmhdh/contributors-readme-action.svg?style=for-the-badge
 [license-url]: https://github.com/akhilmhdh/contributors-readme-action/blob/master/LICENSE.txt
-
