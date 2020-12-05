@@ -43,7 +43,8 @@ async function run() {
             repo,
             affiliation
         });
-        console.log({ contributorsList, collaboratorsList });
+        console.log(console.log(JSON.stringify(contributorsList.data, null, 4)));
+        console.log(console.log(JSON.stringify(collaboratorsList.data, null, 4)));
         const sponsersList = await octokit.graphql(getSponserListQuery, { owner });
 
         // get data of contributors
