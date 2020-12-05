@@ -6091,6 +6091,7 @@ async function run() {
             repo,
             affiliation
         });
+        console.log({ contributorsList, collaboratorsList });
         const sponsersList = await src_octokit.graphql(getSponsorsList, { owner });
 
         // get data of contributors
