@@ -62,8 +62,6 @@ const templateBuilder = async (contributors, prevContributors, type) => {
             column++
         ) {
             const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
-            console.log({ login, avatar_url, type });
-            console.log(JSON.stringify(prevContributors, null, 4));
 
             if (type !== 'bot') {
                 const { name, url } = await getUserInfo(login, avatar_url, prevContributors);

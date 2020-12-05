@@ -5908,8 +5908,6 @@ const templateBuilder = async (contributors, prevContributors, type) => {
             column++
         ) {
             const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
-            console.log({ login, avatar_url, type });
-            console.log(JSON.stringify(prevContributors, null, 4));
 
             if (type !== 'bot') {
                 const { name, url } = await getUserInfo(login, avatar_url, prevContributors);
@@ -6093,9 +6091,7 @@ async function run() {
             repo,
             affiliation
         });
-        console.log(JSON.stringify(contributorsList.data, null, 4));
-        console.log(JSON.stringify(collaboratorsList.data, null, 4));
-        const sponsersList = await src_octokit.graphql(getSponsorsList, { owner });
+        const sponsorsList = await src_octokit.graphql(getSponsorsList, { owner });
 
         // get data of contributors
         // collaborators
@@ -6122,7 +6118,7 @@ async function run() {
                 name: login,
                 type: 'bot'
             }));
-        const sponsers = sponsersList.user.sponsorshipsAsMaintainer.nodes.map(
+        const sponsors = sponsorsList.user.sponsorshipsAsMaintainer.nodes.map(
             ({ sponsorEntity: { name, login, avatarUrl } }) => ({
                 name,
                 login,
@@ -6130,7 +6126,6 @@ async function run() {
             })
         );
         const bots = [...contributorsBots, ...collaboratorsBots];
-        console.log({ contributorsBots, collaboratorsBots, bots });
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
         const prevContent = content;
@@ -6158,7 +6153,7 @@ async function run() {
                 contributors,
                 collaborators,
                 bots,
-                sponsers,
+                sponsors,
                 content
             );
         }

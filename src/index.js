@@ -3,7 +3,7 @@ import { context } from '@actions/github';
 import octokit from './octokit';
 
 import buildContributorsList from './core';
-import getSponserListQuery from './query/getSponsorsList.gql';
+import getSponsorListQuery from './query/getSponsorsList.gql';
 
 async function run() {
     try {
@@ -43,9 +43,7 @@ async function run() {
             repo,
             affiliation
         });
-        console.log(JSON.stringify(contributorsList.data, null, 4));
-        console.log(JSON.stringify(collaboratorsList.data, null, 4));
-        const sponsersList = await octokit.graphql(getSponserListQuery, { owner });
+        const sponsorsList = await octokit.graphql(getSponsorListQuery, { owner });
 
         // get data of contributors
         // collaborators
@@ -72,7 +70,7 @@ async function run() {
                 name: login,
                 type: 'bot'
             }));
-        const sponsers = sponsersList.user.sponsorshipsAsMaintainer.nodes.map(
+        const sponsors = sponsorsList.user.sponsorshipsAsMaintainer.nodes.map(
             ({ sponsorEntity: { name, login, avatarUrl } }) => ({
                 name,
                 login,
@@ -80,7 +78,6 @@ async function run() {
             })
         );
         const bots = [...contributorsBots, ...collaboratorsBots];
-        console.log({ contributorsBots, collaboratorsBots, bots });
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
         const prevContent = content;
@@ -108,7 +105,7 @@ async function run() {
                 contributors,
                 collaborators,
                 bots,
-                sponsers,
+                sponsors,
                 content
             );
         }
