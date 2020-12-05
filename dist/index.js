@@ -6101,7 +6101,7 @@ async function run() {
         // collaborators
         // bots
         const contributors = contributorsList.data.filter(
-            el => el.type !== 'Bot' || !el.login.includes('actions-user')
+            el => el.type !== 'Bot' && !el.login.includes('actions-user')
         );
         const contributorsBots = contributorsList.data
             .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
@@ -6112,7 +6112,7 @@ async function run() {
                 type: 'bot'
             }));
         const collaborators = collaboratorsList.data.filter(
-            el => el.type !== 'Bot' || !el.login.includes('actions-user')
+            el => el.type !== 'Bot' && !el.login.includes('actions-user')
         );
         const collaboratorsBots = contributorsList.data
             .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
@@ -6130,6 +6130,7 @@ async function run() {
             })
         );
         const bots = [...contributorsBots, ...collaboratorsBots];
+        console.log({ contributorsBots, collaboratorsBots, bots });
         // parse the base64 readme
         let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
         const prevContent = content;
