@@ -5754,7 +5754,7 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 821:
+/***/ 649:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6045,9 +6045,25 @@ query($owner:String!) {
 }
 `);
 
-// EXTERNAL MODULE: ./node_modules/@vercel/ncc/dist/ncc/@@notfound.js?./query/getOrgSponsorsList.gql
-var getOrgSponsorsList = __webpack_require__(95);
-var getOrgSponsorsList_default = /*#__PURE__*/__webpack_require__.n(getOrgSponsorsList);
+// CONCATENATED MODULE: ./src/query/getOrgSponsorsList.gql
+/* harmony default export */ const getOrgSponsorsList = (`
+query($owner:String!) {
+    organization(login: $owner) {
+        name
+        sponsorshipsAsMaintainer(first: 100) {
+            nodes {
+                sponsorEntity {
+                    ... on User {
+                        name
+                        login
+                        avatarUrl
+                    }
+                }
+            }
+        }
+    }
+}
+`);
 
 // CONCATENATED MODULE: ./src/index.js
 
@@ -6106,7 +6122,7 @@ async function run() {
          * if no -> org sponserlist
          */
         const sponsorsList = await src_octokit.graphql(
-            isOrg ? (getOrgSponsorsList_default()) : getSponsorsList,
+            isOrg ? getOrgSponsorsList : getSponsorsList,
             { owner }
         );
 
@@ -6201,14 +6217,6 @@ async function run() {
 }
 
 run();
-
-
-/***/ }),
-
-/***/ 95:
-/***/ ((module) => {
-
-module.exports = eval("require")("./query/getOrgSponsorsList.gql");
 
 
 /***/ }),
@@ -6357,35 +6365,6 @@ module.exports = require("zlib");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -6403,7 +6382,7 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(821);
+/******/ 	return __webpack_require__(649);
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map
