@@ -6080,9 +6080,6 @@ async function run() {
             if (github.context.payload.action !== 'closed') return;
         }
 
-        const userInfo = await src_octokit.users.getAuthenticated();
-        const isOrg = userInfo.data.type === 'Organization';
-
         // get various inputs applied in action.yml
         const path = (0,core.getInput)('readme_path').trim();
         const affiliation = (0,core.getInput)('collaborators').trim();
@@ -6099,6 +6096,9 @@ async function run() {
 
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
+
+        const userInfo = await src_octokit.users.getByUsername({ username: owner });
+        const isOrg = userInfo.data.type === 'Organization';
 
         // get the readme of the repo
         const readme = await src_octokit.repos.getContent({ owner, repo, path });

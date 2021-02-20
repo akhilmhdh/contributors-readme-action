@@ -12,9 +12,6 @@ async function run() {
             if (context.payload.action !== 'closed') return;
         }
 
-        const userInfo = await octokit.users.getAuthenticated();
-        const isOrg = userInfo.data.type === 'Organization';
-
         // get various inputs applied in action.yml
         const path = getInput('readme_path').trim();
         const affiliation = getInput('collaborators').trim();
@@ -31,6 +28,9 @@ async function run() {
 
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
+
+        const userInfo = await octokit.users.getByUsername({ username: owner });
+        const isOrg = userInfo.data.type === 'Organization';
 
         // get the readme of the repo
         const readme = await octokit.repos.getContent({ owner, repo, path });
