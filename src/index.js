@@ -79,7 +79,7 @@ async function run() {
         );
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
-        let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
+        let content = Buffer.from(readme.data.content, 'base64').toString('utf8');
         const prevContent = content;
 
         /**
@@ -110,7 +110,7 @@ async function run() {
             );
         }
 
-        const base64String = Buffer.from(content).toString('base64');
+        const base64String = Buffer.from(content, 'utf8').toString('base64');
 
         if (prevContent !== content) {
             await octokit.repos.createOrUpdateFileContents({
