@@ -1,0 +1,18 @@
+export default `
+query($owner:String!) {
+    organization(login: $owner) {
+        name
+        sponsorshipsAsMaintainer(first: 100) {
+            nodes {
+                sponsorEntity {
+                    ... on User {
+                        name
+                        login
+                        avatarUrl
+                    }
+                }
+            }
+        }
+    }
+}
+`

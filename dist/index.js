@@ -5754,7 +5754,7 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 821:
+/***/ 649:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -6045,7 +6045,28 @@ query($owner:String!) {
 }
 `);
 
+// CONCATENATED MODULE: ./src/query/getOrgSponsorsList.gql
+/* harmony default export */ const getOrgSponsorsList = (`
+query($owner:String!) {
+    organization(login: $owner) {
+        name
+        sponsorshipsAsMaintainer(first: 100) {
+            nodes {
+                sponsorEntity {
+                    ... on User {
+                        name
+                        login
+                        avatarUrl
+                    }
+                }
+            }
+        }
+    }
+}
+`);
+
 // CONCATENATED MODULE: ./src/index.js
+
 
 
 
@@ -6058,6 +6079,9 @@ async function run() {
         if (github.context.payload.action) {
             if (github.context.payload.action !== 'closed') return;
         }
+
+        const userInfo = await src_octokit.users.getAuthenticated();
+        const isOrg = userInfo.data.type === 'Organization';
 
         // get various inputs applied in action.yml
         const path = (0,core.getInput)('readme_path').trim();
@@ -6091,7 +6115,16 @@ async function run() {
             repo,
             affiliation
         });
-        const sponsorsList = await src_octokit.graphql(getSponsorsList, { owner });
+
+        /**
+         * check whether the owner repo is user or not
+         * if yes -> sponserlist of user
+         * if no -> org sponserlist
+         */
+        const sponsorsList = await src_octokit.graphql(
+            isOrg ? getOrgSponsorsList : getSponsorsList,
+            { owner }
+        );
 
         // get data of contributors
         // collaborators
@@ -6110,6 +6143,7 @@ async function run() {
         const collaborators = collaboratorsList.data.filter(
             el => el.type !== 'Bot' && !el.login.includes('actions-user')
         );
+
         const collaboratorsBots = contributorsList.data
             .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
             .map(({ login, avatar_url }) => ({
@@ -6118,16 +6152,18 @@ async function run() {
                 name: login,
                 type: 'bot'
             }));
-        const sponsors = sponsorsList.user.sponsorshipsAsMaintainer.nodes.map(
-            ({ sponsorEntity: { name, login, avatarUrl } }) => ({
-                name,
-                login,
-                avatar_url: avatarUrl
-            })
-        );
+
+        const sponsors = sponsorsList[
+            isOrg ? 'organization' : 'user'
+        ].sponsorshipsAsMaintainer.nodes.map(({ sponsorEntity: { name, login, avatarUrl } }) => ({
+            name,
+            login,
+            avatar_url: avatarUrl
+        }));
+
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
-        let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
+        let content = Buffer.from(readme.data.content, 'base64').toString('utf8');
         const prevContent = content;
 
         /**
@@ -6158,7 +6194,7 @@ async function run() {
             );
         }
 
-        const base64String = Buffer.from(content).toString('base64');
+        const base64String = Buffer.from(content, 'utf8').toString('base64');
 
         if (prevContent !== content) {
             await src_octokit.repos.createOrUpdateFileContents({
@@ -6346,7 +6382,7 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(821);
+/******/ 	return __webpack_require__(649);
 /******/ })()
 ;
 //# sourceMappingURL=index.js.map

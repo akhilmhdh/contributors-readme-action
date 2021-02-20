@@ -4,12 +4,16 @@ import octokit from './octokit';
 
 import buildContributorsList from './core';
 import getSponsorListQuery from './query/getSponsorsList.gql';
+import getOrgSponsorListQuery from './query/getOrgSponsorsList.gql';
 
 async function run() {
     try {
         if (context.payload.action) {
             if (context.payload.action !== 'closed') return;
         }
+
+        const userInfo = await octokit.users.getAuthenticated();
+        const isOrg = userInfo.data.type === 'Organization';
 
         // get various inputs applied in action.yml
         const path = getInput('readme_path').trim();
@@ -43,7 +47,16 @@ async function run() {
             repo,
             affiliation
         });
-        const sponsorsList = await octokit.graphql(getSponsorListQuery, { owner });
+
+        /**
+         * check whether the owner repo is user or not
+         * if yes -> sponserlist of user
+         * if no -> org sponserlist
+         */
+        const sponsorsList = await octokit.graphql(
+            isOrg ? getOrgSponsorListQuery : getSponsorListQuery,
+            { owner }
+        );
 
         // get data of contributors
         // collaborators
@@ -62,6 +75,7 @@ async function run() {
         const collaborators = collaboratorsList.data.filter(
             el => el.type !== 'Bot' && !el.login.includes('actions-user')
         );
+
         const collaboratorsBots = contributorsList.data
             .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
             .map(({ login, avatar_url }) => ({
@@ -70,16 +84,18 @@ async function run() {
                 name: login,
                 type: 'bot'
             }));
-        const sponsors = sponsorsList.user.sponsorshipsAsMaintainer.nodes.map(
-            ({ sponsorEntity: { name, login, avatarUrl } }) => ({
-                name,
-                login,
-                avatar_url: avatarUrl
-            })
-        );
+
+        const sponsors = sponsorsList[
+            isOrg ? 'organization' : 'user'
+        ].sponsorshipsAsMaintainer.nodes.map(({ sponsorEntity: { name, login, avatarUrl } }) => ({
+            name,
+            login,
+            avatar_url: avatarUrl
+        }));
+
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme
-        let content = Buffer.from(readme.data.content, 'base64').toString('ascii');
+        let content = Buffer.from(readme.data.content, 'base64').toString('utf8');
         const prevContent = content;
 
         /**
@@ -110,7 +126,7 @@ async function run() {
             );
         }
 
-        const base64String = Buffer.from(content).toString('base64');
+        const base64String = Buffer.from(content, 'utf8').toString('base64');
 
         if (prevContent !== content) {
             await octokit.repos.createOrUpdateFileContents({
