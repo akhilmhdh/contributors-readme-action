@@ -5894,7 +5894,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const imageSize = (0,core.getInput)('image_size').trim();
     const columns = Number((0,core.getInput)('columns_per_row').trim());
 
-    let contributors_content = `<!-- readme:${type}-start --> \n<table>\n`;
+    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
