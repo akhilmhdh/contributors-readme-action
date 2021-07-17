@@ -31,7 +31,7 @@ jobs:
         name: A job to automate contrib in readme
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@v2.1.2
+              uses: akhilmhdh/contributors-readme-action@v2.2
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -41,7 +41,7 @@ That's it!
 To add it to your to your existing workflow, append this to your current `.yml` workflow script.
 
 ```yml
-- uses: akhilmhdh/contributors-readme-action@v2.1.2
+- uses: akhilmhdh/contributors-readme-action@v2.2
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -110,13 +110,21 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 
 -   [An example of this action can be found here](./contributors.md)
 
+### Operators
+
+Operators are in a nutshell simple modifiers that can be applied to a list like removing a person from a list. They can be applied accordingly to a keyword like `akhilmhdh/-` with a / as seperator.
+
+| operator | Definition                    | Example     |
+| -------- | ----------------------------- | ----------- |
+| /-       | remove the username from list | akhilmhdh/- |
+
 ### Optional parameters
 
 You can add these optional parameters in your action script to modify the appearance of the resulting list.
 
 ```yml
 - name: Contribute List
-  uses: akhilmhdh/contributors-readme-action@v2.1
+  uses: akhilmhdh/contributors-readme-action@v2.2
   with:
       image_size: 100
 ```
@@ -125,6 +133,7 @@ You can add these optional parameters in your action script to modify the appear
 | ------------------ | ---------------------------------------- | ------------------------------------------------- | -------- |
 | image_size         | 100(px)                                  | Size of square images in the stack                | false    |
 | readme_path        | README.md                                | Path of the readme file you want to update        | false    |
+| user_username      | false                                    | To use username instead of full name              | false    |
 | columns_per_row    | 6                                        | Number of columns in a row                        | false    |
 | collaborators      | direct                                   | Type of collaborators options: all/direct/outside | false    |
 | commit_message     | contrib-readme-action has updated readme | Commit message of the github action               | false    |
