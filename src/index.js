@@ -18,7 +18,6 @@ async function run() {
         const message = getInput('commit_message').trim();
         const name = getInput('committer_username').trim();
         const email = getInput('committer_email').trim();
-
         // get repo token
         const token = process.env['GITHUB_TOKEN'];
 

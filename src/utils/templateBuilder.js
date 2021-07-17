@@ -2,7 +2,7 @@ import capitalize from './capitalize';
 import stripDuplicates from './stripDuplicates';
 import octokit from '../octokit';
 
-import { getInput } from '@actions/core';
+import { getBooleanInput, getInput } from '@actions/core';
 
 export const getTemplate = (userID, imageSize, name, avatarUrl) => {
     return `
@@ -10,7 +10,7 @@ export const getTemplate = (userID, imageSize, name, avatarUrl) => {
         <a href="https://github.com/${userID}">
             <img src="${avatarUrl}" width="${imageSize};" alt="${userID}"/>
             <br />
-            <sub><b>${name ? capitalize(name) : userID}</b></sub>
+            <sub><b>${name ? name : userID}</b></sub>
         </a>
     </td>`;
 };
@@ -20,20 +20,27 @@ export const getTemplate = (userID, imageSize, name, avatarUrl) => {
  * @param {string} login : login id of github
  * @param {string} avatarUrl : url of the github user
  * @param {object} prevContributors : prev contributors list to fetch it like a cache instead of calling
- * @param {object} octokit : octokit client
+ * @param {boolean} useUsername : to use githubid instead of full name
  */
-export const getUserInfo = async (login, avatarUrl, prevContributors) => {
-    if (prevContributors[login] && prevContributors[login].url) {
-        return { name: prevContributors[login].name, url: avatarUrl };
-    } else {
+export const getUserInfo = async (login, avatarUrl, prevContributors, useUserName) => {
+    const isUserDetailsAvailable = Boolean(prevContributors[login] || (useUserName && avatarUrl));
+
+    if (!isUserDetailsAvailable) {
         try {
-            const user_details = await octokit.users.getByUsername({ username: login });
-            return { name: user_details.data.name, url: user_details.data.avatar_url };
+            const {
+                data: { name, avatar_url }
+            } = await octokit.users.getByUsername({ username: login });
+            return { name: useUserName ? login : name, url: avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
             return { name: login, url: '' };
         }
     }
+
+    return {
+        name: useUserName ? login : prevContributors[login].name,
+        url: avatarUrl || prevContributors[login].url
+    };
 };
 
 /**
@@ -46,6 +53,7 @@ export const getUserInfo = async (login, avatarUrl, prevContributors) => {
 const templateBuilder = async (contributors, prevContributors, type) => {
     // get various inputs applied in action.yml
     const imageSize = getInput('image_size').trim();
+    const useUsername = getBooleanInput('use_username');
     const columns = Number(getInput('columns_per_row').trim());
 
     let contributors_content = `<!-- readme:${type}-start -->\n<table>\n`;
@@ -64,8 +72,18 @@ const templateBuilder = async (contributors, prevContributors, type) => {
             const { login, avatar_url, type } = contributors[(row - 1) * columns + column - 1];
 
             if (type !== 'bot') {
-                const { name, url } = await getUserInfo(login, avatar_url, prevContributors);
-                contributors_content += getTemplate(login, imageSize, name, url);
+                const { name, url } = await getUserInfo(
+                    login,
+                    avatar_url,
+                    prevContributors,
+                    useUsername
+                );
+                contributors_content += getTemplate(
+                    login,
+                    imageSize,
+                    useUsername ? name : capitalize(name),
+                    url
+                );
             } else {
                 contributors_content += getTemplate(login, imageSize, login, avatar_url);
             }
