@@ -14,9 +14,11 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots, 
     let joinedArray = [];
 
     values.forEach(category => {
+        // checks the command and parses it eg: contributors,akhilmhdh|-
         category = category.trim().toLowerCase();
+        const [category_type, operator] = category.split('/'); // category is like akhilmhdh/-
 
-        switch (category) {
+        switch (category_type.trim()) {
             case 'contributors':
                 joinedArray = joinedArray.concat(contributors);
                 break;
@@ -30,14 +32,25 @@ const joinArray = (values, prevContributors, contributors, collaborators, bots, 
                 joinedArray = joinedArray.concat(sponsors);
                 break;
             default:
-                prevContributors[category]
+                prevContributors[category_type]
                     ? joinedArray.push({
-                          login: category,
-                          avatar_url: prevContributors[category].url,
-                          name: prevContributors[category].name
+                          login: category_type,
+                          avatar_url: prevContributors[category_type].url,
+                          name: prevContributors[category_type].name
                       })
-                    : joinedArray.push({ login: category });
+                    : joinedArray.push({ login: category_type });
                 break;
+        }
+        // operators mutation
+        if (operator) {
+            switch (operator.trim()) {
+                case '-': {
+                    joinedArray = joinedArray.filter(({ login }) => login !== category_type);
+                    break;
+                }
+                default:
+                    break;
+            }
         }
     });
 
@@ -89,7 +102,6 @@ const buildContent = async (
     const re = new RegExp(
         `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
     );
-
     const postprocess_content = content.replace(re, contributors_content);
     return postprocess_content;
 };
