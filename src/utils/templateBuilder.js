@@ -29,7 +29,7 @@ export const getUserInfo = async (login, avatarUrl, prevContributors, useUserNam
         try {
             const {
                 data: { name, avatar_url }
-            } = await octokit.users.getByUsername({ username: login });
+            } = await octokit.rest.users.getByUsername({ username: login });
             return { name: useUserName ? login : name, url: avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);

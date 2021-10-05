@@ -28,20 +28,22 @@ async function run() {
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
 
-        const userInfo = await octokit.users.getByUsername({ username: owner });
+        const userInfo = await octokit.rest.users.getByUsername({ username: owner });
         const isOrg = userInfo.data.type === 'Organization';
-
         // get the readme of the repo
-        const readme = await octokit.repos.getContent({ owner, repo, path });
-
+        const readme = await octokit.rest.repos.getContent({ owner, repo, path });
         if (readme.headers.status === '404') {
             console.log('readme not added');
             return;
         }
 
         // get all contributors of the repo max:500
-        const contributorsList = await octokit.repos.listContributors({ owner, repo });
-        const collaboratorsList = await octokit.repos.listCollaborators({
+        const contributorsList = await octokit.paginate(octokit.rest.repos.listContributors, {
+            owner,
+            repo
+        });
+
+        const collaboratorsList = await octokit.paginate(octokit.rest.repos.listCollaborators, {
             owner,
             repo,
             affiliation
@@ -60,10 +62,10 @@ async function run() {
         // get data of contributors
         // collaborators
         // bots
-        const contributors = contributorsList.data.filter(
+        const contributors = contributorsList.filter(
             el => el.type !== 'Bot' && !el.login.includes('actions-user')
         );
-        const contributorsBots = contributorsList.data
+        const contributorsBots = contributorsList
             .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
             .map(({ login, avatar_url }) => ({
                 login: login,
@@ -71,11 +73,11 @@ async function run() {
                 name: login,
                 type: 'bot'
             }));
-        const collaborators = collaboratorsList.data.filter(
+        const collaborators = collaboratorsList.filter(
             el => el.type !== 'Bot' && !el.login.includes('actions-user')
         );
 
-        const collaboratorsBots = contributorsList.data
+        const collaboratorsBots = contributorsList
             .filter(el => el.type === 'Bot' || el.login.includes('actions-user'))
             .map(({ login, avatar_url }) => ({
                 login: login,
@@ -128,7 +130,7 @@ async function run() {
         const base64String = Buffer.from(content, 'utf8').toString('base64');
 
         if (prevContent !== content) {
-            await octokit.repos.createOrUpdateFileContents({
+            await octokit.rest.repos.createOrUpdateFileContents({
                 owner,
                 repo,
                 message,
