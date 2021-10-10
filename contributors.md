@@ -40,7 +40,7 @@ This is an example of contributors-readme-action as it can't be utilized in mast
 
 ## Feature Thank Away
 
-<!-- readme: samslow,alandefreitas,atharwa-24 -start -->
+<!-- readme: samslow,alandefreitas,atharwa-24,EmilStenstrom -start -->
 <table>
 <tr>
     <td align="center">
@@ -65,7 +65,7 @@ This is an example of contributors-readme-action as it can't be utilized in mast
         </a>
     </td></tr>
 </table>
-<!-- readme: samslow,alandefreitas,atharwa-24 -end -->
+<!-- readme: samslow,alandefreitas,atharwa-24,EmilStenstrom -end -->
 
 ## Bots
 

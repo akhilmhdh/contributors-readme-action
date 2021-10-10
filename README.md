@@ -31,7 +31,7 @@ jobs:
         name: A job to automate contrib in readme
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@v2.2.1
+              uses: akhilmhdh/contributors-readme-action@v2.3
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -41,12 +41,14 @@ That's it!
 To add it to your to your existing workflow, append this to your current `.yml` workflow script.
 
 ```yml
-- uses: akhilmhdh/contributors-readme-action@v2.2.1
+- uses: akhilmhdh/contributors-readme-action@v2.3
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 > Currently GITHUB_TOKEN doesn't have permission to directly commit on a protected branch. To solve this you may need to replace the github action token with an admin acc token as mentioned in this post by [phips28](https://github.community/t/how-to-push-to-protected-branches-in-a-github-action/16101/10). Hopefully in the future GitHub can give an exception to actions in workflow.
+
+> Now there is an alternative solution, if your branch is protected or there is status checks. You can set input `is_protected` to `true` in config and the action won't directly commit to the branch. Instead it will put a PR by creating a branch out of the branch that the action is running on. To avoid bloating with lot of branches either delete the branch on merge or set the option in github to delete source branch on merge automatically.
 
 ### Second Step
 
@@ -124,21 +126,22 @@ You can add these optional parameters in your action script to modify the appear
 
 ```yml
 - name: Contribute List
-  uses: akhilmhdh/contributors-readme-action@v2.2.1
+  uses: akhilmhdh/contributors-readme-action@v2.3
   with:
       image_size: 100
 ```
 
-| Option             | Default Value                            | Description                                       | Required |
-| ------------------ | ---------------------------------------- | ------------------------------------------------- | -------- |
-| image_size         | 100(px)                                  | Size of square images in the stack                | false    |
-| readme_path        | README.md                                | Path of the readme file you want to update        | false    |
-| user_username      | false                                    | To use username instead of full name              | false    |
-| columns_per_row    | 6                                        | Number of columns in a row                        | false    |
-| collaborators      | direct                                   | Type of collaborators options: all/direct/outside | false    |
-| commit_message     | contrib-readme-action has updated readme | Commit message of the github action               | false    |
-| committer_username | contrib-readme-bot                       | Username on commit                                | false    |
-| committer_email    | email id of committer                    | contrib-readme-action@noreply.com                 | false    |
+| Option             | Default Value                            | Description                                                                                                 | Required |
+| ------------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------- |
+| image_size         | 100(px)                                  | Size of square images in the stack                                                                          | false    |
+| is_protected       | false                                    | If the branch to be updated is protected change this to true to change from directly commiting to PR update | false    |
+| readme_path        | README.md                                | Path of the readme file you want to update                                                                  | false    |
+| user_username      | false                                    | To use username instead of full name                                                                        | false    |
+| columns_per_row    | 6                                        | Number of columns in a row                                                                                  | false    |
+| collaborators      | direct                                   | Type of collaborators options: all/direct/outside                                                           | false    |
+| commit_message     | contrib-readme-action has updated readme | Commit message of the github action                                                                         | false    |
+| committer_username | contrib-readme-bot                       | Username on commit                                                                                          | false    |
+| committer_email    | email id of committer                    | contrib-readme-action@noreply.com                                                                           | false    |
 
 ## License
 
