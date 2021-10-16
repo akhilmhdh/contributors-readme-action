@@ -8421,6 +8421,59 @@ var __webpack_exports__ = {};
 // ESM COMPAT FLAG
 __nccwpck_require__.r(__webpack_exports__);
 
+;// CONCATENATED MODULE: external "crypto"
+const external_crypto_namespaceObject = require("crypto");
+;// CONCATENATED MODULE: ./node_modules/nanoid/url-alphabet/index.js
+let urlAlphabet =
+  'useandom-26T198340PX75pxJACKVERYMINDBUSHWOLF_GQZbfghjklqvwyzrict'
+
+
+;// CONCATENATED MODULE: ./node_modules/nanoid/index.js
+
+
+const POOL_SIZE_MULTIPLIER = 128
+let pool, poolOffset
+let fillPool = bytes => {
+  if (!pool || pool.length < bytes) {
+    pool = Buffer.allocUnsafe(bytes * POOL_SIZE_MULTIPLIER)
+    external_crypto_namespaceObject.randomFillSync(pool)
+    poolOffset = 0
+  } else if (poolOffset + bytes > pool.length) {
+    external_crypto_namespaceObject.randomFillSync(pool)
+    poolOffset = 0
+  }
+  poolOffset += bytes
+}
+let random = bytes => {
+  fillPool(bytes)
+  return pool.subarray(poolOffset - bytes, poolOffset)
+}
+let customRandom = (alphabet, size, getRandom) => {
+  let mask = (2 << (31 - Math.clz32((alphabet.length - 1) | 1))) - 1
+  let step = Math.ceil((1.6 * mask * size) / alphabet.length)
+  return () => {
+    let id = ''
+    while (true) {
+      let bytes = getRandom(step)
+      let i = step
+      while (i--) {
+        id += alphabet[bytes[i] & mask] || ''
+        if (id.length === size) return id
+      }
+    }
+  }
+}
+let customAlphabet = (alphabet, size) => customRandom(alphabet, size, random)
+let nanoid = (size = 21) => {
+  fillPool(size)
+  let id = ''
+  for (let i = poolOffset - size; i < poolOffset; i++) {
+    id += urlAlphabet[pool[i] & 63]
+  }
+  return id
+}
+
+
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
@@ -8764,6 +8817,7 @@ query($owner:String!) {
 
 
 
+
 async function run() {
     try {
         if (github.context.payload.action) {
@@ -8776,6 +8830,11 @@ async function run() {
         const message = (0,core.getInput)('commit_message').trim();
         const name = (0,core.getInput)('committer_username').trim();
         const email = (0,core.getInput)('committer_email').trim();
+        const isProtected = (0,core.getBooleanInput)('is_protected');
+
+        const ref = github.context.ref;
+        const branch = github.context.ref.split('/').pop();
+
         // get repo token
         const token = process.env['GITHUB_TOKEN'];
 
@@ -8789,7 +8848,7 @@ async function run() {
         const userInfo = await src_octokit.rest.users.getByUsername({ username: owner });
         const isOrg = userInfo.data.type === 'Organization';
         // get the readme of the repo
-        const readme = await src_octokit.rest.repos.getContent({ owner, repo, path });
+        const readme = await src_octokit.rest.repos.getContent({ owner, repo, path, ref });
         if (readme.headers.status === '404') {
             console.log('readme not added');
             return;
@@ -8888,18 +8947,53 @@ async function run() {
         const base64String = Buffer.from(content, 'utf8').toString('base64');
 
         if (prevContent !== content) {
-            await src_octokit.rest.repos.createOrUpdateFileContents({
-                owner,
-                repo,
-                message,
-                content: base64String,
-                path,
-                sha: readme.data.sha,
-                committer: {
-                    name,
-                    email
-                }
-            });
+            if (isProtected) {
+                const uniqueId = nanoid(10);
+                const branchNameForPR = `contributors-readme-action-${uniqueId}`;
+
+                await src_octokit.rest.git.createRef({
+                    owner,
+                    repo,
+                    ref: `refs/heads/${branchNameForPR}`,
+                    sha: github.context.sha
+                });
+
+                await src_octokit.rest.repos.createOrUpdateFileContents({
+                    owner,
+                    repo,
+                    message,
+                    content: base64String,
+                    path,
+                    sha: readme.data.sha,
+                    branch: branchNameForPR,
+                    committer: {
+                        name,
+                        email
+                    }
+                });
+
+                await src_octokit.rest.pulls.create({
+                    owner,
+                    repo,
+                    base: branch,
+                    head: branchNameForPR,
+                    title: 'contributors readme action update'
+                });
+            } else {
+                await src_octokit.rest.repos.createOrUpdateFileContents({
+                    owner,
+                    repo,
+                    message,
+                    path,
+                    branch,
+                    content: base64String,
+                    sha: readme.data.sha,
+                    committer: {
+                        name,
+                        email
+                    }
+                });
+            }
             console.log('Updated contribution section of readme');
         }
     } catch (error) {

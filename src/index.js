@@ -1,4 +1,5 @@
-import { getInput, setFailed } from '@actions/core';
+import { nanoid } from 'nanoid';
+import { getInput, getBooleanInput, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 import octokit from './octokit';
 
@@ -18,6 +19,11 @@ async function run() {
         const message = getInput('commit_message').trim();
         const name = getInput('committer_username').trim();
         const email = getInput('committer_email').trim();
+        const isProtected = getBooleanInput('is_protected');
+
+        const ref = context.ref;
+        const branch = context.ref.split('/').pop();
+
         // get repo token
         const token = process.env['GITHUB_TOKEN'];
 
@@ -31,7 +37,7 @@ async function run() {
         const userInfo = await octokit.rest.users.getByUsername({ username: owner });
         const isOrg = userInfo.data.type === 'Organization';
         // get the readme of the repo
-        const readme = await octokit.rest.repos.getContent({ owner, repo, path });
+        const readme = await octokit.rest.repos.getContent({ owner, repo, path, ref });
         if (readme.headers.status === '404') {
             console.log('readme not added');
             return;
@@ -130,18 +136,53 @@ async function run() {
         const base64String = Buffer.from(content, 'utf8').toString('base64');
 
         if (prevContent !== content) {
-            await octokit.rest.repos.createOrUpdateFileContents({
-                owner,
-                repo,
-                message,
-                content: base64String,
-                path,
-                sha: readme.data.sha,
-                committer: {
-                    name,
-                    email
-                }
-            });
+            if (isProtected) {
+                const uniqueId = nanoid(10);
+                const branchNameForPR = `contributors-readme-action-${uniqueId}`;
+
+                await octokit.rest.git.createRef({
+                    owner,
+                    repo,
+                    ref: `refs/heads/${branchNameForPR}`,
+                    sha: context.sha
+                });
+
+                await octokit.rest.repos.createOrUpdateFileContents({
+                    owner,
+                    repo,
+                    message,
+                    content: base64String,
+                    path,
+                    sha: readme.data.sha,
+                    branch: branchNameForPR,
+                    committer: {
+                        name,
+                        email
+                    }
+                });
+
+                await octokit.rest.pulls.create({
+                    owner,
+                    repo,
+                    base: branch,
+                    head: branchNameForPR,
+                    title: 'contributors readme action update'
+                });
+            } else {
+                await octokit.rest.repos.createOrUpdateFileContents({
+                    owner,
+                    repo,
+                    message,
+                    path,
+                    branch,
+                    content: base64String,
+                    sha: readme.data.sha,
+                    committer: {
+                        name,
+                        email
+                    }
+                });
+            }
             console.log('Updated contribution section of readme');
         }
     } catch (error) {
