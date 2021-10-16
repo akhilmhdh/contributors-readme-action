@@ -63,6 +63,13 @@ This is an example of contributors-readme-action as it can't be utilized in mast
             <br />
             <sub><b>Atharwa_24</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/emilstenstrom">
+            <img src="https://avatars.githubusercontent.com/u/224130?v=4" width="100;" alt="emilstenstrom"/>
+            <br />
+            <sub><b>Emil Stenström</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: samslow,alandefreitas,atharwa-24,EmilStenstrom -end -->
