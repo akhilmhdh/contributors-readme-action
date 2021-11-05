@@ -20,6 +20,7 @@ async function run() {
         const name = getInput('committer_username').trim();
         const email = getInput('committer_email').trim();
         const isProtected = getBooleanInput('is_protected');
+        const prTitle = getInput('pr_title').trim();
 
         const ref = context.ref;
         const branch = context.ref.split('/').pop();
@@ -166,7 +167,7 @@ async function run() {
                     repo,
                     base: branch,
                     head: branchNameForPR,
-                    title: 'contributors readme action update'
+                    title: prTitle
                 });
             } else {
                 await octokit.rest.repos.createOrUpdateFileContents({
