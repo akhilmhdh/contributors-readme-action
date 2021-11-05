@@ -37,6 +37,10 @@ inputs:
         description: "email id of committer"
         default: "contrib-readme-action@noreply.com"
         required: false
+    pr_title_on_protected:
+        description: "Title of the PR that will be created if the branch is protected"
+        default: "contributors readme action update"
+        required: false
 runs:
     using: "node12"
     main: "dist/index.js"
