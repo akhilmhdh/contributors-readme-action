@@ -131,17 +131,17 @@ You can add these optional parameters in your action script to modify the appear
       image_size: 100
 ```
 
-| Option             | Default Value                            | Description                                                                                                 | Required |
-| ------------------ | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------- |
-| image_size         | 100(px)                                  | Size of square images in the stack                                                                          | false    |
-| is_protected       | false                                    | If the branch to be updated is protected change this to true to change from directly commiting to PR update | false    |
-| readme_path        | README.md                                | Path of the readme file you want to update                                                                  | false    |
-| use_username      | false                                    | To use username instead of full name                                                                        | false    |
-| columns_per_row    | 6                                        | Number of columns in a row                                                                                  | false    |
-| collaborators      | direct                                   | Type of collaborators options: all/direct/outside                                                           | false    |
-| commit_message     | contrib-readme-action has updated readme | Commit message of the github action                                                                         | false    |
-| committer_username | contrib-readme-bot                       | Username on commit                                                                                          | false    |
-| committer_email    | email id of committer                    | contrib-readme-action@noreply.com                                                                           | false    |
+| Option                | Default Value                            | Description                                                                                                 | Required |
+| --------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------- |
+| image_size            | 100(px)                                  | Size of square images in the stack                                                                          | false    |
+| is_protected          | false                                    | If the branch to be updated is protected change this to true to change from directly commiting to PR update | false    |
+| readme_path           | README.md                                | Path of the readme file you want to update                                                                  | false    |
+| use_username          | false                                    | To use username instead of full name                                                                        | false    |
+| columns_per_row       | 6                                        | Number of columns in a row                                                                                  | false    |
+| collaborators         | direct                                   | Type of collaborators options: all/direct/outside                                                           | false    |
+| commit_message        | contrib-readme-action has updated readme | Commit message of the github action                                                                         | false    |
+| committer_username    | contrib-readme-bot                       | Username on commit                                                                                          | false    |
+| committer_email       | contrib-readme-action@noreply.com        | Email id of committer                                                                                       | false    |
 | pr_title_on_protected | contributors readme action update        | Title of the PR that will be created if the branch is protected                                             | false    |
 
 ## License
