@@ -142,7 +142,7 @@ You can add these optional parameters in your action script to modify the appear
 | commit_message     | contrib-readme-action has updated readme | Commit message of the github action                                                                         | false    |
 | committer_username | contrib-readme-bot                       | Username on commit                                                                                          | false    |
 | committer_email    | email id of committer                    | contrib-readme-action@noreply.com                                                                           | false    |
-| pr_title           | contributors readme action update        | Title of the PR that will be created if the branch is protected                                             | false    |
+| pr_title_on_protected | contributors readme action update        | Title of the PR that will be created if the branch is protected                                             | false    |
 
 ## License
 

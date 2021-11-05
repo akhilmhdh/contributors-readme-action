@@ -20,7 +20,7 @@ async function run() {
         const name = getInput('committer_username').trim();
         const email = getInput('committer_email').trim();
         const isProtected = getBooleanInput('is_protected');
-        const prTitle = getInput('pr_title').trim();
+        const prTitle = getInput('pr_title_on_protected').trim();
 
         const ref = context.ref;
         const branch = context.ref.split('/').pop();
