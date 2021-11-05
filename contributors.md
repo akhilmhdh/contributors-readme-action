@@ -15,6 +15,13 @@ This is an example of contributors-readme-action as it can't be utilized in mast
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/MrChocolatine">
+            <img src="https://avatars.githubusercontent.com/u/47531779?v=4" width="100;" alt="MrChocolatine"/>
+            <br />
+            <sub><b>Max Z</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/matks">
             <img src="https://avatars.githubusercontent.com/u/3830050?v=4" width="100;" alt="matks"/>
             <br />
@@ -26,13 +33,6 @@ This is an example of contributors-readme-action as it can't be utilized in mast
             <img src="https://avatars.githubusercontent.com/u/40897573?v=4" width="100;" alt="athul"/>
             <br />
             <sub><b>Athul Cyriac Ajay</b></sub>
-        </a>
-    </td>
-    <td align="center">
-        <a href="https://github.com/MrChocolatine">
-            <img src="https://avatars.githubusercontent.com/u/47531779?v=4" width="100;" alt="MrChocolatine"/>
-            <br />
-            <sub><b>Max Z</b></sub>
         </a>
     </td>
     <td align="center">
