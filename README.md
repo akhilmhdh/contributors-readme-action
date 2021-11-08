@@ -31,7 +31,7 @@ jobs:
         name: A job to automate contrib in readme
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@v2.3
+              uses: akhilmhdh/contributors-readme-action@v2.3.1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -41,14 +41,10 @@ That's it!
 To add it to your to your existing workflow, append this to your current `.yml` workflow script.
 
 ```yml
-- uses: akhilmhdh/contributors-readme-action@v2.3
+- uses: akhilmhdh/contributors-readme-action@v2.3.1
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
-
-> Currently GITHUB_TOKEN doesn't have permission to directly commit on a protected branch. To solve this you may need to replace the github action token with an admin acc token as mentioned in this post by [phips28](https://github.community/t/how-to-push-to-protected-branches-in-a-github-action/16101/10). Hopefully in the future GitHub can give an exception to actions in workflow.
-
-> Now there is an alternative solution, if your branch is protected or there is status checks. You can set input `is_protected` to `true` in config and the action won't directly commit to the branch. Instead it will put a PR by creating a branch out of the branch that the action is running on. To avoid bloating with lot of branches either delete the branch on merge or set the option in github to delete source branch on merge automatically.
 
 ### Second Step
 
@@ -126,23 +122,40 @@ You can add these optional parameters in your action script to modify the appear
 
 ```yml
 - name: Contribute List
-  uses: akhilmhdh/contributors-readme-action@v2.3
+  uses: akhilmhdh/contributors-readme-action@v2.3.1
   with:
       image_size: 100
 ```
 
-| Option                | Default Value                            | Description                                                                                                 | Required |
-| --------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------- | -------- |
-| image_size            | 100(px)                                  | Size of square images in the stack                                                                          | false    |
-| is_protected          | false                                    | If the branch to be updated is protected change this to true to change from directly commiting to PR update | false    |
-| readme_path           | README.md                                | Path of the readme file you want to update                                                                  | false    |
-| use_username          | false                                    | To use username instead of full name                                                                        | false    |
-| columns_per_row       | 6                                        | Number of columns in a row                                                                                  | false    |
-| collaborators         | direct                                   | Type of collaborators options: all/direct/outside                                                           | false    |
-| commit_message        | contrib-readme-action has updated readme | Commit message of the github action                                                                         | false    |
-| committer_username    | contrib-readme-bot                       | Username on commit                                                                                          | false    |
-| committer_email       | contrib-readme-action@noreply.com        | Email id of committer                                                                                       | false    |
-| pr_title_on_protected | contributors readme action update        | Title of the PR that will be created if the branch is protected                                             | false    |
+| Option                | Default Value                            | Description                                                     | Required |
+| --------------------- | ---------------------------------------- | --------------------------------------------------------------- | -------- |
+| image_size            | 100(px)                                  | Size of square images in the stack                              | false    |
+| readme_path           | README.md                                | Path of the readme file you want to update                      | false    |
+| use_username          | false                                    | To use username instead of full name                            | false    |
+| columns_per_row       | 6                                        | Number of columns in a row                                      | false    |
+| collaborators         | direct                                   | Type of collaborators options: all/direct/outside               | false    |
+| commit_message        | contrib-readme-action has updated readme | Commit message of the github action                             | false    |
+| committer_username    | contrib-readme-bot                       | Username on commit                                              | false    |
+| committer_email       | contrib-readme-action@noreply.com        | Email id of committer                                           | false    |
+| pr_title_on_protected | contributors readme action update        | Title of the PR that will be created if the branch is protected | false    |
+
+> The action will update Readme as PR when the branch is protected, else it will directly commit it.
+
+### Outputs
+
+Following outputs are generated on the execution of this action.
+
+| Output | Value  | Description                                                  |
+| ------ | ------ | ------------------------------------------------------------ |
+| pr_id  | string | Id of the generated PR when the branch is in protected mode. |
+
+## Contributing
+
+Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for getting started with the contribution.
+
+Make sure that you follow [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) while contributing and engaging in the discussions.
+
+**When contributing, please first discuss the change you wish to make via an issue on this repository before making the actual change**.
 
 ## License
 

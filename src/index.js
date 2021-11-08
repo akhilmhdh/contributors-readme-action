@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { getInput, getBooleanInput, setFailed } from '@actions/core';
+import { getInput, setOutput, setFailed } from '@actions/core';
 import { context } from '@actions/github';
 import octokit from './octokit';
 
@@ -19,7 +19,6 @@ async function run() {
         const message = getInput('commit_message').trim();
         const name = getInput('committer_username').trim();
         const email = getInput('committer_email').trim();
-        const isProtected = getBooleanInput('is_protected');
         const prTitle = getInput('pr_title_on_protected').trim();
 
         const ref = context.ref;
@@ -34,6 +33,8 @@ async function run() {
 
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
+        const branchDetails = await octokit.rest.repos.getBranch({ owner, repo, branch });
+        const isProtected = branchDetails.data.protected;
 
         const userInfo = await octokit.rest.users.getByUsername({ username: owner });
         const isOrg = userInfo.data.type === 'Organization';
@@ -162,13 +163,14 @@ async function run() {
                     }
                 });
 
-                await octokit.rest.pulls.create({
+                const prDetails = await octokit.rest.pulls.create({
                     owner,
                     repo,
                     base: branch,
                     head: branchNameForPR,
                     title: prTitle
                 });
+                setOutput('pr_id', prDetails.data.id);
             } else {
                 await octokit.rest.repos.createOrUpdateFileContents({
                     owner,

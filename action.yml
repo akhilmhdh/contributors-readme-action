@@ -5,10 +5,6 @@ inputs:
         description: "Size of square images in the stack"
         required: false
         default: "100"
-    is_protected:
-        description: "Is the branch to be updated protected"
-        required: false
-        default: "false"
     readme_path:
         description: "Path of the readme file you want to update"
         default: "README.md"
@@ -41,6 +37,9 @@ inputs:
         description: "Title of the PR that will be created if the branch is protected"
         default: "contributors readme action update"
         required: false
+outputs:
+    pr_id: # id of pr
+        description: "Id of the generated PR when the branch is in protected mode"
 runs:
     using: "node12"
     main: "dist/index.js"

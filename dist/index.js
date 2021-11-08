@@ -8830,7 +8830,7 @@ async function run() {
         const message = (0,core.getInput)('commit_message').trim();
         const name = (0,core.getInput)('committer_username').trim();
         const email = (0,core.getInput)('committer_email').trim();
-        const isProtected = (0,core.getBooleanInput)('is_protected');
+        const prTitle = (0,core.getInput)('pr_title_on_protected').trim();
 
         const ref = github.context.ref;
         const branch = github.context.ref.split('/').pop();
@@ -8844,6 +8844,8 @@ async function run() {
 
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
+        const branchDetails = await src_octokit.rest.repos.getBranch({ owner, repo, branch });
+        const isProtected = branchDetails.data.protected;
 
         const userInfo = await src_octokit.rest.users.getByUsername({ username: owner });
         const isOrg = userInfo.data.type === 'Organization';
@@ -8972,13 +8974,14 @@ async function run() {
                     }
                 });
 
-                await src_octokit.rest.pulls.create({
+                const prDetails = await src_octokit.rest.pulls.create({
                     owner,
                     repo,
                     base: branch,
                     head: branchNameForPR,
-                    title: 'contributors readme action update'
+                    title: prTitle
                 });
+                (0,core.setOutput)('pr_id', prDetails.data.id);
             } else {
                 await src_octokit.rest.repos.createOrUpdateFileContents({
                     owner,
