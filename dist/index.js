@@ -8981,7 +8981,7 @@ async function run() {
                     head: branchNameForPR,
                     title: prTitle
                 });
-                (0,core.setOutput)('pr_id', prDetails.data.id);
+                (0,core.setOutput)('pr_id', prDetails.data.number);
             } else {
                 await src_octokit.rest.repos.createOrUpdateFileContents({
                     owner,
