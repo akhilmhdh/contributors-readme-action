@@ -170,7 +170,7 @@ async function run() {
                     head: branchNameForPR,
                     title: prTitle
                 });
-                setOutput('pr_id', prDetails.data.id);
+                setOutput('pr_id', prDetails.data.number);
             } else {
                 await octokit.rest.repos.createOrUpdateFileContents({
                     owner,
