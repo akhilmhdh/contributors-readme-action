@@ -23,7 +23,10 @@ The contributors list is fetched from [GitHub API](https://developer.github.com/
 If you're new to actions, add these to your `.github/workflows/main.yml` file. If this file does not exist, create one.
 
 ```yml
-on: [push, pull_request]
+on:
+    push:
+        branches:
+            - main
 
 jobs:
     contrib-readme-job:
