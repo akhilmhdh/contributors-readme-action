@@ -8947,6 +8947,7 @@ async function run() {
         }
 
         const base64String = Buffer.from(content, 'utf8').toString('base64');
+        const committer = email && name ? { email, name } : undefined;
 
         if (prevContent !== content) {
             if (isProtected) {
@@ -8968,10 +8969,7 @@ async function run() {
                     path,
                     sha: readme.data.sha,
                     branch: branchNameForPR,
-                    committer: {
-                        name,
-                        email
-                    }
+                    committer
                 });
 
                 const prDetails = await src_octokit.rest.pulls.create({
@@ -8991,10 +8989,7 @@ async function run() {
                     branch,
                     content: base64String,
                     sha: readme.data.sha,
-                    committer: {
-                        name,
-                        email
-                    }
+                    committer
                 });
             }
             console.log('Updated contribution section of readme');

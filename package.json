@@ -1,6 +1,6 @@
 {
     "name": "contribution-automation-action",
-    "version": "2.3.2",
+    "version": "2.3.3",
     "description": "A github action to automate contributors section of a readme",
     "main": "index.js",
     "scripts": {
