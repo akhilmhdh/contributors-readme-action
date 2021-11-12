@@ -27,11 +27,9 @@ inputs:
         required: false
     committer_username:
         description: "Username on commit"
-        default: "contrib-readme-bot"
         required: false
     committer_email:
         description: "email id of committer"
-        default: "contrib-readme-action@noreply.com"
         required: false
     pr_title_on_protected:
         description: "Title of the PR that will be created if the branch is protected"
