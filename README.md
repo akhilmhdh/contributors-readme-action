@@ -34,7 +34,7 @@ jobs:
         name: A job to automate contrib in readme
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@v2.3.3
+              uses: akhilmhdh/contributors-readme-action@v2.3.4
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -44,7 +44,7 @@ That's it!
 To add it to your to your existing workflow, append this to your current `.yml` workflow script.
 
 ```yml
-- uses: akhilmhdh/contributors-readme-action@v2.3.3
+- uses: akhilmhdh/contributors-readme-action@v2.3.4
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -125,26 +125,28 @@ You can add these optional parameters in your action script to modify the appear
 
 ```yml
 - name: Contribute List
-  uses: akhilmhdh/contributors-readme-action@v2.3.3
+  uses: akhilmhdh/contributors-readme-action@v2.3.4
   with:
       image_size: 100
 ```
 
-| Option                | Default Value                            | Description                                                     | Required |
-| --------------------- | ---------------------------------------- | --------------------------------------------------------------- | -------- |
-| image_size            | 100(px)                                  | Size of square images in the stack                              | false    |
-| readme_path           | README.md                                | Path of the readme file you want to update                      | false    |
-| use_username          | false                                    | To use username instead of full name                            | false    |
-| columns_per_row       | 6                                        | Number of columns in a row                                      | false    |
-| collaborators         | direct                                   | Type of collaborators options: all/direct/outside               | false    |
-| commit_message        | contrib-readme-action has updated readme | Commit message of the github action                             | false    |
-| committer_username    | ""                                       | Username on commit                                              | false    |
-| committer_email       | ""                                       | Email id of committer                                           | false    |
-| pr_title_on_protected | contributors readme action update        | Title of the PR that will be created if the branch is protected | false    |
+| Option                        | Default Value                            | Description                                                     | Required |
+| ----------------------------- | ---------------------------------------- | --------------------------------------------------------------- | -------- |
+| image_size                    | 100(px)                                  | Size of square images in the stack                              | false    |
+| readme_path                   | README.md                                | Path of the readme file you want to update                      | false    |
+| use_username                  | false                                    | To use username instead of full name                            | false    |
+| columns_per_row               | 6                                        | Number of columns in a row                                      | false    |
+| collaborators                 | direct                                   | Type of collaborators options: all/direct/outside               | false    |
+| commit_message                | contrib-readme-action has updated readme | Commit message of the github action                             | false    |
+| committer_username            | ""                                       | Username on commit                                              | false    |
+| committer_email               | ""                                       | Email id of committer                                           | false    |
+| pr_title_on_protected         | contributors readme action update        | Title of the PR that will be created if the branch is protected | false    |
+| auto_detect_branch_protection | true                                     | To override auto protected branch detection                     | false    |
 
 > committer_username and committer_email both must be provided to use as a replacement to GH action committer
 
 > The action will update Readme as PR when the branch is protected, else it will directly commit it.
+> But if your branch is protected and you passed personal access token to avoid PR mode by trusting the action, you could set auto_detect_branch_protection to false
 
 ### Outputs
 

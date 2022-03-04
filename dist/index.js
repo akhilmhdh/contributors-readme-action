@@ -5149,7 +5149,7 @@ Object.defineProperty(Response.prototype, Symbol.toStringTag, {
 });
 
 const INTERNALS$2 = Symbol('Request internals');
-const URL = whatwgUrl.URL;
+const URL = Url.URL || whatwgUrl.URL;
 
 // fix an issue where "format", "parse" aren't a named export for node <10
 const parse_url = Url.parse;
@@ -5412,9 +5412,17 @@ AbortError.prototype = Object.create(Error.prototype);
 AbortError.prototype.constructor = AbortError;
 AbortError.prototype.name = 'AbortError';
 
+const URL$1 = Url.URL || whatwgUrl.URL;
+
 // fix an issue where "PassThrough", "resolve" aren't a named export for node <10
 const PassThrough$1 = Stream.PassThrough;
-const resolve_url = Url.resolve;
+
+const isDomainOrSubdomain = function isDomainOrSubdomain(destination, original) {
+	const orig = new URL$1(original).hostname;
+	const dest = new URL$1(destination).hostname;
+
+	return orig === dest || orig[orig.length - dest.length - 1] === '.' && orig.endsWith(dest);
+};
 
 /**
  * Fetch function
@@ -5502,7 +5510,19 @@ function fetch(url, opts) {
 				const location = headers.get('Location');
 
 				// HTTP fetch step 5.3
-				const locationURL = location === null ? null : resolve_url(request.url, location);
+				let locationURL = null;
+				try {
+					locationURL = location === null ? null : new URL$1(location, request.url).toString();
+				} catch (err) {
+					// error here can only be invalid URL in Location: header
+					// do not throw when options.redirect == manual
+					// let the user extract the errorneous redirect URL
+					if (request.redirect !== 'manual') {
+						reject(new FetchError(`uri requested responds with an invalid redirect URL: ${location}`, 'invalid-redirect'));
+						finalize();
+						return;
+					}
+				}
 
 				// HTTP fetch step 5.5
 				switch (request.redirect) {
@@ -5549,6 +5569,12 @@ function fetch(url, opts) {
 							timeout: request.timeout,
 							size: request.size
 						};
+
+						if (!isDomainOrSubdomain(request.url, locationURL)) {
+							for (const name of ['authorization', 'www-authenticate', 'cookie', 'cookie2']) {
+								requestOpts.headers.delete(name);
+							}
+						}
 
 						// HTTP-redirect fetch step 9
 						if (res.statusCode !== 303 && request.body && getTotalBytes(request) === null) {
@@ -8445,13 +8471,13 @@ let fillPool = bytes => {
   poolOffset += bytes
 }
 let random = bytes => {
-  fillPool(bytes)
+  fillPool((bytes -= 0))
   return pool.subarray(poolOffset - bytes, poolOffset)
 }
-let customRandom = (alphabet, size, getRandom) => {
+let customRandom = (alphabet, defaultSize, getRandom) => {
   let mask = (2 << (31 - Math.clz32((alphabet.length - 1) | 1))) - 1
-  let step = Math.ceil((1.6 * mask * size) / alphabet.length)
-  return () => {
+  let step = Math.ceil((1.6 * mask * defaultSize) / alphabet.length)
+  return (size = defaultSize) => {
     let id = ''
     while (true) {
       let bytes = getRandom(step)
@@ -8463,9 +8489,10 @@ let customRandom = (alphabet, size, getRandom) => {
     }
   }
 }
-let customAlphabet = (alphabet, size) => customRandom(alphabet, size, random)
+let customAlphabet = (alphabet, size = 21) =>
+  customRandom(alphabet, size, random)
 let nanoid = (size = 21) => {
-  fillPool(size)
+  fillPool((size -= 0))
   let id = ''
   for (let i = poolOffset - size; i < poolOffset; i++) {
     id += urlAlphabet[pool[i] & 63]
@@ -8781,6 +8808,11 @@ query($owner:String!) {
                         login
                         avatarUrl
                     }
+                     ... on Organization {
+                        name
+                        login
+                        avatarUrl
+                    }
                 }
             }
         }
@@ -8797,6 +8829,11 @@ query($owner:String!) {
             nodes {
                 sponsorEntity {
                     ... on User {
+                        name
+                        login
+                        avatarUrl
+                    }
+                     ... on Organization {
                         name
                         login
                         avatarUrl
@@ -8831,6 +8868,7 @@ async function run() {
         const name = (0,core.getInput)('committer_username').trim();
         const email = (0,core.getInput)('committer_email').trim();
         const prTitle = (0,core.getInput)('pr_title_on_protected').trim();
+        const auto_detect_branch_protection = (0,core.getBooleanInput)('auto_detect_branch_protection');
 
         const ref = github.context.ref;
         const branch = github.context.ref.split('/').pop();
@@ -8845,7 +8883,7 @@ async function run() {
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
         const branchDetails = await src_octokit.rest.repos.getBranch({ owner, repo, branch });
-        const isProtected = branchDetails.data.protected;
+        const isProtected = branchDetails.data.protected && auto_detect_branch_protection;
 
         const userInfo = await src_octokit.rest.users.getByUsername({ username: owner });
         const isOrg = userInfo.data.type === 'Organization';
@@ -8907,11 +8945,13 @@ async function run() {
 
         const sponsors = sponsorsList[
             isOrg ? 'organization' : 'user'
-        ].sponsorshipsAsMaintainer.nodes.map(({ sponsorEntity: { name, login, avatarUrl } }) => ({
-            name,
-            login,
-            avatar_url: avatarUrl
-        }));
+        ].sponsorshipsAsMaintainer.nodes
+            .filter(el => Boolean(el))
+            .map(({ sponsorEntity: { name, login, avatarUrl } }) => ({
+                name,
+                login,
+                avatar_url: avatarUrl
+            }));
 
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme

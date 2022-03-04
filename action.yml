@@ -31,6 +31,10 @@ inputs:
     committer_email:
         description: "email id of committer"
         required: false
+    auto_detect_branch_protection:
+        description: "check if branch is protected"
+        default: "true"
+        required: false
     pr_title_on_protected:
         description: "Title of the PR that will be created if the branch is protected"
         default: "contributors readme action update"

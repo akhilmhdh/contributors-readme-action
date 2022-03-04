@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { getInput, setOutput, setFailed } from '@actions/core';
+import { getInput, setOutput, setFailed, getBooleanInput } from '@actions/core';
 import { context } from '@actions/github';
 import octokit from './octokit';
 
@@ -20,6 +20,7 @@ async function run() {
         const name = getInput('committer_username').trim();
         const email = getInput('committer_email').trim();
         const prTitle = getInput('pr_title_on_protected').trim();
+        const auto_detect_branch_protection = getBooleanInput('auto_detect_branch_protection');
 
         const ref = context.ref;
         const branch = context.ref.split('/').pop();
@@ -34,7 +35,7 @@ async function run() {
         const nwo = process.env['GITHUB_REPOSITORY'] || '/';
         const [owner, repo] = nwo.split('/');
         const branchDetails = await octokit.rest.repos.getBranch({ owner, repo, branch });
-        const isProtected = branchDetails.data.protected;
+        const isProtected = branchDetails.data.protected && auto_detect_branch_protection;
 
         const userInfo = await octokit.rest.users.getByUsername({ username: owner });
         const isOrg = userInfo.data.type === 'Organization';
@@ -96,11 +97,13 @@ async function run() {
 
         const sponsors = sponsorsList[
             isOrg ? 'organization' : 'user'
-        ].sponsorshipsAsMaintainer.nodes.map(({ sponsorEntity: { name, login, avatarUrl } }) => ({
-            name,
-            login,
-            avatar_url: avatarUrl
-        }));
+        ].sponsorshipsAsMaintainer.nodes
+            .filter(el => Boolean(el))
+            .map(({ sponsorEntity: { name, login, avatarUrl } }) => ({
+                name,
+                login,
+                avatar_url: avatarUrl
+            }));
 
         const bots = [...contributorsBots, ...collaboratorsBots];
         // parse the base64 readme

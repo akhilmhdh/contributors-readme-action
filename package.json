@@ -24,7 +24,7 @@
     "dependencies": {
         "@actions/core": "^1.6.0",
         "@actions/github": "^5.0.0",
-        "nanoid": "^3.1.30"
+        "nanoid": "^3.3.1"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.15.6",
