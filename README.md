@@ -104,7 +104,7 @@ To add it to your to your existing workflow, append this to your current `.yml` 
 | keywords      | Definition                                       |
 | ------------- | ------------------------------------------------ |
 | contributors  | contributors of the repo                         |
-| collaborators | contributors of the repo                         |
+| collaborators | collaborators of the repo                        |
 | sponsors      | sponsors of the repo's user/organization         |
 | bots          | bots of the repo                                 |
 | username      | any username that you want to add on to the list |
