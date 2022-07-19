@@ -36,10 +36,10 @@ This is an example of contributors-readme-action as it can't be utilized in mast
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/nhcarrigan">
-            <img src="https://avatars.githubusercontent.com/u/63889819?v=4" width="100;" alt="nhcarrigan"/>
+        <a href="https://github.com/naomi-lgbt">
+            <img src="https://avatars.githubusercontent.com/u/63889819?v=4" width="100;" alt="naomi-lgbt"/>
             <br />
-            <sub><b>Nicholas Carrigan</b></sub>
+            <sub><b>Naomi Carrigan</b></sub>
         </a>
     </td></tr>
 </table>
