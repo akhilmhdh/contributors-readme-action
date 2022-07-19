@@ -8583,7 +8583,17 @@ const capitalCaseUtil = str => {
     return uniqueArray;
 });
 
+;// CONCATENATED MODULE: ./src/utils/htmlEncoding.js
+const htmlEncoding = string => {
+    return String(string)
+        .replace(/&/g, '&amp;')
+        .replace(/>/g, '&gt;')
+        .replace(/</g, '&lt;')
+        .replace(/"/g, '&quot;');
+};
+
 ;// CONCATENATED MODULE: ./src/utils/templateBuilder.js
+
 
 
 
@@ -8616,7 +8626,7 @@ const getUserInfo = async (login, avatarUrl, prevContributors, useUserName) => {
             const {
                 data: { name, avatar_url }
             } = await src_octokit.rest.users.getByUsername({ username: login });
-            return { name: useUserName ? login : name, url: avatar_url };
+            return { name: useUserName ? login : htmlEncoding(name), url: avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
             return { name: login, url: '' };
@@ -8624,7 +8634,7 @@ const getUserInfo = async (login, avatarUrl, prevContributors, useUserName) => {
     }
 
     return {
-        name: useUserName ? login : prevContributors[login].name,
+        name: useUserName ? login : htmlEncoding(prevContributors[login].name),
         url: avatarUrl || prevContributors[login].url
     };
 };

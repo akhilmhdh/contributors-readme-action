@@ -34,7 +34,7 @@ jobs:
         name: A job to automate contrib in readme
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@v2.3.4
+              uses: akhilmhdh/contributors-readme-action@v2.3.5
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -44,7 +44,7 @@ That's it!
 To add it to your to your existing workflow, append this to your current `.yml` workflow script.
 
 ```yml
-- uses: akhilmhdh/contributors-readme-action@v2.3.4
+- uses: akhilmhdh/contributors-readme-action@v2.3.5
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -125,7 +125,7 @@ You can add these optional parameters in your action script to modify the appear
 
 ```yml
 - name: Contribute List
-  uses: akhilmhdh/contributors-readme-action@v2.3.4
+  uses: akhilmhdh/contributors-readme-action@v2.3.5
   with:
       image_size: 100
 ```

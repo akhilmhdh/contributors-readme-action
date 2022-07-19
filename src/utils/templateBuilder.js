@@ -3,6 +3,7 @@ import stripDuplicates from './stripDuplicates';
 import octokit from '../octokit';
 
 import { getBooleanInput, getInput } from '@actions/core';
+import { htmlEncoding } from './htmlEncoding';
 
 export const getTemplate = (userID, imageSize, name, avatarUrl) => {
     return `
@@ -30,7 +31,7 @@ export const getUserInfo = async (login, avatarUrl, prevContributors, useUserNam
             const {
                 data: { name, avatar_url }
             } = await octokit.rest.users.getByUsername({ username: login });
-            return { name: useUserName ? login : name, url: avatar_url };
+            return { name: useUserName ? login : htmlEncoding(name), url: avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
             return { name: login, url: '' };
@@ -38,7 +39,7 @@ export const getUserInfo = async (login, avatarUrl, prevContributors, useUserNam
     }
 
     return {
-        name: useUserName ? login : prevContributors[login].name,
+        name: useUserName ? login : htmlEncoding(prevContributors[login].name),
         url: avatarUrl || prevContributors[login].url
     };
 };
