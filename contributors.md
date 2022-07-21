@@ -49,6 +49,14 @@ This is an example of contributors-readme-action as it can't be utilized in mast
             <sub><b>Naomi Carrigan</b></sub>
         </a>
     </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/shufo">
+            <img src="https://avatars.githubusercontent.com/u/1641039?v=4" width="100;" alt="shufo"/>
+            <br />
+            <sub><b>Shuhei Hayashibara</b></sub>
+        </a>
+    </td></tr>
 </table>
 <!-- readme: contributors -end -->
 
