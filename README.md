@@ -137,10 +137,10 @@ You can add these optional parameters in your action script to modify the appear
 | use_username                  | false                                    | To use username instead of full name                            | false    |
 | columns_per_row               | 6                                        | Number of columns in a row                                      | false    |
 | collaborators                 | direct                                   | Type of collaborators options: all/direct/outside               | false    |
-| commit_message                | contrib-readme-action has updated readme | Commit message of the github action                             | false    |
+| commit_message                | docs(contributor): contrib-readme-action has updated readme | Commit message of the github action                             | false    |
 | committer_username            | ""                                       | Username on commit                                              | false    |
 | committer_email               | ""                                       | Email id of committer                                           | false    |
-| pr_title_on_protected         | contributors readme action update        | Title of the PR that will be created if the branch is protected | false    |
+| pr_title_on_protected         | docs(contributor): contributors readme action update        | Title of the PR that will be created if the branch is protected | false    |
 | auto_detect_branch_protection | true                                     | To override auto protected branch detection                     | false    |
 
 > committer_username and committer_email both must be provided to use as a replacement to GH action committer
