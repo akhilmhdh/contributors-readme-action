@@ -23,7 +23,7 @@ inputs:
         default: "direct"
     commit_message:
         description: "Commit message of the github action"
-        default: "contrib-readme-action has updated readme"
+        default: "docs: contrib-readme-action has updated readme"
         required: false
     committer_username:
         description: "Username on commit"
@@ -37,7 +37,7 @@ inputs:
         required: false
     pr_title_on_protected:
         description: "Title of the PR that will be created if the branch is protected"
-        default: "contributors readme action update"
+        default: "docs: contributors readme action update"
         required: false
 outputs:
     pr_id: # id of pr
