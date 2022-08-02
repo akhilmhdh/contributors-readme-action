@@ -8585,11 +8585,7 @@ const capitalCaseUtil = str => {
 
 ;// CONCATENATED MODULE: ./src/utils/htmlEncoding.js
 const htmlEncoding = string => {
-    return String(string)
-        .replace(/&/g, '&amp;')
-        .replace(/>/g, '&gt;')
-        .replace(/</g, '&lt;')
-        .replace(/"/g, '&quot;');
+    return String(string).replace(/>/g, '&gt;').replace(/</g, '&lt;');
 };
 
 ;// CONCATENATED MODULE: ./src/utils/templateBuilder.js
