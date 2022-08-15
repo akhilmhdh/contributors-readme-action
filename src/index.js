@@ -117,7 +117,7 @@ async function run() {
          */
         // get all tag comments with the given format
         const getAllReadmeComments = content.match(
-            /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
+            /\[\/\/\]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\/\/\]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
         );
 
         // return action if no tags were found
