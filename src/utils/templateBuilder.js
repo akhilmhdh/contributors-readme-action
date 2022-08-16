@@ -56,8 +56,9 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const imageSize = getInput('image_size').trim();
     const useUsername = getBooleanInput('use_username');
     const columns = Number(getInput('columns_per_row').trim());
+    const commentStyle = getInput('comment_style').trim();
 
-    let contributors_content = `[//]: # ( readme:${type}-start )\n<table>\n`;
+    let contributors_content = commentStyle === 'link_style' ? `[//]: # ( readme:${type}-start )\n<table>\n`:`<!-- readme:${type}-start -->\n<table>\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
@@ -92,7 +93,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
         contributors_content += '</tr>\n';
     }
 
-    contributors_content += `</table>\n\n[//]: # ( readme:${type}-end )`;
+    contributors_content += commentStyle === 'link_style' ? `</table>\n\n[//]: # ( readme:${type}-end )`: `</table>\n<!-- readme:${type}-end -->`;
 
     return contributors_content;
 };
