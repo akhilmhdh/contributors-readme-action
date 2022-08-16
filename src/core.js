@@ -100,7 +100,7 @@ const buildContent = async (
      * replace it with the old one
      */
     const re = new RegExp(
-        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*\\)([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*\\)`
+        `\\[\\/\\/]:\\s#\\s\\(\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*\\)([\\s\\S]*?)\\[\\/\\/]:\\s#\\s\\(\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*\\)`
     );
     const postprocess_content = content.replace(re, contributors_content);
     return postprocess_content;
