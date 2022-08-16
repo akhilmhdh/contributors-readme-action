@@ -8647,8 +8647,9 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const imageSize = (0,core.getInput)('image_size').trim();
     const useUsername = (0,core.getBooleanInput)('use_username');
     const columns = Number((0,core.getInput)('columns_per_row').trim());
+    const commentStyle = (0,core.getInput)('comment_style').trim();
 
-    let contributors_content = `[//]: # ( readme:${type}-start )\n<table>\n`;
+    let contributors_content = commentStyle === 'link' ? `[//]: # ( readme:${type}-start )\n<table>\n`:`<!-- readme:${type}-start -->\n<table>\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
@@ -8683,7 +8684,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
         contributors_content += '</tr>\n';
     }
 
-    contributors_content += `</table>\n\n[//]: # ( readme:${type}-end )`;
+    contributors_content += commentStyle === 'link' ? `</table>\n\n[//]: # ( readme:${type}-end )`: `</table>\n<!-- readme:${type}-end -->`;
 
     return contributors_content;
 };
@@ -8769,11 +8770,122 @@ const buildContent = async (
      */
     // get prev contributors in the readme
     let prevReadmeContributorsTemplate = templateContent.match(
-        /\[\/\/]:\s#\s\(\s*readme:(?<type>[\s\S]*?)-start\s*\)(?<content>[\s\S]*?)\[\/\/]:\s#\s\(\s*readme:[\s\S]*?-end\s*\)/
+        /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
     );
     const prevContributors = utils_templateParser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
     const contributorsPool = joinArray(
+        types,
+        prevContributors,
+        contributors,
+        collaborators,
+        bots,
+        sponsors
+    );
+
+    let contributors_content = await utils_templateBuilder(
+        contributorsPool,
+        prevContributors,
+        prevReadmeContributorsTemplate.groups.type
+    );
+
+    /**
+     * Build back the new template
+     * replace it with the old one
+     */
+    const re = new RegExp(
+        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
+    );
+    const postprocess_content = content.replace(re, contributors_content);
+    return postprocess_content;
+};
+
+/* harmony default export */ const src_core = (buildContent);
+
+;// CONCATENATED MODULE: ./src/coreMdx.js
+
+
+/**
+ * build a new array by joining given arrays
+ * @param {Array} values - priority based order
+ * @param {Array} prevContributors - contributors list of previous readme
+ * @param {Array} contributors - current contributors
+ * @param {Array} collaborators - current colloborators
+ * @param {Array} bots - current bots
+ * @param {Array} sponsors - current sponsors
+ * @returns {Array} prdered list
+ */
+const coreMdx_joinArray = (values, prevContributors, contributors, collaborators, bots, sponsors) => {
+    let joinedArray = [];
+
+    values.forEach(category => {
+        // checks the command and parses it eg: contributors,akhilmhdh|-
+        category = category.trim().toLowerCase();
+        const [category_type, operator] = category.split('/'); // category is like akhilmhdh/-
+
+        switch (category_type.trim()) {
+            case 'contributors':
+                joinedArray = joinedArray.concat(contributors);
+                break;
+            case 'collaborators':
+                joinedArray = joinedArray.concat(collaborators);
+                break;
+            case 'bots':
+                joinedArray = joinedArray.concat(bots);
+                break;
+            case 'sponsors':
+                joinedArray = joinedArray.concat(sponsors);
+                break;
+            default:
+                prevContributors[category_type]
+                    ? joinedArray.push({
+                          login: category_type,
+                          avatar_url: prevContributors[category_type].url,
+                          name: prevContributors[category_type].name
+                      })
+                    : joinedArray.push({ login: category_type });
+                break;
+        }
+        // operators mutation
+        if (operator) {
+            switch (operator.trim()) {
+                case '-': {
+                    joinedArray = joinedArray.filter(({ login }) => login !== category_type);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    });
+
+    return joinedArray;
+};
+
+const coreMdx_buildContent = async (
+    templateContent,
+    contributors,
+    collaborators,
+    bots,
+    sponsors,
+    content
+) => {
+    /**
+     * regex expression to parse the options passed inside the readme tags
+     * eg: <!-- readme:contributors,bots -start --!> anything inside this<!-- readme:contributors,bots -end --!>
+     * using the regex we get two groups return as
+     *  type: contributors,bots, collobortors, sponsors
+     *      use: to get the options passed
+     *  content: anything that was inside the tag
+     *      use: to reuse the html created inside the tah
+     */
+    // get prev contributors in the readme
+    let prevReadmeContributorsTemplate = templateContent.match(
+        /\[\/\/]:\s#\s\(\s*readme:(?<type>[\s\S]*?)-start\s*\)(?<content>[\s\S]*?)\[\/\/]:\s#\s\(\s*readme:[\s\S]*?-end\s*\)/
+    );
+    const prevContributors = utils_templateParser(prevReadmeContributorsTemplate.groups.content);
+    const types = prevReadmeContributorsTemplate.groups.type.split(',');
+    const contributorsPool = coreMdx_joinArray(
         types,
         prevContributors,
         contributors,
@@ -8799,7 +8911,7 @@ const buildContent = async (
     return postprocess_content;
 };
 
-/* harmony default export */ const src_core = (buildContent);
+/* harmony default export */ const coreMdx = (coreMdx_buildContent);
 
 ;// CONCATENATED MODULE: ./src/query/getSponsorsList.gql
 /* harmony default export */ const getSponsorsList = (`
@@ -8861,6 +8973,7 @@ query($owner:String!) {
 
 
 
+
 async function run() {
     try {
         if (github.context.payload.action) {
@@ -8874,6 +8987,7 @@ async function run() {
         const name = (0,core.getInput)('committer_username').trim();
         const email = (0,core.getInput)('committer_email').trim();
         const prTitle = (0,core.getInput)('pr_title_on_protected').trim();
+        const commentStyle = (0,core.getInput)('comment_style').trim();
         const auto_detect_branch_protection = (0,core.getBooleanInput)('auto_detect_branch_protection');
 
         const ref = github.context.ref;
@@ -8970,9 +9084,14 @@ async function run() {
          * gets these matched and the content inside of these tags to an array
          */
         // get all tag comments with the given format
-        const getAllReadmeComments = content.match(
-            /\[\/\/]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\\/\]:\s#\s\\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
-        );
+        const getAllReadmeComments =
+            commentStyle === 'link'
+                ? content.match(
+                      /\[\/\/]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\\/\]:\s#\s\\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
+                  )
+                : content.match(
+                      /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
+                  );
 
         // return action if no tags were found
         if (!getAllReadmeComments) {
@@ -8982,14 +9101,23 @@ async function run() {
 
         // based on tags update the content
         for (let match = 0; match < getAllReadmeComments.length; match++) {
-            content = await src_core(
-                getAllReadmeComments[match],
-                contributors,
-                collaborators,
-                bots,
-                sponsors,
-                content
-            );
+            commentStyle === 'link'
+                ? (content = await coreMdx(
+                      getAllReadmeComments[match],
+                      contributors,
+                      collaborators,
+                      bots,
+                      sponsors,
+                      content
+                  ))
+                : (content = await src_core(
+                      getAllReadmeComments[match],
+                      contributors,
+                      collaborators,
+                      bots,
+                      sponsors,
+                      content
+                  ));
         }
 
         const base64String = Buffer.from(content, 'utf8').toString('base64');
