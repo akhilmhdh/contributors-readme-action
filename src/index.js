@@ -4,6 +4,7 @@ import { context } from '@actions/github';
 import octokit from './octokit';
 
 import buildContributorsList from './core';
+import buildContributorsListMdx from './coreMdx';
 import getSponsorListQuery from './query/getSponsorsList.gql';
 import getOrgSponsorListQuery from './query/getOrgSponsorsList.gql';
 
@@ -117,11 +118,14 @@ async function run() {
          * gets these matched and the content inside of these tags to an array
          */
         // get all tag comments with the given format
-        const getAllReadmeComments = commentStyle === 'link_style' ? content.match(
-            /\[\/\/]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\\/\]:\s#\s\\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
-        ) : content.match(
-                /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
-            );
+        const getAllReadmeComments =
+            commentStyle === 'link'
+                ? content.match(
+                      /\[\/\/]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\\/\]:\s#\s\\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
+                  )
+                : content.match(
+                      /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
+                  );
 
         // return action if no tags were found
         if (!getAllReadmeComments) {
@@ -131,14 +135,23 @@ async function run() {
 
         // based on tags update the content
         for (let match = 0; match < getAllReadmeComments.length; match++) {
-            content = await buildContributorsList(
-                getAllReadmeComments[match],
-                contributors,
-                collaborators,
-                bots,
-                sponsors,
-                content
-            );
+            commentStyle === 'link'
+                ? (content = await buildContributorsListMdx(
+                      getAllReadmeComments[match],
+                      contributors,
+                      collaborators,
+                      bots,
+                      sponsors,
+                      content
+                  ))
+                : (content = await buildContributorsList(
+                      getAllReadmeComments[match],
+                      contributors,
+                      collaborators,
+                      bots,
+                      sponsors,
+                      content
+                  ));
         }
 
         const base64String = Buffer.from(content, 'utf8').toString('base64');
