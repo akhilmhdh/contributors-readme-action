@@ -1,5 +1,5 @@
 import readme from '../testDummyData/readme';
-import readmejsx from '../testDummyData/readme-jsx-compatible';
+import readmejsx from '../testDummyData/readmeJsxCompatible';
 import templateParser from './templateParser';
 
 describe('templateParser Function', () => {
