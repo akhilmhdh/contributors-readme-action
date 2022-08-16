@@ -76,7 +76,7 @@ const buildContent = async (
      */
     // get prev contributors in the readme
     let prevReadmeContributorsTemplate = templateContent.match(
-        /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
+        /\[\/\/]:\s#\s\(\s*readme:(?<type>[\s\S]*?)-start\s*\)(?<content>[\s\S]*?)\[\/\/]:\s#\s\(\s*readme:[\s\S]*?-end\s*\)/
     );
     const prevContributors = templateParser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
@@ -100,7 +100,7 @@ const buildContent = async (
      * replace it with the old one
      */
     const re = new RegExp(
-        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
+        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*\\)([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*\\)`
     );
     const postprocess_content = content.replace(re, contributors_content);
     return postprocess_content;

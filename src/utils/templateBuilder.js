@@ -57,7 +57,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const useUsername = getBooleanInput('use_username');
     const columns = Number(getInput('columns_per_row').trim());
 
-    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n`;
+    let contributors_content = `[//]: # ( readme:${type}-start )\n<table>\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
@@ -92,7 +92,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
         contributors_content += '</tr>\n';
     }
 
-    contributors_content += `</table>\n<!-- readme:${type}-end -->`;
+    contributors_content += `</table>\n[//]: # ( readme:${type}-end )`;
 
     return contributors_content;
 };

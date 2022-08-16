@@ -1,5 +1,5 @@
 export default `
-<!-- readme: contributors -start --> 
+[//]: # ( readme: contributors -start )
 <table>
 <tr>
     <td align="center">
@@ -18,5 +18,5 @@ export default `
         </a>
     </td></tr>
 </table>
-<!-- readme: contributors -end -->
+[//]: # ( readme: contributors -end )
 `;
