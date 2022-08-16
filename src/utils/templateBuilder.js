@@ -92,7 +92,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
         contributors_content += '</tr>\n';
     }
 
-    contributors_content += `</table>\n[//]: # ( readme:${type}-end )`;
+    contributors_content += `</table>\n\n[//]: # ( readme:${type}-end )`;
 
     return contributors_content;
 };
