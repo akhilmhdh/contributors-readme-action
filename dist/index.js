@@ -8648,7 +8648,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const useUsername = (0,core.getBooleanInput)('use_username');
     const columns = Number((0,core.getInput)('columns_per_row').trim());
 
-    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n`;
+    let contributors_content = `[//]: # ( readme:${type}-start )\n<table>\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
@@ -8683,7 +8683,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
         contributors_content += '</tr>\n';
     }
 
-    contributors_content += `</table>\n<!-- readme:${type}-end -->`;
+    contributors_content += `</table>\n[//]: # ( readme:${type}-end )`;
 
     return contributors_content;
 };
@@ -8769,7 +8769,7 @@ const buildContent = async (
      */
     // get prev contributors in the readme
     let prevReadmeContributorsTemplate = templateContent.match(
-        /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
+        /\[\/\/]:\s#\s\(\s*readme:(?<type>[\s\S]*?)-start\s*\)(?<content>[\s\S]*?)\[\/\/]:\s#\s\(\s*readme:[\s\S]*?-end\s*\)/
     );
     const prevContributors = utils_templateParser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
@@ -8793,7 +8793,7 @@ const buildContent = async (
      * replace it with the old one
      */
     const re = new RegExp(
-        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
+        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*\\)([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*\\)`
     );
     const postprocess_content = content.replace(re, contributors_content);
     return postprocess_content;
@@ -8971,7 +8971,7 @@ async function run() {
          */
         // get all tag comments with the given format
         const getAllReadmeComments = content.match(
-            /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
+            /\[\/\/]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\\/\]:\s#\s\\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
         );
 
         // return action if no tags were found
