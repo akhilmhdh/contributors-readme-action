@@ -4,7 +4,6 @@ import { context } from '@actions/github';
 import octokit from './octokit';
 
 import buildContributorsList from './core';
-import buildContributorsListMdx from './coreMdx';
 import getSponsorListQuery from './query/getSponsorsList.gql';
 import getOrgSponsorListQuery from './query/getOrgSponsorsList.gql';
 
@@ -135,23 +134,15 @@ async function run() {
 
         // based on tags update the content
         for (let match = 0; match < getAllReadmeComments.length; match++) {
-            commentStyle === 'link'
-                ? (content = await buildContributorsListMdx(
-                      getAllReadmeComments[match],
-                      contributors,
-                      collaborators,
-                      bots,
-                      sponsors,
-                      content
-                  ))
-                : (content = await buildContributorsList(
-                      getAllReadmeComments[match],
-                      contributors,
-                      collaborators,
-                      bots,
-                      sponsors,
-                      content
-                  ));
+            content = await buildContributorsList(
+                getAllReadmeComments[match],
+                contributors,
+                collaborators,
+                bots,
+                sponsors,
+                content,
+                commentStyle
+            );
         }
 
         const base64String = Buffer.from(content, 'utf8').toString('base64');
