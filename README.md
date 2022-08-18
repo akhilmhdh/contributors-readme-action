@@ -107,7 +107,7 @@ To add it to your to your existing workflow, **append** this to your current `.y
 
 > The subject inside start and end must be same.
 
-## Comment Styles
+### Comment Styles
 
 If for some reason you do not wish to use HTML style comments `<!-- -->`, you may also use markdown link style comments. 
 
