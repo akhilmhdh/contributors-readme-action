@@ -107,6 +107,22 @@ To add it to your to your existing workflow, **append** this to your current `.y
 
 > The subject inside start and end must be same.
 
+## Comment Styles
+
+If for some reason you do not wish to use HTML style comments `<!-- -->`, you may also use markdown link style comments. 
+
+```md
+[//]: # ( readme: collaborators,contributors -start )
+[//]: # ( readme: collaborators,contributors -end )
+```
+
+Make sure to add `comment_style: "link"` to your workflow.
+
+```yaml
+with:
+  comment_style: "link"
+```
+
 ### Keywords
 
 | keywords      | Definition                                       |
@@ -139,7 +155,7 @@ You can add these optional parameters in your action script to modify the appear
 ```
 
 | Option                        | Default Value                                               | Description                                                     | Required |
-| ----------------------------- | ----------------------------------------------------------- | --------------------------------------------------------------- | -------- |
+|-------------------------------|-------------------------------------------------------------|-----------------------------------------------------------------| -------- |
 | image_size                    | 100(px)                                                     | Size of square images in the stack                              | false    |
 | readme_path                   | README.md                                                   | Path of the readme file you want to update                      | false    |
 | use_username                  | false                                                       | To use username instead of full name                            | false    |
@@ -150,6 +166,7 @@ You can add these optional parameters in your action script to modify the appear
 | committer_email               | ""                                                          | Email id of committer                                           | false    |
 | pr_title_on_protected         | docs(contributor): contributors readme action update        | Title of the PR that will be created if the branch is protected | false    |
 | auto_detect_branch_protection | true                                                        | To override auto protected branch detection                     | false    |
+| comment_style                 | html                                                        | Whether to use link or html style comments in the README.md     | false    |
 
 > committer_username and committer_email both must be provided to use as a replacement to GH action committer
 
