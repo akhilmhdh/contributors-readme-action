@@ -4,12 +4,13 @@
     "description": "A github action to automate contributors section of a readme",
     "main": "index.js",
     "scripts": {
-        "lint": "eslint .",
+        "lint": "eslint ./src-ts",
         "format": "prettier --write **/*.js",
         "format-check": "prettier --check **/*.js",
         "test": "jest --verbose",
         "test:watch": "jest --verbose --watch",
-        "build": "ncc build src/index.js -o dist --source-map --license licenses.txt"
+        "build": "node esbuild.config.js",
+        "type-check": "tsc --noEmit"
     },
     "repository": {
         "type": "git",
@@ -28,10 +29,23 @@
     },
     "devDependencies": {
         "@babel/preset-env": "^7.15.6",
-        "@vercel/ncc": "^0.31.1",
+        "@typescript-eslint/eslint-plugin": "^5.0.0",
+        "@typescript-eslint/parser": "^5.37.0",
         "babel-jest": "^27.2.4",
-        "eslint": "^7.32.0",
+        "esbuild": "^0.15.7",
+        "esbuild-node-externals": "^1.5.0",
+        "eslint": "^8.2.0",
+        "eslint-config-airbnb": "19.0.4",
+        "eslint-config-airbnb-typescript": "^17.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-config-standard-with-typescript": "^23.0.0",
+        "eslint-plugin-import": "^2.25.3",
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-n": "^15.0.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "eslint-plugin-promise": "^6.0.0",
         "jest": "^27.2.4",
-        "prettier": "^2.4.1"
+        "prettier": "^2.7.1",
+        "typescript": "*"
     }
 }

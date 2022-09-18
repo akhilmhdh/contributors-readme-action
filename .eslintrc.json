@@ -1,19 +1,17 @@
 {
     "env": {
-        "commonjs": true,
-        "es6": true,
-        "jest": true,
-        "node": true
+        "browser": true,
+        "es2021": true
     },
-    "extends": "eslint:recommended",
-    "globals": {
-        "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly"
-    },
+    "extends": ["airbnb-base", "airbnb-typescript/base", "standard-with-typescript", "prettier"],
+    "plugins": ["prettier"],
+    "overrides": [],
     "parserOptions": {
-        "ecmaVersion": 11,
-        "sourceType": "module"
+        "ecmaVersion": "latest",
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "rules": {
+        "prettier/prettier": ["error"]
     }
 }
