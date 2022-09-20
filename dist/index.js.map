@@ -2,6 +2,6 @@
   "version": 3,
   "sources": ["../src-ts/index.ts"],
   "sourcesContent": ["console.log('hello');\n"],
-  "mappings": "AAAA,QAAQ,IAAI,OAAO",
+  "mappings": "aAAA,QAAQ,IAAI,OAAO",
   "names": []
 }

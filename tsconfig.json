@@ -6,8 +6,9 @@
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "skipLibCheck": true,
-        "noEmit": true
+        "noEmit": true,
+        "types": ["jest"]
     },
-    "exclude": ["node_modules", "dist", "**/*.test.ts"],
+    "exclude": ["node_modules", "dist"],
     "include": ["src-ts/**/*.ts"]
 }
