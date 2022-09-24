@@ -1,13 +1,14 @@
 {
     "compilerOptions": {
-        "target": "es2016",
+        "target": "es2019",
         "module": "commonjs",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "strict": true,
         "skipLibCheck": true,
         "noEmit": true,
-        "types": ["jest"]
+        "types": ["jest", "node"],
+        "typeRoots": ["node_modules/@types", "src/@types"]
     },
     "exclude": ["node_modules", "dist"],
     "include": ["src-ts/**/*.ts"]
