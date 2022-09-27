@@ -1,7 +1,5 @@
 const esbuild = require('esbuild');
 
-const graphqlLoaderPlugin = require('@luckycatfactory/esbuild-graphql-loader');
-
 const isWatchMode = process.argv.includes('--watch');
 
 esbuild
@@ -9,11 +7,11 @@ esbuild
         entryPoints: ['./src-ts/index.ts'],
         outfile: 'dist/index.js',
         bundle: true,
-        minify: true,
+        minify: false,
         platform: 'node',
         sourcemap: true,
         target: 'node16',
-        plugins: [graphqlLoaderPlugin.default({ filterRegex: /\.gql$/ })],
+        plugins: [],
         watch: isWatchMode
     })
     .then(() => {

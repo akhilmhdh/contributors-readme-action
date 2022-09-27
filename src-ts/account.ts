@@ -1,8 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { GitHub } from '@actions/github/lib/utils';
 import { Sponsor } from '@octokit/graphql-schema';
-import getSponsorListQuery from './query/getSponsorsList.gql';
-import getOrgSponsorListQuery from './query/getOrgSponsorsList.gql';
+import getSponsorListQuery from './query/getSponsorsList';
+import getOrgSponsorListQuery from './query/getOrgSponsorsList';
 
 type GetAccountsDTO = {
     owner: string;
@@ -23,6 +23,7 @@ export const getKeywordsAccounts = async (
         owner,
         repo
     });
+    console.log(JSON.stringify(contributorsList, null, 4));
 
     const collaboratorsList = await octokit.paginate(octokit.rest.repos.listCollaborators, {
         owner,

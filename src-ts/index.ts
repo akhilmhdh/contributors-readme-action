@@ -43,11 +43,11 @@ async function run(): Promise<void> {
 
         // get the readme of the repo
         const rawContentRes = await octokit.rest.repos.getContent({ owner, repo, path, ref });
-        if (rawContentRes.headers.status !== '200') {
+        if (rawContentRes.status !== 200) {
             throw new Error('readme not added');
         }
 
-        if (Array.isArray(rawContentRes.data) || rawContentRes.data?.type !== 'file') {
+        if (Array.isArray(rawContentRes.data)) {
             throw new Error('readme file is invalid');
         }
 
