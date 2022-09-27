@@ -1,5 +1,4 @@
-export default `
-query($owner:String!) {
+query ($owner: String!) {
     sponsors: user(login: $owner) {
         name
         sponsorshipsAsMaintainer(first: 100) {
@@ -10,7 +9,7 @@ query($owner:String!) {
                         login
                         avatarUrl
                     }
-                     ... on Organization {
+                    ... on Organization {
                         name
                         login
                         avatarUrl
@@ -20,4 +19,3 @@ query($owner:String!) {
         }
     }
 }
-`

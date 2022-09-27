@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@actions/core': ^1.6.0
   '@actions/github': ^5.0.0
+  '@luckycatfactory/esbuild-graphql-loader': ^3.7.0
   '@octokit/graphql-schema': ^12.7.1
   '@swc/core': ^1.3.2
   '@swc/jest': ^0.2.22
@@ -22,6 +23,7 @@ specifiers:
   eslint-plugin-n: ^15.0.0
   eslint-plugin-prettier: ^4.2.1
   eslint-plugin-promise: ^6.0.0
+  graphql-tag: ^2.12.6
   jest: ^27.5.1
   nanoid: ^3.3.1
   prettier: ^2.7.1
@@ -33,6 +35,7 @@ dependencies:
   nanoid: 3.3.4
 
 devDependencies:
+  '@luckycatfactory/esbuild-graphql-loader': 3.7.0_t5hz6ir3hkf4yglirnvrkce4ii
   '@octokit/graphql-schema': 12.7.1
   '@swc/core': 1.3.2
   '@swc/jest': 0.2.22_@swc+core@1.3.2
@@ -52,6 +55,7 @@ devDependencies:
   eslint-plugin-n: 15.2.5_eslint@8.23.1
   eslint-plugin-prettier: 4.2.1_cabrci5exjdaojcvd6xoxgeowu
   eslint-plugin-promise: 6.0.1_eslint@8.23.1
+  graphql-tag: 2.12.6_graphql@16.6.0
   jest: 27.5.1
   prettier: 2.7.1
   typescript: 4.8.3
@@ -752,6 +756,16 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: true
+
+  /@luckycatfactory/esbuild-graphql-loader/3.7.0_t5hz6ir3hkf4yglirnvrkce4ii:
+    resolution: {integrity: sha512-5IMQvIa2bCMASsdAsY+5xeLWCWULE6HBw5TeA7lsdfBUTs1qFuXbdvxnZhxLxiF8x7biokjCWKzb2WWNa1wthQ==}
+    peerDependencies:
+      esbuild: '>=0.8.26'
+      graphql-tag: ^2.11.0
+    dependencies:
+      esbuild: 0.15.7
+      graphql-tag: 2.12.6_graphql@16.6.0
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:

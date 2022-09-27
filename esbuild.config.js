@@ -1,9 +1,6 @@
 const esbuild = require('esbuild');
 
-// Automatically exclude all node_modules from the bundled version
-const { nodeExternalsPlugin } = require('esbuild-node-externals');
-
-const args = process.argv;
+const graphqlLoaderPlugin = require('@luckycatfactory/esbuild-graphql-loader');
 
 const isWatchMode = process.argv.includes('--watch');
 
@@ -15,8 +12,8 @@ esbuild
         minify: true,
         platform: 'node',
         sourcemap: true,
-        target: 'node14',
-        plugins: [nodeExternalsPlugin()],
+        target: 'node16',
+        plugins: [graphqlLoaderPlugin.default({ filterRegex: /\.gql$/ })],
         watch: isWatchMode
     })
     .then(() => {

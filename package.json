@@ -8,7 +8,7 @@
         "test": "jest --verbose ./src-ts",
         "test:watch": "jest --verbose --watch ./src-ts",
         "build": "node esbuild.config.js",
-        "build:watch": "node esbuild.config.js --watch",
+        "build:watch": "node esbuild.config.mjs --watch",
         "type-check": "tsc --noEmit"
     },
     "repository": {
@@ -27,6 +27,7 @@
         "nanoid": "^3.3.1"
     },
     "devDependencies": {
+        "@luckycatfactory/esbuild-graphql-loader": "^3.7.0",
         "@octokit/graphql-schema": "^12.7.1",
         "@swc/core": "^1.3.2",
         "@swc/jest": "^0.2.22",
@@ -46,6 +47,7 @@
         "eslint-plugin-n": "^15.0.0",
         "eslint-plugin-prettier": "^4.2.1",
         "eslint-plugin-promise": "^6.0.0",
+        "graphql-tag": "^2.12.6",
         "jest": "^27.5.1",
         "prettier": "^2.7.1",
         "typescript": "*"

@@ -4,6 +4,7 @@ import { nanoid } from 'nanoid';
 
 import { getCustomUsers, getKeywordsAccounts } from './account';
 import { parser } from './parser';
+import { templateGenerator } from './template';
 
 async function run(): Promise<void> {
     try {
@@ -55,7 +56,7 @@ async function run(): Promise<void> {
 
         const { content, uniqueKeywords } = parser(rawContent);
 
-        const { collaborators, contributors, bots, sponsors } = await getKeywordsAccounts(octokit, {
+        const userList = await getKeywordsAccounts(octokit, {
             owner,
             repo,
             affiliation,
@@ -65,7 +66,8 @@ async function run(): Promise<void> {
 
         const newContentParsed = content.map(c => {
             if (c.isLine) return c.line;
-            return '';
+            return `<!-- cra:start ${c.type.join(',')} -->\n
+${templateGenerator(c.type, userList, customUserData)}`;
         });
 
         const newContent = newContentParsed.join('\n');
