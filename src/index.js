@@ -20,6 +20,7 @@ async function run() {
         const name = getInput('committer_username').trim();
         const email = getInput('committer_email').trim();
         const prTitle = getInput('pr_title_on_protected').trim();
+        const commentStyle = getInput('comment_style').trim();
         const auto_detect_branch_protection = getBooleanInput('auto_detect_branch_protection');
 
         const ref = context.ref;
@@ -116,9 +117,14 @@ async function run() {
          * gets these matched and the content inside of these tags to an array
          */
         // get all tag comments with the given format
-        const getAllReadmeComments = content.match(
-            /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
-        );
+        const getAllReadmeComments =
+            commentStyle === 'link'
+                ? content.match(
+                      /\[\/\/]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\\/\]:\s#\s\\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
+                  )
+                : content.match(
+                      /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
+                  );
 
         // return action if no tags were found
         if (!getAllReadmeComments) {
@@ -134,7 +140,8 @@ async function run() {
                 collaborators,
                 bots,
                 sponsors,
-                content
+                content,
+                commentStyle
             );
         }
 

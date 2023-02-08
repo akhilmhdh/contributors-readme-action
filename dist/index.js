@@ -8647,8 +8647,9 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const imageSize = (0,core.getInput)('image_size').trim();
     const useUsername = (0,core.getBooleanInput)('use_username');
     const columns = Number((0,core.getInput)('columns_per_row').trim());
+    const commentStyle = (0,core.getInput)('comment_style').trim();
 
-    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n`;
+    let contributors_content = commentStyle === 'link' ? `[//]: # ( readme:${type}-start )\n<table>\n`:`<!-- readme:${type}-start -->\n<table>\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
@@ -8683,7 +8684,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
         contributors_content += '</tr>\n';
     }
 
-    contributors_content += `</table>\n<!-- readme:${type}-end -->`;
+    contributors_content += commentStyle === 'link' ? `</table>\n\n[//]: # ( readme:${type}-end )`: `</table>\n<!-- readme:${type}-end -->`;
 
     return contributors_content;
 };
@@ -8756,7 +8757,8 @@ const buildContent = async (
     collaborators,
     bots,
     sponsors,
-    content
+    content,
+    commentStyle
 ) => {
     /**
      * regex expression to parse the options passed inside the readme tags
@@ -8768,9 +8770,14 @@ const buildContent = async (
      *      use: to reuse the html created inside the tah
      */
     // get prev contributors in the readme
-    let prevReadmeContributorsTemplate = templateContent.match(
-        /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
-    );
+    let prevReadmeContributorsTemplate =
+        commentStyle !== 'link'
+            ? templateContent.match(
+                  /<!--\s*readme:(?<type>[\s\S]*?)-start\s*-->(?<content>[\s\S]*?)<!--\s*readme:[\s\S]*?-end\s*-->/
+              )
+            : templateContent.match(
+                  /\[\/\/]:\s#\s\(\s*readme:(?<type>[\s\S]*?)-start\s*\)(?<content>[\s\S]*?)\[\/\/]:\s#\s\(\s*readme:[\s\S]*?-end\s*\)/
+              );
     const prevContributors = utils_templateParser(prevReadmeContributorsTemplate.groups.content);
     const types = prevReadmeContributorsTemplate.groups.type.split(',');
     const contributorsPool = joinArray(
@@ -8792,9 +8799,14 @@ const buildContent = async (
      * Build back the new template
      * replace it with the old one
      */
-    const re = new RegExp(
-        `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
-    );
+    const re =
+        commentStyle !== 'link'
+            ? new RegExp(
+                  `<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*-->([\\s\\S]*?)<!--\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*-->`
+              )
+            : new RegExp(
+                  `\\[\\/\\/]:\\s#\\s\\(\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-start\\s*\\)([\\s\\S]*?)\\[\\/\\/]:\\s#\\s\\(\\s*readme:\\s*${prevReadmeContributorsTemplate.groups.type}\\s*-end\\s*\\)`
+              );
     const postprocess_content = content.replace(re, contributors_content);
     return postprocess_content;
 };
@@ -8874,6 +8886,7 @@ async function run() {
         const name = (0,core.getInput)('committer_username').trim();
         const email = (0,core.getInput)('committer_email').trim();
         const prTitle = (0,core.getInput)('pr_title_on_protected').trim();
+        const commentStyle = (0,core.getInput)('comment_style').trim();
         const auto_detect_branch_protection = (0,core.getBooleanInput)('auto_detect_branch_protection');
 
         const ref = github.context.ref;
@@ -8970,9 +8983,14 @@ async function run() {
          * gets these matched and the content inside of these tags to an array
          */
         // get all tag comments with the given format
-        const getAllReadmeComments = content.match(
-            /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
-        );
+        const getAllReadmeComments =
+            commentStyle === 'link'
+                ? content.match(
+                      /\[\/\/]:\s#\s\(\s*readme:\s*[a-zA-Z0-9,]*\s*-start\s*\)[\\/\]:\s#\s\\(\s*readme:\s*[a-zA-Z0-9,]*\s*-end\s*\)/gm
+                  )
+                : content.match(
+                      /<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-start\s*-->[\s\S]*?<!--\s*readme:\s*[a-zA-Z0-9,-/]*\s*-end\s*-->/gm
+                  );
 
         // return action if no tags were found
         if (!getAllReadmeComments) {
@@ -8988,7 +9006,8 @@ async function run() {
                 collaborators,
                 bots,
                 sponsors,
-                content
+                content,
+                commentStyle
             );
         }
 

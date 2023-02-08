@@ -39,6 +39,10 @@ inputs:
         description: "Title of the PR that will be created if the branch is protected"
         default: "docs(contributor): contributors readme action update"
         required: false
+    comment_style:
+        description: "Use html or link style comments"
+        default: "html"
+        required: false
 outputs:
     pr_id: # id of pr
         description: "Id of the generated PR when the branch is in protected mode"
