@@ -4,7 +4,7 @@ This is an example of contributors-readme-action as it can't be utilized in mast
 
 ## Contributors
 
-<!-- readme: contributors -start -->
+<!-- readme: contributors/- -start -->
 <table>
 <tr>
     <td align="center">
