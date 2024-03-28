@@ -5421,7 +5421,7 @@ const isDomainOrSubdomain = function isDomainOrSubdomain(destination, original) 
 	const orig = new URL$1(original).hostname;
 	const dest = new URL$1(destination).hostname;
 
-	return orig === dest || orig[orig.length - dest.length - 1] === '.' && orig.endsWith(dest);
+	return orig === dest || orig.slice(-dest.length - 1) === '.' + dest;
 };
 
 /**
