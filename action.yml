@@ -43,7 +43,7 @@ outputs:
     pr_id: # id of pr
         description: "Id of the generated PR when the branch is in protected mode"
 runs:
-    using: "node16"
+    using: "node20"
     main: "dist/index.js"
 branding:
     icon: "archive"
