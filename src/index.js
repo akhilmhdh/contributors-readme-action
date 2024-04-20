@@ -9,10 +9,6 @@ import getOrgSponsorListQuery from './query/getOrgSponsorsList.gql';
 
 async function run() {
     try {
-        if (context.payload.action) {
-            if (context.payload.action !== 'closed') return;
-        }
-
         // get various inputs applied in action.yml
         const path = getInput('readme_path').trim();
         const affiliation = getInput('collaborators').trim();
