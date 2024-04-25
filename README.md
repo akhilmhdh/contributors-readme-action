@@ -2,7 +2,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![MIT License][license-shield]](LICENSE)
 
 <br />
 
@@ -49,7 +49,7 @@ jobs:
 
 That's it!
 
-To add it to your to your existing workflow, **append** this to your current `.yml` workflow script.
+To add it to your existing workflow, **append** this to your current `.yml` workflow script.
 
 ```yml
 - uses: akhilmhdh/contributors-readme-action@v2.3.8
