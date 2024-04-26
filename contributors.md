@@ -65,6 +65,13 @@ This is an example of contributors-readme-action as it can't be utilized in mast
         </a>
     </td>
     <td align="center">
+        <a href="https://github.com/KPCOFGS">
+            <img src="https://avatars.githubusercontent.com/u/100217654?v=4" width="100;" alt="KPCOFGS"/>
+            <br />
+            <sub><b>Shi Sheng</b></sub>
+        </a>
+    </td>
+    <td align="center">
         <a href="https://github.com/shufo">
             <img src="https://avatars.githubusercontent.com/u/1641039?v=4" width="100;" alt="shufo"/>
             <br />
