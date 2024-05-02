@@ -33860,15 +33860,6 @@ const templateParser = inputTemplate => {
 
 /* harmony default export */ const utils_templateParser = (templateParser);
 
-;// CONCATENATED MODULE: ./src/utils/capitalize.js
-const capitalCaseUtil = str => {
-    return str.charAt(0).toUpperCase() + str.substring(1);
-};
-
-/* harmony default export */ const capitalize = (str => {
-    return str ? str.split(' ').map(capitalCaseUtil).join(' ') : '';
-});
-
 ;// CONCATENATED MODULE: ./src/utils/stripDuplicates.js
 /**
  * function to clean an array of objects with duplicates
@@ -33896,7 +33887,6 @@ const htmlEncoding = string => {
 };
 
 ;// CONCATENATED MODULE: ./src/utils/templateBuilder.js
-
 
 
 
@@ -33931,7 +33921,7 @@ const getUserInfo = async (login, avatarUrl, prevContributors, useUserName) => {
             } = await src_octokit.rest.users.getByUsername({ username: login });
             // Use login (== username) when useUserName is true, otherwise try to use name. 
             // Unless name is null, then fallback to login.
-            const finalName = (useUserName) ? login: (name) ? capitalize(htmlEncoding(name)) : login
+            const finalName = (useUserName) ? login: (name) ? htmlEncoding(name) : login
             return { name: finalName, url: avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
@@ -33942,7 +33932,7 @@ const getUserInfo = async (login, avatarUrl, prevContributors, useUserName) => {
     // Use login (== username) when useUserName is true, otherwise try to use name.
     // If name is null, then fallback to login.
     const finalName = (useUserName) ? login : (prevContributors[login] && prevContributors[login].name) ?
-        capitalize(htmlEncoding(prevContributors[login].name)) : login
+        htmlEncoding(prevContributors[login].name) : login
     return {
         name: finalName,
         url: avatarUrl || prevContributors[login].url
