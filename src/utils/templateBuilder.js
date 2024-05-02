@@ -1,4 +1,3 @@
-import capitalize from './capitalize';
 import stripDuplicates from './stripDuplicates';
 import octokit from '../octokit';
 
@@ -33,7 +32,7 @@ export const getUserInfo = async (login, avatarUrl, prevContributors, useUserNam
             } = await octokit.rest.users.getByUsername({ username: login });
             // Use login (== username) when useUserName is true, otherwise try to use name. 
             // Unless name is null, then fallback to login.
-            const finalName = (useUserName) ? login: (name) ? capitalize(htmlEncoding(name)) : login
+            const finalName = (useUserName) ? login: (name) ? htmlEncoding(name) : login
             return { name: finalName, url: avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
@@ -44,7 +43,7 @@ export const getUserInfo = async (login, avatarUrl, prevContributors, useUserNam
     // Use login (== username) when useUserName is true, otherwise try to use name.
     // If name is null, then fallback to login.
     const finalName = (useUserName) ? login : (prevContributors[login] && prevContributors[login].name) ?
-        capitalize(htmlEncoding(prevContributors[login].name)) : login
+        htmlEncoding(prevContributors[login].name) : login
     return {
         name: finalName,
         url: avatarUrl || prevContributors[login].url
