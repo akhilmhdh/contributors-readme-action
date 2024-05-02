@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "lint": "eslint .",
+        "fix": "eslint --fix .",
         "format": "prettier --write **/*.js",
         "format-check": "prettier --check **/*.js",
         "test": "jest --verbose",

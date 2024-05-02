@@ -31,15 +31,22 @@ export const getUserInfo = async (login, avatarUrl, prevContributors, useUserNam
             const {
                 data: { name, avatar_url }
             } = await octokit.rest.users.getByUsername({ username: login });
-            return { name: useUserName ? login : htmlEncoding(name), url: avatar_url };
+            // Use login (== username) when useUserName is true, otherwise try to use name. 
+            // Unless name is null, then fallback to login.
+            const finalName = (useUserName) ? login: (name) ? capitalize(htmlEncoding(name)) : login
+            return { name: finalName, url: avatar_url };
         } catch (error) {
             console.log(`Oops...given github id ${login} is invalid :(`);
             return { name: login, url: '' };
         }
     }
 
+    // Use login (== username) when useUserName is true, otherwise try to use name.
+    // If name is null, then fallback to login.
+    const finalName = (useUserName) ? login : (prevContributors[login] && prevContributors[login].name) ?
+        capitalize(htmlEncoding(prevContributors[login].name)) : login
     return {
-        name: useUserName ? login : htmlEncoding(prevContributors[login].name),
+        name: finalName,
         url: avatarUrl || prevContributors[login].url
     };
 };
@@ -82,7 +89,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
                 contributors_content += getTemplate(
                     login,
                     imageSize,
-                    useUsername ? name : capitalize(name),
+                    name,
                     url
                 );
             } else {
