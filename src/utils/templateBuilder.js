@@ -12,8 +12,7 @@ export const getTemplate = (userID, imageSize, name, avatarUrl) => {
                     <br />
                     <sub><b>${name ? name : userID}</b></sub>
                 </a>
-            </td>
-`;
+            </td>`;
 };
 
 /**
@@ -96,7 +95,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
                 contributors_content += getTemplate(login, imageSize, login, avatar_url);
             }
         }
-        contributors_content += '\t\t</tr>\n';
+        contributors_content += '\n\t\t</tr>\n';
     }
 
     contributors_content += `\t<tbody>\n</table>\n<!-- readme:${type}-end -->`;
