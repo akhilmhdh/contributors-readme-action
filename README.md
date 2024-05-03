@@ -40,9 +40,12 @@ jobs:
     contrib-readme-job:
         runs-on: ubuntu-latest
         name: A job to automate contrib in readme
+        permissions:
+          contents: write
+          pull-requests: write
         steps:
             - name: Contribute List
-              uses: akhilmhdh/contributors-readme-action@v2.3.9
+              uses: akhilmhdh/contributors-readme-action@v2.3.10
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -52,7 +55,8 @@ That's it!
 To add it to your existing workflow, **append** this to your current `.yml` workflow script.
 
 ```yml
-- uses: akhilmhdh/contributors-readme-action@v2.3.9
+# add required write permission
+- uses: akhilmhdh/contributors-readme-action@v2.3.10
   env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -133,7 +137,8 @@ You can add these optional parameters in your action script to modify the appear
 
 ```yml
 - name: Contribute List
-  uses: akhilmhdh/contributors-readme-action@v2.3.9
+# add required write permission
+  uses: akhilmhdh/contributors-readme-action@v2.3.10
   with:
       image_size: 100
 ```
