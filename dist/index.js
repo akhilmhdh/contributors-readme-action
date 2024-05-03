@@ -33895,13 +33895,13 @@ const htmlEncoding = string => {
 
 const getTemplate = (userID, imageSize, name, avatarUrl) => {
     return `
-    <td align="center">
-        <a href="https://github.com/${userID}">
-            <img src="${avatarUrl}" width="${imageSize};" alt="${userID}"/>
-            <br />
-            <sub><b>${name ? name : userID}</b></sub>
-        </a>
-    </td>`;
+        <td align="center">
+            <a href="https://github.com/${userID}">
+                <img src="${avatarUrl}" width="${imageSize};" alt="${userID}"/>
+                <br />
+                <sub><b>${name ? name : userID}</b></sub>
+            </a>
+        </td>`;
 };
 
 /**
@@ -33952,14 +33952,14 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const useUsername = (0,core.getBooleanInput)('use_username');
     const columns = Number((0,core.getInput)('columns_per_row').trim());
 
-    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n`;
+    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n<tbody>\t\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
     const rows = Math.ceil(contributors.length / columns);
 
     for (let row = 1; row <= rows; row++) {
-        contributors_content += '<tr>';
+        contributors_content += '\t\t<tr>';
         for (
             let column = 1;
             column <= columns && (row - 1) * columns + column - 1 < contributors.length;
@@ -33984,10 +33984,10 @@ const templateBuilder = async (contributors, prevContributors, type) => {
                 contributors_content += getTemplate(login, imageSize, login, avatar_url);
             }
         }
-        contributors_content += '</tr>\n';
+        contributors_content += '\t\t</tr>\n';
     }
 
-    contributors_content += `</table>\n<!-- readme:${type}-end -->`;
+    contributors_content += `\t<tbody>\n</table>\n<!-- readme:${type}-end -->`;
 
     return contributors_content;
 };
