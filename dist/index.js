@@ -33895,13 +33895,14 @@ const htmlEncoding = string => {
 
 const getTemplate = (userID, imageSize, name, avatarUrl) => {
     return `
-        <td align="center">
-            <a href="https://github.com/${userID}">
-                <img src="${avatarUrl}" width="${imageSize};" alt="${userID}"/>
-                <br />
-                <sub><b>${name ? name : userID}</b></sub>
-            </a>
-        </td>`;
+            <td align="center">
+                <a href="https://github.com/${userID}">
+                    <img src="${avatarUrl}" width="${imageSize};" alt="${userID}"/>
+                    <br />
+                    <sub><b>${name ? name : userID}</b></sub>
+                </a>
+            </td>
+`;
 };
 
 /**
@@ -33952,7 +33953,7 @@ const templateBuilder = async (contributors, prevContributors, type) => {
     const useUsername = (0,core.getBooleanInput)('use_username');
     const columns = Number((0,core.getInput)('columns_per_row').trim());
 
-    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n<tbody>\t\n`;
+    let contributors_content = `<!-- readme:${type}-start -->\n<table>\n\t<tbody>\n`;
 
     contributors = stripDuplicates(contributors, 'login');
 
