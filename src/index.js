@@ -1,4 +1,5 @@
 import { nanoid } from 'nanoid';
+import { writeFile } from 'fs/promises';
 import { getInput, setOutput, setFailed, getBooleanInput } from '@actions/core';
 import { context } from '@actions/github';
 import octokit from './octokit';
@@ -17,6 +18,7 @@ async function run() {
         const email = getInput('committer_email').trim();
         const prTitle = getInput('pr_title_on_protected').trim();
         const auto_detect_branch_protection = getBooleanInput('auto_detect_branch_protection');
+        const noCommitOrPush = getBooleanInput('no_commit_or_push');
 
         const ref = context.ref;
         const branch = context.ref.split('/').pop();
@@ -138,6 +140,11 @@ async function run() {
         const committer = email && name ? { email, name } : undefined;
 
         if (prevContent !== content) {
+            if (noCommitOrPush) {
+                await writeFile(path, content);
+                process.exit(0);
+            }
+
             if (isProtected) {
                 const uniqueId = nanoid(10);
                 const branchNameForPR = `contributors-readme-action-${uniqueId}`;
