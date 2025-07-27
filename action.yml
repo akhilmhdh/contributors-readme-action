@@ -39,6 +39,10 @@ inputs:
         description: "Title of the PR that will be created if the branch is protected"
         default: "docs(contributor): contributors readme action update"
         required: false
+    no_commit_or_push:
+        description: "Skip committing, creating a branch, and pushing or creating a pull request"
+        default: "false"
+        required: false
 outputs:
     pr_id: # id of pr
         description: "Id of the generated PR when the branch is in protected mode"

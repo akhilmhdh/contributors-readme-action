@@ -33808,6 +33808,8 @@ let nanoid = (size = 21) => {
 }
 
 
+;// CONCATENATED MODULE: external "fs/promises"
+const promises_namespaceObject = require("fs/promises");
 // EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
 var core = __nccwpck_require__(2186);
 // EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
@@ -34165,6 +34167,7 @@ query($owner:String!) {
 
 
 
+
 async function run() {
     try {
         // get various inputs applied in action.yml
@@ -34175,6 +34178,7 @@ async function run() {
         const email = (0,core.getInput)('committer_email').trim();
         const prTitle = (0,core.getInput)('pr_title_on_protected').trim();
         const auto_detect_branch_protection = (0,core.getBooleanInput)('auto_detect_branch_protection');
+        const noCommitOrPush = (0,core.getBooleanInput)('no_commit_or_push');
 
         const ref = github.context.ref;
         const branch = github.context.ref.split('/').pop();
@@ -34296,6 +34300,11 @@ async function run() {
         const committer = email && name ? { email, name } : undefined;
 
         if (prevContent !== content) {
+            if (noCommitOrPush) {
+                await (0,promises_namespaceObject.writeFile)(path, content);
+                process.exit(0);
+            }
+
             if (isProtected) {
                 const uniqueId = nanoid(10);
                 const branchNameForPR = `contributors-readme-action-${uniqueId}`;
