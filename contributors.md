@@ -44,8 +44,8 @@ This is an example of contributors-readme-action as it can't be utilized in mast
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/dtcMLOps">
-                    <img src="https://avatars.githubusercontent.com/u/115469901?v=4" width="100;" alt="dtcMLOps"/>
+                <a href="https://github.com/codebydant">
+                    <img src="https://avatars.githubusercontent.com/u/115469901?v=4" width="100;" alt="codebydant"/>
                     <br />
                     <sub><b>Daniel T</b></sub>
                 </a>
@@ -64,20 +64,6 @@ This is an example of contributors-readme-action as it can't be utilized in mast
                     <img src="https://avatars.githubusercontent.com/u/1180335?v=4" width="100;" alt="kachick"/>
                     <br />
                     <sub><b>Kenichi Kamiya</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/naomi-lgbt">
-                    <img src="https://avatars.githubusercontent.com/u/63889819?v=4" width="100;" alt="naomi-lgbt"/>
-                    <br />
-                    <sub><b>Naomi Carrigan</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/KPCOFGS">
-                    <img src="https://avatars.githubusercontent.com/u/100217654?v=4" width="100;" alt="KPCOFGS"/>
-                    <br />
-                    <sub><b>Shi Sheng</b></sub>
                 </a>
             </td>
             <td align="center">
